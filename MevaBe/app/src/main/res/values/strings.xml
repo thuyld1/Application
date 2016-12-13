@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Me va Be</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+
+    <string name="left_menu_lich_time">Lịch tiêm phòng</string>
+    <string name="left_menu_su_dung_thuoc">Lịch sử sử dụng </string>
+    <string name="left_menu_kien_thuc">Kiến thức chăm sóc con</string>
+    <string name="left_menu_bac_sy">Tìm bác sỹ</string>
+</resources>
