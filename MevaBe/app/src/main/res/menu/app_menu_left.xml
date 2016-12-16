@@ -3,9 +3,13 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/left_menu_dashboard" />
+        <item
             android:id="@+id/nav_lich_tiem"
             android:icon="@drawable/ic_menu_camera"
-            android:title="@string/left_menu_lich_time" />
+            android:title="@string/left_menu_lich_tiem" />
         <item
             android:id="@+id/nav_su_dung_thuoc"
             android:icon="@drawable/ic_menu_gallery"

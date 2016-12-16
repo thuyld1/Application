@@ -22,13 +22,20 @@ import com.android.mevabe.lichtiem.LichTiemMain;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private Toolbar toolbar;
+    private DrawerLayout mainLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.app_main_layout);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
+        // Set up
+        setContentView(R.layout.app_main_layout);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        mainLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        // Add feed back button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,10 +45,10 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        // Build left menu
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+                this, mainLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mainLayout.setDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -94,10 +101,15 @@ public class MainActivity extends AppCompatActivity
 
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if (id == R.id.nav_lich_tiem) {
+        if (id == R.id.nav_dashboard) {
+            content = new DashBoard();
+            toolbar.setTitle(R.string.left_menu_dashboard);
+        } else if (id == R.id.nav_lich_tiem) {
             content = new LichTiemMain();
+            toolbar.setTitle(R.string.left_menu_lich_tiem);
         } else if (id == R.id.nav_su_dung_thuoc) {
             content = new LichSuThuocMain();
+            toolbar.setTitle(R.string.left_menu_su_dung_thuoc);
         } else if (id == R.id.nav_kien_thuc) {
             return false;
         } else if (id == R.id.nav_bac_sy) {
@@ -118,8 +130,8 @@ public class MainActivity extends AppCompatActivity
         // Commit the transaction
         transaction.commit();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+
+        mainLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 }
