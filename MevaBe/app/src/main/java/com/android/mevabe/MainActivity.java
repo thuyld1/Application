@@ -1,10 +1,7 @@
 package com.android.mevabe;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.mevabe.dashboard.DashBoard;
 import com.android.mevabe.lichsuthuoc.LichSuThuocMain;
@@ -24,6 +22,7 @@ public class MainActivity extends AppCompatActivity
 
     private Toolbar toolbar;
     private DrawerLayout mainLayout;
+    private BaseFragment currentContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +34,24 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         mainLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        // Add feed back button
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        // Listener toolbar
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"your icon was clicked",Toast.LENGTH_SHORT).show();
+                currentContent.onToolBarClicked(v);
             }
         });
+
+        // Add feed back button
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         // Build left menu
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -55,11 +63,11 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         // Default create dashboard fragment
-        Fragment dashboard = new DashBoard();
+        currentContent = new DashBoard();
 
         // Add the dashboard to content view
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.content_area, dashboard).commit();
+                .add(R.id.content_area, currentContent).commit();
     }
 
     @Override
@@ -97,18 +105,16 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        Fragment content = null;
-
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.nav_dashboard) {
-            content = new DashBoard();
+            currentContent = new DashBoard();
             toolbar.setTitle(R.string.left_menu_dashboard);
         } else if (id == R.id.nav_lich_tiem) {
-            content = new LichTiemMain();
+            currentContent = new LichTiemMain();
             toolbar.setTitle(R.string.left_menu_lich_tiem);
         } else if (id == R.id.nav_su_dung_thuoc) {
-            content = new LichSuThuocMain();
+            currentContent = new LichSuThuocMain();
             toolbar.setTitle(R.string.left_menu_su_dung_thuoc);
         } else if (id == R.id.nav_kien_thuc) {
             return false;
@@ -124,7 +130,7 @@ public class MainActivity extends AppCompatActivity
 
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.content_area, content);
+        transaction.replace(R.id.content_area, currentContent);
         transaction.addToBackStack(null);
 
         // Commit the transaction
