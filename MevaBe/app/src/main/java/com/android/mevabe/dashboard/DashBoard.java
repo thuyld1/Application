@@ -66,7 +66,7 @@ public class DashBoard extends BaseFragment implements DBRecyclerViewAdapter.IDa
 
     @Override
     protected void onToolBarClicked(View v) {
-        mRecyclerView.scrollTo(0, 0);
+        mRecyclerView.smoothScrollToPosition(0);
     }
 
     /**

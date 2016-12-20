@@ -11,8 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
+import com.android.mevabe.common.OnDoubleClickListener;
 import com.android.mevabe.dashboard.DashBoard;
 import com.android.mevabe.lichsuthuoc.LichSuThuocMain;
 import com.android.mevabe.lichtiem.LichTiemMain;
@@ -35,10 +35,10 @@ public class MainActivity extends AppCompatActivity
         mainLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         // Listener toolbar
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        toolbar.setClickable(true);
+        toolbar.setOnClickListener(new OnDoubleClickListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"your icon was clicked",Toast.LENGTH_SHORT).show();
+            public void onDoubleClick(View v) {
                 currentContent.onToolBarClicked(v);
             }
         });
