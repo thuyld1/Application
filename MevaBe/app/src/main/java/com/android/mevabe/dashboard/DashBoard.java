@@ -9,11 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.android.mevabe.BaseFragment;
 import com.android.mevabe.R;
+import com.android.mevabe.common.Screen;
+import com.android.mevabe.view.RefreshLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,12 +29,11 @@ import java.util.List;
 /**
  * Created by thuyld on 12/14/16.
  */
-public class DashBoard extends BaseFragment implements DBRecyclerViewAdapter.IDashBoardListHandler {
-    private SwipeRefreshLayout swipeRefreshLayout;
+public class DashBoard extends Screen implements DBRecyclerViewAdapter.IDashBoardListHandler {
+    private RefreshLayout swipeRefreshLayout;
     private List<DBFeedItem> feedsList;
     private RecyclerView mRecyclerView;
     private DBRecyclerViewAdapter adapter;
-    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -45,7 +44,11 @@ public class DashBoard extends BaseFragment implements DBRecyclerViewAdapter.IDa
                 R.layout.dashboard, container, false);
 
         // Set up listener for swipe to refresh
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.itemsRecyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        swipeRefreshLayout = (RefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setChildView(mRecyclerView);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -53,19 +56,21 @@ public class DashBoard extends BaseFragment implements DBRecyclerViewAdapter.IDa
                 refreshItems();
             }
         });
+        swipeRefreshLayout.setOnLoadMoreListener(new RefreshLayout.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.itemsRecyclerView);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
+            }
+        });
 
-        String url = "http://stacktips.com/?json=get_category_posts&slug=news&count=30";
+        String url = "http://stacktips.com/?json=get_category_posts&slug=news&count=10";
         new DownloadTask().execute(url);
 
         return view;
     }
 
     @Override
-    protected void onToolBarClicked(View v) {
+    public void onToolBarClicked(View v) {
         mRecyclerView.smoothScrollToPosition(0);
     }
 
@@ -104,7 +109,6 @@ public class DashBoard extends BaseFragment implements DBRecyclerViewAdapter.IDa
 
         @Override
         protected void onPreExecute() {
-            progressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -137,8 +141,6 @@ public class DashBoard extends BaseFragment implements DBRecyclerViewAdapter.IDa
 
         @Override
         protected void onPostExecute(Integer result) {
-            progressBar.setVisibility(View.GONE);
-
             if (result == 1) {
                 adapter = new DBRecyclerViewAdapter(getActivity(), feedsList);
                 adapter.setHandler(DashBoard.this);

@@ -12,17 +12,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.android.mevabe.common.Screen;
 import com.android.mevabe.common.OnDoubleClickListener;
 import com.android.mevabe.dashboard.DashBoard;
 import com.android.mevabe.lichsuthuoc.LichSuThuocMain;
 import com.android.mevabe.lichtiem.LichTiemMain;
 
+/**
+ * MainActivity class controls main application activity
+ */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Toolbar toolbar;
     private DrawerLayout mainLayout;
-    private BaseFragment currentContent;
+    private Screen currentContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
