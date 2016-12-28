@@ -43,7 +43,7 @@ public class DBRecyclerViewAdapter extends RecyclerView.Adapter<DBRecyclerViewAd
 
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dashboard_item, null);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dashboard_item_update_info, null);
         CustomViewHolder viewHolder = new CustomViewHolder(view);
         return viewHolder;
     }

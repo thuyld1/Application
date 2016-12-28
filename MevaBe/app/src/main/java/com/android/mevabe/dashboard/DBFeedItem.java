@@ -4,6 +4,7 @@ package com.android.mevabe.dashboard;
  * Created by leducthuy on 12/17/16.
  */
 public class DBFeedItem {
+    private int type;
     private String thumbnail;
     private String title;
 
@@ -21,5 +22,13 @@ public class DBFeedItem {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }
