@@ -19,7 +19,7 @@ import com.android.mevabe.lichsuthuoc.LichSuThuocMain;
 import com.android.mevabe.lichtiem.LichTiemMain;
 
 /**
- * MainActivity class controls main application activity
+ * MainActivity2 class controls main application activity
  */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
