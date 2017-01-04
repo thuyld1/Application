@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.android.mevabe.common.Screen;
 import com.android.mevabe.dashboard.DashBoard;
 import com.android.mevabe.lichsuthuoc.LichSuThuocMain;
 import com.android.mevabe.lichtiem.LichTiemMain;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class MainActivity2 extends AppCompatActivity {
 
-//    private Toolbar toolbar;
+    //    private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
@@ -39,6 +40,24 @@ public class MainActivity2 extends AppCompatActivity {
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_menu_camera);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_menu_camera);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_menu_camera);
+        tabLayout.setOnTabSelectedListener(
+                new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
+                    @Override
+                    public void onTabSelected(TabLayout.Tab tab) {
+                        super.onTabSelected(tab);
+
+                    }
+
+                    @Override
+                    public void onTabReselected(TabLayout.Tab tab) {
+                        super.onTabReselected(tab);
+
+                        // Fire on toolbar click event
+                        ViewPagerAdapter adapter = (ViewPagerAdapter) viewPager.getAdapter();
+                        Screen screen = (Screen) adapter.getItem(viewPager.getCurrentItem());
+                        screen.onToolBarClicked(null);
+                    }
+                });
     }
 
     private void setupViewPager(ViewPager viewPager) {

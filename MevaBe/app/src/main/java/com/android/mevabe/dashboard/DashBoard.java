@@ -1,6 +1,5 @@
 package com.android.mevabe.dashboard;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,17 +11,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.mevabe.R;
+import com.android.mevabe.common.AppConfig;
 import com.android.mevabe.common.Screen;
+import com.android.mevabe.services.APIService;
 import com.android.mevabe.view.RefreshLayout;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,14 +55,33 @@ public class DashBoard extends Screen implements DBRecyclerViewAdapter.IDashBoar
             }
         });
 
-        String url = "http://stacktips.com/?json=get_category_posts&slug=news&count=10";
-        new DownloadTask().execute(url);
+        // Prepare data
+        feedsList = new ArrayList<>();
+        adapter = new DBRecyclerViewAdapter(getActivity(), feedsList);
+        adapter.setHandler(DashBoard.this);
+        mRecyclerView.setAdapter(adapter);
+
+
+        String url = "http://stacktips.com/?json=get_category_posts&slug=news&count=15";
+        APIService service = new APIService();
+        service.callAPI(url, new APIService.IAPIServiceHandler<List<DBFeedItem>>() {
+            @Override
+            public void onSuccess(List<DBFeedItem> result) {
+                if (result != null) {
+                    feedsList.addAll(result);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(getContext(), "Failed to fetch data!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         return view;
     }
 
     @Override
     public void onToolBarClicked(View v) {
+        Log.i(AppConfig.LOG_TAG, "onToolBarClicked");
         mRecyclerView.smoothScrollToPosition(0);
     }
 
@@ -77,23 +89,22 @@ public class DashBoard extends Screen implements DBRecyclerViewAdapter.IDashBoar
      * Refresh item
      */
     private void refreshItems() {
-        // Load items
-        for (int i = 0; i < 10000; i++) {
+        String url = "http://stacktips.com/?json=get_category_posts&slug=news&count=15";
+        APIService service = new APIService();
+        service.callAPI(url, new APIService.IAPIServiceHandler<List<DBFeedItem>>() {
+            @Override
+            public void onSuccess(List<DBFeedItem> result) {
+                if (result != null) {
+                    feedsList.addAll(result);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(getContext(), "Failed to fetch data!", Toast.LENGTH_SHORT).show();
+                }
 
-        }
-        // Load complete
-        onItemsLoadComplete();
-    }
-
-    /**
-     * Handle in case completed
-     */
-    private void onItemsLoadComplete() {
-        // Update the adapter and notify data set changed
-        // ...
-
-        // Stop refresh animation
-        swipeRefreshLayout.setRefreshing(false);
+                // Stop refresh animation
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     // ******** DBRecyclerViewAdapter.IDashBoardListHandler ******** //
@@ -102,69 +113,4 @@ public class DashBoard extends Screen implements DBRecyclerViewAdapter.IDashBoar
         Toast.makeText(getActivity(), item.getTitle(), Toast.LENGTH_SHORT).show();
     }
 
-
-    // ******** DownloadTask ******** //
-    public class DownloadTask extends AsyncTask<String, Void, Integer> {
-
-        @Override
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected Integer doInBackground(String... params) {
-            Integer result = 0;
-            HttpURLConnection urlConnection;
-            try {
-                URL url = new URL(params[0]);
-                urlConnection = (HttpURLConnection) url.openConnection();
-                int statusCode = urlConnection.getResponseCode();
-
-                // 200 represents HTTP OK
-                if (statusCode == 200) {
-                    BufferedReader r = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                    StringBuilder response = new StringBuilder();
-                    String line;
-                    while ((line = r.readLine()) != null) {
-                        response.append(line);
-                    }
-                    parseResult(response.toString());
-                    result = 1; // Successful
-                } else {
-                    result = 0; //"Failed to fetch data!";
-                }
-            } catch (Exception e) {
-                Log.d("", e.getLocalizedMessage());
-            }
-            return result; //"Failed to fetch data!";
-        }
-
-        @Override
-        protected void onPostExecute(Integer result) {
-            if (result == 1) {
-                adapter = new DBRecyclerViewAdapter(getActivity(), feedsList);
-                adapter.setHandler(DashBoard.this);
-                mRecyclerView.setAdapter(adapter);
-            } else {
-                Toast.makeText(getContext(), "Failed to fetch data!", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    private void parseResult(String result) {
-        try {
-            JSONObject response = new JSONObject(result);
-            JSONArray posts = response.optJSONArray("posts");
-            feedsList = new ArrayList<>();
-
-            for (int i = 0; i < posts.length(); i++) {
-                JSONObject post = posts.optJSONObject(i);
-                DBFeedItem item = new DBFeedItem();
-                item.setTitle(post.optString("title"));
-                item.setThumbnail(post.optString("thumbnail"));
-                feedsList.add(item);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
 }
