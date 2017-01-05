@@ -15,7 +15,7 @@ public class RefreshLayout extends SwipeRefreshLayout {
 
     private float firstTouchY;
     private float lastTouchY;
-    private boolean isLoading = false;
+    private boolean isLoadingMore;
     private float mStartX, mLastX;
 
     /**
@@ -38,11 +38,6 @@ public class RefreshLayout extends SwipeRefreshLayout {
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
     }
 
-    //set the child view of RefreshLayout,ListView
-    public void setChildView(RecyclerView recyclerView) {
-        this.recyclerView = recyclerView;
-    }
-
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         final int action = event.getAction();
@@ -55,9 +50,9 @@ public class RefreshLayout extends SwipeRefreshLayout {
                 lastTouchY = event.getRawY();
                 mLastX = event.getRawX();
 
-                // Check load more condition
-                if (canLoadMore()) {
-                    loadData();
+                // Check load more condition to start load data
+                if (mOnLoadMoreListener != null && canLoadMore()) {
+                    setLoadingMore(true);
                 }
                 break;
             default:
@@ -67,8 +62,13 @@ public class RefreshLayout extends SwipeRefreshLayout {
         return super.dispatchTouchEvent(event);
     }
 
+    /**
+     * Check can load more or not
+     *
+     * @return boolean
+     */
     private boolean canLoadMore() {
-        return isBottom() && !isLoading && isPullingUp();
+        return !isLoadingMore && isBottom() && isPullingUp();
     }
 
     private boolean isBottom() {
@@ -87,17 +87,16 @@ public class RefreshLayout extends SwipeRefreshLayout {
         return false;
     }
 
-    private void loadData() {
-        if (mOnLoadMoreListener != null) {
-            setLoading(true);
-        }
-    }
-
-    public void setLoading(boolean loading) {
+    /**
+     * Start load more or stop load
+     *
+     * @param loadingMore
+     */
+    public void setLoadingMore(boolean loadingMore) {
         if (recyclerView == null) return;
-        isLoading = loading;
-        if (loading) {
-            // Cancel reresh
+        isLoadingMore = loadingMore;
+        if (loadingMore) {
+            // Cancel refresh action
             if (isRefreshing()) {
                 setRefreshing(false);
             }
@@ -126,5 +125,14 @@ public class RefreshLayout extends SwipeRefreshLayout {
      */
     public interface OnLoadMoreListener {
         public void onLoadMore();
+    }
+
+    /**
+     * set the child view of RefreshLayout,ListView
+     *
+     * @param recyclerView RecyclerView
+     */
+    public void setChildView(RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
     }
 }
