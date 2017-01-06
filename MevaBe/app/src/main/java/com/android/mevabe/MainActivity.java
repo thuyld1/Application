@@ -12,8 +12,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.android.mevabe.common.Screen;
-import com.android.mevabe.common.OnDoubleClickListener;
+import com.android.mevabe.view.FragmentBase;
+import com.android.mevabe.view.OnDoubleClickListener;
 import com.android.mevabe.dashboard.DashBoard;
 import com.android.mevabe.lichsuthuoc.LichSuThuocMain;
 import com.android.mevabe.lichtiem.LichTiemMain;
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity
 
     private Toolbar toolbar;
     private DrawerLayout mainLayout;
-    private Screen currentContent;
+    private FragmentBase currentContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

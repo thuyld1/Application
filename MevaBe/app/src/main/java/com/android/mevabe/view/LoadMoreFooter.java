@@ -58,7 +58,7 @@ public class LoadMoreFooter extends FrameLayout {
             tvMore.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
         } else {
-            tvMore.setVisibility(View.VISIBLE);
+            tvMore.setVisibility(View.GONE);
             progressBar.setVisibility(View.GONE);
         }
     }

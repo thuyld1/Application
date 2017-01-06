@@ -1,45 +1,38 @@
 package com.android.mevabe.dashboard;
 
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.mevabe.R;
 import com.android.mevabe.common.AppConfig;
-import com.android.mevabe.common.Screen;
 import com.android.mevabe.services.APIService;
-import com.android.mevabe.view.RefreshLayout;
+import com.android.mevabe.view.FragmentBase;
+import com.android.mevabe.view.LoadMoreRecyclerView;
+import com.android.mevabe.view.RefreshLoadMoreLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by thuyld on 12/14/16.
  */
-public class DashBoard extends Screen implements DBRecyclerViewAdapter.IDashBoardListHandler {
-    private RefreshLayout swipeRefreshLayout;
-    private List<DBFeedItem> feedsList;
-    private RecyclerView mRecyclerView;
+public class DashBoard extends FragmentBase implements DBRecyclerViewAdapter.IDashBoardListHandler {
+    private RefreshLoadMoreLayout swipeRefreshLayout;
+    private LoadMoreRecyclerView mRecyclerView;
     private DBRecyclerViewAdapter adapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(
-                R.layout.dashboard, container, false);
+    public int getLayoutContentViewXML() {
+        return R.layout.dashboard;
+    }
 
+    @Override
+    public void initView(View layoutView) {
         // Set up listener for swipe to refresh
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.itemsRecyclerView);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView = (LoadMoreRecyclerView) layoutView.findViewById(R.id.itemsRecyclerView);
 
-        swipeRefreshLayout = (RefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout = (RefreshLoadMoreLayout) layoutView.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -48,44 +41,21 @@ public class DashBoard extends Screen implements DBRecyclerViewAdapter.IDashBoar
                 refreshItems();
             }
         });
-        swipeRefreshLayout.setOnLoadMoreListener(new RefreshLayout.OnLoadMoreListener() {
+        swipeRefreshLayout.bindView(mRecyclerView, new RefreshLoadMoreLayout.ILoadMoreListener() {
             @Override
             public void onLoadMore() {
                 // Load more data
                 loadMore();
             }
         });
-        swipeRefreshLayout.setChildView(mRecyclerView);
 
         // Prepare data
-        feedsList = new ArrayList<>();
-        adapter = new DBRecyclerViewAdapter(getActivity(), feedsList);
+        adapter = new DBRecyclerViewAdapter(getActivity());
         adapter.setHandler(DashBoard.this);
         mRecyclerView.setAdapter(adapter);
-
-
-        String url = "http://stacktips.com/?json=get_category_posts&slug=news&count=15";
-        APIService service = new APIService();
-        service.callAPI(url, new APIService.IAPIServiceHandler<List<DBFeedItem>>() {
-            @Override
-            public void onSuccess(List<DBFeedItem> result) {
-                if (result != null) {
-                    feedsList.addAll(result);
-                    adapter.notifyDataSetChanged();
-                } else {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getContext(), "Failed to fetch data!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                }
-            }
-        });
-
-        return view;
+        refreshItems();
     }
+
 
     @Override
     public void onToolBarClicked(View v) {
@@ -97,28 +67,15 @@ public class DashBoard extends Screen implements DBRecyclerViewAdapter.IDashBoar
      * Refresh item
      */
     private void refreshItems() {
-        String url = "http://stacktips.com/?json=get_category_posts&slug=news&count=5";
+        // Show refreshing UI
+        swipeRefreshLayout.setRefreshing(true);
+
+        String url = "http://stacktips.com/?json=get_category_posts&slug=news&count=2";
         APIService service = new APIService();
         service.callAPI(url, new APIService.IAPIServiceHandler<List<DBFeedItem>>() {
             @Override
             public void onSuccess(List<DBFeedItem> result) {
-                if (result != null) {
-                    feedsList.addAll(result);
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            adapter.notifyDataSetChanged();
-                        }
-                    });
-
-                } else {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getContext(), "Failed to fetch data!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
+                adapter.refreshItems(result);
 
                 // Stop refreshing UI
                 swipeRefreshLayout.setRefreshing(false);
@@ -130,48 +87,23 @@ public class DashBoard extends Screen implements DBRecyclerViewAdapter.IDashBoar
      * Load more data
      */
     private void loadMore() {
-        swipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                if (adapter != null && adapter.loadMoreFooter != null) {
-                    adapter.loadMoreFooter.setOnLoadMore(true);
-                }
-            }
-        });
+        // Show loading more view
+        swipeRefreshLayout.setLoadingMore(true);
 
         String url = "http://stacktips.com/?json=get_category_posts&slug=news&count=2";
         APIService service = new APIService();
         service.callAPI(url, new APIService.IAPIServiceHandler<List<DBFeedItem>>() {
             @Override
-            public void onSuccess(List<DBFeedItem> result) {
-                if (result != null) {
-                    feedsList.addAll(result);
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            adapter.notifyDataSetChanged();
-                        }
-                    });
-
-                } else {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getContext(), "Failed to fetch data!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-
-                // Stop loading
-                swipeRefreshLayout.setLoadingMore(false);
+            public void onSuccess(final List<DBFeedItem> result) {
                 swipeRefreshLayout.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (adapter != null && adapter.loadMoreFooter != null) {
-                            adapter.loadMoreFooter.setOnLoadMore(false);
-                        }
+                        adapter.appendItems(result);
+
+                        // Stop loading
+                        swipeRefreshLayout.setLoadingMore(false);
                     }
-                }, 100);
+                }, 5000);
             }
         });
     }
@@ -180,12 +112,6 @@ public class DashBoard extends Screen implements DBRecyclerViewAdapter.IDashBoar
     @Override
     public void onItemClick(DBFeedItem item) {
         Toast.makeText(getActivity(), item.getTitle(), Toast.LENGTH_SHORT).show();
-    }
-
-
-    @Override
-    public void onClickToLoadMore() {
-        loadMore();
     }
 
 }

@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.android.mevabe.common.Screen;
+import com.android.mevabe.view.FragmentBase;
 import com.android.mevabe.dashboard.DashBoard;
 import com.android.mevabe.lichsuthuoc.LichSuThuocMain;
 import com.android.mevabe.lichtiem.LichTiemMain;
@@ -54,7 +54,7 @@ public class MainActivity2 extends AppCompatActivity {
 
                         // Fire on toolbar click event
                         ViewPagerAdapter adapter = (ViewPagerAdapter) viewPager.getAdapter();
-                        Screen screen = (Screen) adapter.getItem(viewPager.getCurrentItem());
+                        FragmentBase screen = (FragmentBase) adapter.getItem(viewPager.getCurrentItem());
                         screen.onToolBarClicked(null);
                     }
                 });

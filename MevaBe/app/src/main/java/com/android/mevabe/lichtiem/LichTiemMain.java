@@ -1,23 +1,21 @@
 package com.android.mevabe.lichtiem;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.android.mevabe.common.Screen;
 import com.android.mevabe.R;
+import com.android.mevabe.view.FragmentBase;
 
 /**
  * Created by thuyld on 12/14/16.
  */
-public class LichTiemMain extends Screen {
+public class LichTiemMain extends FragmentBase {
     @Override
-    public View onCreateView(LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public int getLayoutContentViewXML() {
+        return R.layout.lich_tiem;
+    }
 
-        // Inflate the layout for this fragment
-        return inflater.inflate(
-                R.layout.lich_tiem, container, false);
+    @Override
+    public void initView(View layoutView) {
+
     }
 }

@@ -1,4 +1,4 @@
-package com.android.mevabe.common;
+package com.android.mevabe.view;
 
 
 import android.view.View;

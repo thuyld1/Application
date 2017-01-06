@@ -11,17 +11,17 @@
     tools:context="com.android.mevabe.MainActivity"
     tools:showIn="@layout/app_main_content">
 
-    <com.android.mevabe.view.RefreshLayout
+    <com.android.mevabe.view.RefreshLoadMoreLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
+        <com.android.mevabe.view.LoadMoreRecyclerView
             android:id="@+id/itemsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:scrollbars="vertical" />
-    </com.android.mevabe.view.RefreshLayout>
+    </com.android.mevabe.view.RefreshLoadMoreLayout>
 </RelativeLayout>
