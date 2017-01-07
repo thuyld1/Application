@@ -60,7 +60,9 @@ public class DashBoard extends FragmentBase implements DBRecyclerViewAdapter.IDa
     @Override
     public void onToolBarClicked(View v) {
         Log.i(AppConfig.LOG_TAG, "onToolBarClicked");
-        mRecyclerView.smoothScrollToPosition(0);
+        if (mRecyclerView != null) {
+            mRecyclerView.smoothScrollToPosition(0);
+        }
     }
 
     /**
@@ -70,7 +72,7 @@ public class DashBoard extends FragmentBase implements DBRecyclerViewAdapter.IDa
         // Show refreshing UI
         swipeRefreshLayout.setRefreshing(true);
 
-        String url = "http://stacktips.com/?json=get_category_posts&slug=news&count=2";
+        String url = "http://stacktips.com/?json=get_category_posts&slug=news&count=5";
         APIService service = new APIService();
         service.callAPI(url, new APIService.IAPIServiceHandler<List<DBFeedItem>>() {
             @Override
@@ -95,15 +97,15 @@ public class DashBoard extends FragmentBase implements DBRecyclerViewAdapter.IDa
         service.callAPI(url, new APIService.IAPIServiceHandler<List<DBFeedItem>>() {
             @Override
             public void onSuccess(final List<DBFeedItem> result) {
-                swipeRefreshLayout.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.appendItems(result);
+//                swipeRefreshLayout.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+                adapter.appendItems(result);
 
-                        // Stop loading
-                        swipeRefreshLayout.setLoadingMore(false);
-                    }
-                }, 5000);
+                // Stop loading
+                swipeRefreshLayout.setLoadingMore(false);
+//                    }
+//                }, 1000);
             }
         });
     }

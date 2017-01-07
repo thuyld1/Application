@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.android.mevabe.model.BaseModel;
 import com.android.mevabe.view.LoadMoreFooter;
 
 import java.util.ArrayList;
@@ -15,8 +16,7 @@ import java.util.List;
  * RefreshLoadMoreAdapter controls view of list with load more option
  */
 public class RefreshLoadMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    protected static final int TYPE_NORMAL_NEWS = 0;
-    protected static final int TYPE_LOADMORE_FOOTER = 100;
+    private static final int VIEW_TYPE_LOADMORE_FOOTER = -1;
     protected List listItems;
     protected Activity mContext;
 
@@ -32,7 +32,7 @@ public class RefreshLoadMoreAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        if (viewType == TYPE_LOADMORE_FOOTER) {
+        if (viewType == VIEW_TYPE_LOADMORE_FOOTER) {
             LoadMoreFooter footer = new LoadMoreFooter(mContext);
             footer.setLayoutParams(
                     new FrameLayout.LayoutParams(
@@ -52,10 +52,11 @@ public class RefreshLoadMoreAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public int getItemViewType(int position) {
-        if (listItems.get(position) == null) {
-            return TYPE_LOADMORE_FOOTER;
+        BaseModel item = (BaseModel) listItems.get(position);
+        if (item == null) {
+            return VIEW_TYPE_LOADMORE_FOOTER;
         } else {
-            return TYPE_NORMAL_NEWS;
+            return item.getViewType();
         }
     }
 

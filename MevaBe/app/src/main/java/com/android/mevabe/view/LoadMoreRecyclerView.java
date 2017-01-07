@@ -10,7 +10,8 @@ public class LoadMoreRecyclerView extends RecyclerView {
 
     private boolean isLoading;
     private int visibleThreshold = 3;
-    private int lastVisibleItem, totalItemCount;
+    private int lastVisibleItem;
+    private int totalItemCount;
 
     /**
      * Constructor

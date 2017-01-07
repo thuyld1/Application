@@ -1,20 +1,15 @@
 package com.android.mevabe.dashboard;
 
+import com.android.mevabe.model.BaseModel;
+
 /**
  * Created by leducthuy on 12/17/16.
  */
-public class DBFeedItem {
-    private int type;
-    private String thumbnail;
+public class DBFeedItem extends BaseModel {
+    private int piority;
+    private String thumb;
     private String title;
-
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
+    private String des;
 
     public String getTitle() {
         return title;
@@ -24,11 +19,19 @@ public class DBFeedItem {
         this.title = title;
     }
 
-    public int getType() {
-        return type;
+    public String getDes() {
+        return des;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setDes(String des) {
+        this.des = des;
+    }
+
+    public String getThumb() {
+        return thumb;
+    }
+
+    public void setThumb(String thumb) {
+        this.thumb = thumb;
     }
 }

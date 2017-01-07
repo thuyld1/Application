@@ -6,8 +6,13 @@ package com.android.mevabe.common;
  */
 
 public class Constants {
-    public static final int FEED_TYPE_ADD = 1;
+    public static final int FEED_VIEW_TYPE_ADD = 1;
+    public static final int FEED_VIEW_TYPE_BIG = 2;
+    public static final int FEED_VIEW_TYPE_LEFT = 3;
+    public static final int FEED_VIEW_TYPE_RIGHT = 4;
 
-    public static final int FEED_TYPE_NEWS = 100;
+    public static final int FEED_PIORITY_HIGHT = 100;
+    public static final int FEED_PIORITY_NORMAL = 101;
+    public static final int FEED_PIORITY_LOW = 102;
 
 }

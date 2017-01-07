@@ -37,16 +37,6 @@ public class RefreshLoadMoreLayout extends SwipeRefreshLayout {
         super(context, attrs);
     }
 
-
-//    private void intView(Context context) {
-//        // Build load more recycler view
-//        recyclerView = new LoadMoreRecyclerView(context);
-//        RecyclerView.LayoutParams layout = new RecyclerView.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-//        recyclerView.setVerticalScrollBarEnabled(true);
-//        recyclerView.setLayoutParams(layout);
-//        this.addView(recyclerView);
-//    }
-
     /**
      * Bind view for refresh and load more view
      *
@@ -60,14 +50,28 @@ public class RefreshLoadMoreLayout extends SwipeRefreshLayout {
         }
     }
 
+    @Override
+    public void setRefreshing(boolean isRefreshing) {
+        // Stop load more if have
+        if (isRefreshing) {
+            setLoadingMore(false);
+        }
+
+        super.setRefreshing(isRefreshing);
+    }
+
     /**
      * Start/stop loading more
      *
      * @param isLoading boolean
      */
     public void setLoadingMore(boolean isLoading) {
-        RefreshLoadMoreAdapter adapter = (RefreshLoadMoreAdapter) recyclerView.getAdapter();
         if (isLoading) {
+            // Stop refresh
+            super.setRefreshing(false);
+
+            // Start loading more
+            RefreshLoadMoreAdapter adapter = (RefreshLoadMoreAdapter) recyclerView.getAdapter();
             adapter.startLoadMore();
         } else {
             recyclerView.setLoading(false);

@@ -62,7 +62,7 @@ public class APIService {
                 JSONObject post = posts.optJSONObject(i);
                 DBFeedItem item = new DBFeedItem();
                 item.setTitle(post.optString("title"));
-                item.setThumbnail(post.optString("thumbnail"));
+                item.setThumb(post.optString("thumbnail"));
                 feedsList.add(item);
             }
 

@@ -1,3 +1,2 @@
-include ':app', ':swiptoloadlayout', ':pullToRefresh'
-project(':swiptoloadlayout').projectDir = new File('app/modules/swiptoloadlayout')
-project(':pullToRefresh').projectDir = new File('app/modules/pullToRefresh')
+include ':app', ':swiptoloadlayout'
+//project(':swiptoloadlayout').projectDir = new File('app/modules/swiptoloadlayout')
