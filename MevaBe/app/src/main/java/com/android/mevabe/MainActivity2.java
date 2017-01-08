@@ -7,18 +7,19 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
-import com.android.mevabe.view.FragmentBase;
+import com.android.mevabe.common.AppConfig;
 import com.android.mevabe.dashboard.DashBoard;
 import com.android.mevabe.lichsuthuoc.LichSuThuocMain;
 import com.android.mevabe.lichtiem.LichTiemMain;
+import com.android.mevabe.view.FragmentBase;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity2 extends AppCompatActivity {
 
-    //    private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
@@ -26,11 +27,6 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        toolbar = (Toolbar) findViewById(toolbar);
-//        setSupportActionBar(toolbar);
-
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -42,20 +38,26 @@ public class MainActivity2 extends AppCompatActivity {
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_menu_camera);
         tabLayout.setOnTabSelectedListener(
                 new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
+                    private TabLayout.Tab selectedTab;
+
                     @Override
                     public void onTabSelected(TabLayout.Tab tab) {
+                        Log.i(AppConfig.LOG_TAG, "onTabSelected");
                         super.onTabSelected(tab);
-
+                        selectedTab = tab;
                     }
 
                     @Override
                     public void onTabReselected(TabLayout.Tab tab) {
+                        Log.i(AppConfig.LOG_TAG, "onTabReselected");
                         super.onTabReselected(tab);
 
                         // Fire on toolbar click event
-                        ViewPagerAdapter adapter = (ViewPagerAdapter) viewPager.getAdapter();
-                        FragmentBase screen = (FragmentBase) adapter.getItem(viewPager.getCurrentItem());
-                        screen.onToolBarClicked(null);
+                        if (selectedTab == null || selectedTab.equals(tab)) {
+                            ViewPagerAdapter adapter = (ViewPagerAdapter) viewPager.getAdapter();
+                            FragmentBase screen = (FragmentBase) adapter.getItem(viewPager.getCurrentItem());
+                            screen.onToolBarClicked(null);
+                        }
                     }
                 });
     }

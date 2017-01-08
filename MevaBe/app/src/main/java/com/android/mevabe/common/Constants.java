@@ -6,6 +6,11 @@ package com.android.mevabe.common;
  */
 
 public class Constants {
+    // Common constants
+    public static final String INTENT_DATA = "myData";
+
+
+    // For display data in dashboard
     public static final int FEED_VIEW_TYPE_ADD = 1;
     public static final int FEED_VIEW_TYPE_BIG = 2;
     public static final int FEED_VIEW_TYPE_LEFT = 3;

@@ -1,12 +1,14 @@
 package com.android.mevabe.dashboard;
 
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.android.mevabe.R;
+import com.android.mevabe.WebViewActivity;
 import com.android.mevabe.common.AppConfig;
+import com.android.mevabe.common.Constants;
 import com.android.mevabe.services.APIService;
 import com.android.mevabe.view.FragmentBase;
 import com.android.mevabe.view.LoadMoreRecyclerView;
@@ -97,15 +99,10 @@ public class DashBoard extends FragmentBase implements DBRecyclerViewAdapter.IDa
         service.callAPI(url, new APIService.IAPIServiceHandler<List<DBFeedItem>>() {
             @Override
             public void onSuccess(final List<DBFeedItem> result) {
-//                swipeRefreshLayout.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
                 adapter.appendItems(result);
 
                 // Stop loading
                 swipeRefreshLayout.setLoadingMore(false);
-//                    }
-//                }, 1000);
             }
         });
     }
@@ -113,7 +110,10 @@ public class DashBoard extends FragmentBase implements DBRecyclerViewAdapter.IDa
     // ******** DBRecyclerViewAdapter.IDashBoardListHandler ******** //
     @Override
     public void onItemClick(DBFeedItem item) {
-        Toast.makeText(getActivity(), item.getTitle(), Toast.LENGTH_SHORT).show();
+        WebViewActivity act = new WebViewActivity();
+        Intent intent = new Intent(getContext(), WebViewActivity.class);
+        intent.putExtra(Constants.INTENT_DATA, item);
+        startActivity(intent);
     }
 
 }

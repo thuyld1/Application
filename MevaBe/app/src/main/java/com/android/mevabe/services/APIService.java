@@ -1,5 +1,6 @@
 package com.android.mevabe.services;
 
+import com.android.mevabe.common.Constants;
 import com.android.mevabe.dashboard.DBFeedItem;
 
 import org.json.JSONArray;
@@ -61,8 +62,10 @@ public class APIService {
             for (int i = 0; i < posts.length(); i++) {
                 JSONObject post = posts.optJSONObject(i);
                 DBFeedItem item = new DBFeedItem();
+                item.setViewType(Constants.FEED_VIEW_TYPE_LEFT);
                 item.setTitle(post.optString("title"));
                 item.setThumb(post.optString("thumbnail"));
+                item.setUrl("http://m.dantri.com.vn/xa-hoi/hai-phong-yeu-cau-thao-do-rong-vang-dau-pikachu-gay-tranh-cai-20170108172552427.htm");
                 feedsList.add(item);
             }
 

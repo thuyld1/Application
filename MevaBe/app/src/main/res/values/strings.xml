@@ -13,4 +13,5 @@
     <string name="left_menu_kien_thuc">Kiến thức chăm sóc con</string>
     <string name="left_menu_bac_sy">Tìm bác sỹ</string>
     <string name="left_menu_profile">Profile</string>
+    <string name="title_activity_web_view">WebViewActivity</string>
 </resources>
