@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.android.mevabe"
-        minSdkVersion 11
+        minSdkVersion 15
         targetSdkVersion 16
         versionCode 1
         versionName "1.0"
@@ -28,4 +28,5 @@ dependencies {
     compile 'com.android.support:cardview-v7:23+'
     compile 'com.android.support:support-v4:23+'
     compile 'com.android.support:recyclerview-v7:23+'
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
 }
