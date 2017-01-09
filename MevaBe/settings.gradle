@@ -1,2 +1,2 @@
-include ':app', ':swiptoloadlayout'
+include ':app'
 //project(':swiptoloadlayout').projectDir = new File('app/modules/swiptoloadlayout')
