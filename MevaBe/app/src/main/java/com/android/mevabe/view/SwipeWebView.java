@@ -3,6 +3,7 @@ package com.android.mevabe.view;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.webkit.WebView;
 
 public final class SwipeWebView extends WebView {
@@ -48,10 +49,10 @@ public final class SwipeWebView extends WebView {
     /*
      * @see android.webkit.WebView#onTouchEvent(android.view.MotionEvent)
      */
-//    @Override
-//    public boolean onTouchEvent(MotionEvent ev) {
-//        return gestureDetector.onTouchEvent(ev) || super.onTouchEvent(ev);
-//    }
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        return gestureDetector.onTouchEvent(ev) || super.onTouchEvent(ev);
+    }
 
     public void setGestureDetector(GestureDetector gestureDetector) {
         this.gestureDetector = gestureDetector;
