@@ -67,7 +67,7 @@ public class WebViewActivity extends AppCompatActivity {
                 return false;
             } else {
                 try {
-                    if (e2.getX() - e1.getX() > 100 && Math.abs(velocityX) > 800) {
+                    if (e2.getX() - e1.getX() > 300 && Math.abs(velocityX) > 1000) {
                         onSwipeRight();
                         return true;
                     }
