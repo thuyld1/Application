@@ -14,6 +14,12 @@ import com.android.mevabe.dashboard.DashBoard;
 import com.android.mevabe.lichsuthuoc.LichSuThuocMain;
 import com.android.mevabe.lichtiem.LichTiemMain;
 import com.android.mevabe.view.FragmentBase;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +64,27 @@ public class MainActivity2 extends AppCompatActivity {
                             FragmentBase screen = (FragmentBase) adapter.getItem(viewPager.getCurrentItem());
                             screen.onToolBarClicked(null);
                         }
+                    }
+                });
+
+
+        FacebookSdk.sdkInitialize(this.getApplicationContext());
+        CallbackManager callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        // App code
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        // App code
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        // App code
                     }
                 });
     }
