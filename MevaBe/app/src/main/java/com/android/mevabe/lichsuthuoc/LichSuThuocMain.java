@@ -3,12 +3,12 @@ package com.android.mevabe.lichsuthuoc;
 import android.view.View;
 
 import com.android.mevabe.R;
-import com.android.mevabe.view.FragmentBase;
+import com.android.mevabe.view.FragmentLoginRequired;
 
 /**
  * Created by thuyld on 12/14/16.
  */
-public class LichSuThuocMain extends FragmentBase {
+public class LichSuThuocMain extends FragmentLoginRequired {
     @Override
     public int getLayoutContentViewXML() {
         return R.layout.lich_su_thuoc;

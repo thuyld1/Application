@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.mevabe.MyApplication;
+import com.facebook.Profile;
+
 /**
  * Created by thuyld on 12/14/16.
  */
@@ -23,6 +26,16 @@ public abstract class FragmentBase extends Fragment {
         initView(layoutView);
 
         return layoutView;
+    }
+
+    /**
+     * Get facebook profile
+     *
+     * @return Profile
+     */
+    public Profile getProfile() {
+        MyApplication application = (MyApplication) getActivity().getApplication();
+        return application.getProfile();
     }
 
 
@@ -49,6 +62,7 @@ public abstract class FragmentBase extends Fragment {
     //##############################################################################################
     //____________________________________  Override optional methods
     //##############################################################################################
+
     /**
      * Do something when toolbar has clicked. Need to override
      *
