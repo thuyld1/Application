@@ -16,9 +16,11 @@ import com.squareup.picasso.Picasso;
 /**
  * Created by thuyld on 12/14/16.
  */
-public class ProfileMain extends FragmentLoginRequired {
+public class ProfileMain extends FragmentLoginRequired implements View.OnClickListener{
     private ImageView avatar;
     private TextView profileName;
+
+    private ImageView addChildButton;
 
 
     @Override
@@ -30,6 +32,9 @@ public class ProfileMain extends FragmentLoginRequired {
     public void initView(View layoutView) {
         avatar = (ImageView) layoutView.findViewById(R.id.avatar);
         profileName = (TextView) layoutView.findViewById(R.id.profile_name);
+        addChildButton = (ImageView) layoutView.findViewById(R.id.children_add_button);
+
+        addChildButton.setOnClickListener(this);
     }
 
 
@@ -53,4 +58,12 @@ public class ProfileMain extends FragmentLoginRequired {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        // Handle case add child button has clicked
+        if (v.equals(addChildButton)) {
+            // Show popup to add child
+
+        }
+    }
 }
