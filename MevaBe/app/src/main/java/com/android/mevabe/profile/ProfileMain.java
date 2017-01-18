@@ -63,7 +63,8 @@ public class ProfileMain extends FragmentLoginRequired implements View.OnClickLi
         // Handle case add child button has clicked
         if (v.equals(addChildButton)) {
             // Show popup to add child
-
+            AddChildDialog dialog = new AddChildDialog(getContext());
+            dialog.show();
         }
     }
 }

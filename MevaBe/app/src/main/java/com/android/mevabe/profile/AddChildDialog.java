@@ -1,26 +1,109 @@
 package com.android.mevabe.profile;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ToggleButton;
+
+import com.android.mevabe.R;
+
+import java.util.Calendar;
 
 /**
  * Created by thuyld on 1/18/17.
  */
+public class AddChildDialog extends Dialog implements android.view.View.OnClickListener {
+    private Button addButton;
+    private Button cancelButton;
 
-public class AddChildDialog extends Dialog {
+    private EditText childName;
+    private Button childDateOfBirth;
+    private DatePickerDialog datePicker;
+    private Calendar calendar;
+
+    private ToggleButton childGender;
+
+    /**
+     * Constructor
+     *
+     * @param context
+     */
     public AddChildDialog(Context context) {
         super(context);
+
+        // Init custom dialog view
+        initView();
     }
 
-    public AddChildDialog(Context context, int themeResId) {
-        super(context, themeResId);
-    }
-
-    protected AddChildDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
-        super(context, cancelable, cancelListener);
-    }
 
     private void initView() {
+        // Set title
+        setTitle("Add child!");
+        setCanceledOnTouchOutside(false);
+
+        // Set layout
+        setContentView(R.layout.profile_add_child_dialog);
+
+        // Bind button controls
+        addButton = (Button) findViewById(R.id.dialog_add);
+        cancelButton = (Button) findViewById(R.id.dialog_cancel);
+        addButton.setOnClickListener(this);
+        cancelButton.setOnClickListener(this);
+
+        // Bind input view
+        childName = (EditText) findViewById(R.id.child_name);
+        childDateOfBirth = (Button) findViewById(R.id.child_date_of_birth);
+
+        calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        showDate(year, month + 1, day);
+        DatePickerDialog.OnDateSetListener myDateListener = new
+                DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker,
+                                          int year, int month, int day) {
+                        showDate(year, month + 1, day);
+                    }
+                };
+        datePicker = new DatePickerDialog(getContext(), myDateListener, year, month, day);
+        datePicker.getDatePicker().setMaxDate(calendar.getTimeInMillis());
+        childDateOfBirth.setOnClickListener(this);
+
+
+        childGender = (ToggleButton) findViewById(R.id.child_gender);
+        childGender.setTextOff(getContext().getText(R.string.child_gender_female));
+        childGender.setTextOn(getContext().getText(R.string.child_gender_male));
+        childGender.setChecked(false);
 
     }
+
+    /**
+     * View selected date
+     *
+     * @param year
+     * @param month
+     * @param day
+     */
+    private void showDate(int year, int month, int day) {
+        childDateOfBirth.setText(String.format("%02d/%02d/%4d", day, month, year));
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.equals(childDateOfBirth)) {
+            // Show select date of birth dialog
+            datePicker.show();
+
+        } else {
+            dismiss();
+        }
+    }
+
+
 }

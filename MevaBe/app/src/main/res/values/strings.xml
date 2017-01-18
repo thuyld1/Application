@@ -1,14 +1,24 @@
 <resources>
+    <!-- Common string -->
     <string name="app_name">Mẹ và Bé</string>
     <string name="facebook_app_id">1804512209790865</string>
 
 
+    <string name="ok">OK</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
+
+
+
+
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="action_settings">Settings</string>
 
 
+
+    <!-- Menu string  -->
     <string name="left_menu_dashboard">Mẹ và bé</string>
     <string name="left_menu_lich_tiem">Lịch tiêm phòng</string>
     <string name="left_menu_su_dung_thuoc">Lịch sử sử dụng thuốc</string>
@@ -16,4 +26,11 @@
     <string name="left_menu_bac_sy">Tìm bác sỹ</string>
     <string name="left_menu_profile">Profile</string>
     <string name="title_activity_web_view">WebViewActivity</string>
+
+    <!-- Profile Screen -->
+    <string name="child_name">Tên bé:</string>
+    <string name="child_date_of_birth">Ngày sinh:</string>
+    <string name="child_gender">Giới tính:</string>
+    <string name="child_gender_male">Nam</string>
+    <string name="child_gender_female">Nữ</string>
 </resources>
