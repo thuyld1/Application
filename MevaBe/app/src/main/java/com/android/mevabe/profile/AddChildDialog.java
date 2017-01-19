@@ -3,7 +3,10 @@ package com.android.mevabe.profile;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -80,6 +83,45 @@ public class AddChildDialog extends Dialog implements android.view.View.OnClickL
         childGender.setTextOff(getContext().getText(R.string.child_gender_female));
         childGender.setTextOn(getContext().getText(R.string.child_gender_male));
         childGender.setChecked(false);
+
+        // Add validate
+        addButton.setEnabled(false);
+        float alpha = 0.45f;
+        AlphaAnimation alphaUp = new AlphaAnimation(alpha, alpha);
+        alphaUp.setFillAfter(true);
+        addButton.startAnimation(alphaUp);
+        childName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Disable add button if invalid
+                if (s.toString().trim().length() == 0) {
+                    float alpha = 0.45f;
+                    AlphaAnimation alphaUp = new AlphaAnimation(alpha, alpha);
+                    alphaUp.setFillAfter(true);
+                    addButton.startAnimation(alphaUp);
+
+                    addButton.setEnabled(false);
+//                    addButton.getBackground().setAlpha(128);
+                } else {
+                    addButton.setEnabled(true);
+//                    addButton.getBackground().setAlpha(255);
+                    float alpha = 1f;
+                    AlphaAnimation alphaUp = new AlphaAnimation(alpha, alpha);
+                    alphaUp.setFillAfter(true);
+                    addButton.startAnimation(alphaUp);
+                }
+            }
+        });
 
     }
 
