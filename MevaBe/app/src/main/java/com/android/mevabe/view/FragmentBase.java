@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.mevabe.MyApplication;
-import com.facebook.Profile;
+import com.android.mevabe.model.MyProfile;
 
 /**
  * Created by thuyld on 12/14/16.
@@ -31,11 +31,11 @@ public abstract class FragmentBase extends Fragment {
     /**
      * Get facebook profile
      *
-     * @return Profile
+     * @return MyProfile
      */
-    public Profile getProfile() {
+    public MyProfile getMyProfile() {
         MyApplication application = (MyApplication) getActivity().getApplication();
-        return application.getProfile();
+        return application.getMyProfile();
     }
 
 

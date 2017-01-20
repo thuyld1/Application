@@ -20,4 +20,8 @@ public class Constants {
     public static final int FEED_PIORITY_NORMAL = 101;
     public static final int FEED_PIORITY_LOW = 102;
 
+
+    public static final int GENDER_FEMALE = 0;
+    public static final int GENDER_MALE = 1;
+
 }

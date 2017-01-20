@@ -2,11 +2,12 @@ package com.android.mevabe;
 
 import android.app.Application;
 
+import com.android.mevabe.model.MyProfile;
 import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 
 public class MyApplication extends Application {
-    private Profile profile;
+    private MyProfile profile;
 
     @Override
     public void onCreate() {
@@ -14,7 +15,7 @@ public class MyApplication extends Application {
         FacebookSdk.sdkInitialize(getApplicationContext());
         // AppEventsLogger.activateApp(this);
 
-        profile = Profile.getCurrentProfile();
+        profile = new MyProfile(Profile.getCurrentProfile());
     }
 
     @Override
@@ -25,12 +26,12 @@ public class MyApplication extends Application {
     }
 
     // ****** Getters and Setters ***** //
-    public Profile getProfile() {
+    public MyProfile getMyProfile() {
         return profile;
     }
 
-    public void setProfile(Profile profile) {
-        this.profile = profile;
+    public void setLoginProfile(Profile loginProfile) {
+        profile.setMyPro(loginProfile);
     }
 
 

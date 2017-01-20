@@ -101,7 +101,7 @@ public class MainActivity2 extends AppCompatActivity {
         Profile profile = Profile.getCurrentProfile();
 
         // Update data
-        ((MyApplication) getApplication()).setProfile(profile);
+        ((MyApplication) getApplication()).setLoginProfile(profile);
 
         // Notify to login required screen
         ViewPagerAdapter adapter = (ViewPagerAdapter) viewPager.getAdapter();

@@ -1,6 +1,8 @@
 package com.android.mevabe.profile;
 
 import android.net.Uri;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,6 +11,8 @@ import android.widget.TextView;
 import com.android.mevabe.R;
 import com.android.mevabe.common.AppConfig;
 import com.android.mevabe.common.utils.AppUtil;
+import com.android.mevabe.model.MyProfile;
+import com.android.mevabe.model.ProfileChildModel;
 import com.android.mevabe.view.FragmentLoginRequired;
 import com.facebook.Profile;
 import com.squareup.picasso.Picasso;
@@ -16,10 +20,13 @@ import com.squareup.picasso.Picasso;
 /**
  * Created by thuyld on 12/14/16.
  */
-public class ProfileMain extends FragmentLoginRequired implements View.OnClickListener{
+public class ProfileMain extends FragmentLoginRequired implements View.OnClickListener, AddChildDialog.IAddChildDialogCallback {
+    private MyProfile myProfile;
     private ImageView avatar;
     private TextView profileName;
 
+    private RecyclerView childListView;
+    private ProfileChildrenViewAdapter childViewAdapter;
     private ImageView addChildButton;
 
 
@@ -30,9 +37,20 @@ public class ProfileMain extends FragmentLoginRequired implements View.OnClickLi
 
     @Override
     public void initView(View layoutView) {
+        // Map data
+        myProfile = getMyProfile();
+
+        // Bind view
         avatar = (ImageView) layoutView.findViewById(R.id.avatar);
         profileName = (TextView) layoutView.findViewById(R.id.profile_name);
+        childListView = (RecyclerView) layoutView.findViewById(R.id.profile_children_view);
         addChildButton = (ImageView) layoutView.findViewById(R.id.children_add_button);
+
+        // Set layout manager
+        childListView.setLayoutManager(new LinearLayoutManager(getContext()));
+        childViewAdapter = new ProfileChildrenViewAdapter(getActivity());
+        childListView.setAdapter(childViewAdapter);
+        childViewAdapter.refreshItems(myProfile.getChildren());
 
         addChildButton.setOnClickListener(this);
     }
@@ -63,8 +81,16 @@ public class ProfileMain extends FragmentLoginRequired implements View.OnClickLi
         // Handle case add child button has clicked
         if (v.equals(addChildButton)) {
             // Show popup to add child
-            AddChildDialog dialog = new AddChildDialog(getContext());
+            AddChildDialog dialog = new AddChildDialog(getContext(), this);
             dialog.show();
         }
+    }
+
+    // ****** IAddChildDialogCallback ******* //
+    @Override
+    public void onAddChildFinish(ProfileChildModel child) {
+        // Add to list children
+        myProfile.getChildren().add(child);
+        childViewAdapter.appendItem(child);
     }
 }

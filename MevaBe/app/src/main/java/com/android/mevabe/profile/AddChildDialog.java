@@ -6,13 +6,14 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ToggleButton;
 
 import com.android.mevabe.R;
+import com.android.mevabe.common.Constants;
+import com.android.mevabe.model.ProfileChildModel;
 
 import java.util.Calendar;
 
@@ -20,6 +21,15 @@ import java.util.Calendar;
  * Created by thuyld on 1/18/17.
  */
 public class AddChildDialog extends Dialog implements android.view.View.OnClickListener {
+    /**
+     * IAddChildDialogCallback interface for AddChildDialog call back
+     */
+    public interface IAddChildDialogCallback {
+        void onAddChildFinish(ProfileChildModel child);
+    }
+
+    private IAddChildDialogCallback handler;
+
     private Button addButton;
     private Button cancelButton;
 
@@ -35,8 +45,10 @@ public class AddChildDialog extends Dialog implements android.view.View.OnClickL
      *
      * @param context
      */
-    public AddChildDialog(Context context) {
+    public AddChildDialog(Context context, IAddChildDialogCallback handler) {
         super(context);
+
+        this.handler = handler;
 
         // Init custom dialog view
         initView();
@@ -72,6 +84,7 @@ public class AddChildDialog extends Dialog implements android.view.View.OnClickL
                     public void onDateSet(DatePicker datePicker,
                                           int year, int month, int day) {
                         showDate(year, month + 1, day);
+                        calendar.set(year, month, day);
                     }
                 };
         datePicker = new DatePickerDialog(getContext(), myDateListener, year, month, day);
@@ -86,10 +99,7 @@ public class AddChildDialog extends Dialog implements android.view.View.OnClickL
 
         // Add validate
         addButton.setEnabled(false);
-        float alpha = 0.45f;
-        AlphaAnimation alphaUp = new AlphaAnimation(alpha, alpha);
-        alphaUp.setFillAfter(true);
-        addButton.startAnimation(alphaUp);
+        addButton.getBackground().setAlpha(128);
         childName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -105,20 +115,11 @@ public class AddChildDialog extends Dialog implements android.view.View.OnClickL
             public void afterTextChanged(Editable s) {
                 // Disable add button if invalid
                 if (s.toString().trim().length() == 0) {
-                    float alpha = 0.45f;
-                    AlphaAnimation alphaUp = new AlphaAnimation(alpha, alpha);
-                    alphaUp.setFillAfter(true);
-                    addButton.startAnimation(alphaUp);
-
                     addButton.setEnabled(false);
-//                    addButton.getBackground().setAlpha(128);
+                    addButton.getBackground().setAlpha(128);
                 } else {
                     addButton.setEnabled(true);
-//                    addButton.getBackground().setAlpha(255);
-                    float alpha = 1f;
-                    AlphaAnimation alphaUp = new AlphaAnimation(alpha, alpha);
-                    alphaUp.setFillAfter(true);
-                    addButton.startAnimation(alphaUp);
+                    addButton.getBackground().setAlpha(255);
                 }
             }
         });
@@ -142,9 +143,37 @@ public class AddChildDialog extends Dialog implements android.view.View.OnClickL
             // Show select date of birth dialog
             datePicker.show();
 
-        } else {
+        } else if (v.equals(addButton)) {
+            // Add child processing
+            addChild();
+
+            // Close dialog
+            dismiss();
+        } else if (v.equals(cancelButton)) {
+            // Close dialog
             dismiss();
         }
+    }
+
+    /**
+     * Add child processing
+     */
+    private void addChild() {
+        if (handler != null) {
+            // Get child information
+            ProfileChildModel child = new ProfileChildModel();
+            child.setName(childName.getText().toString().trim());
+            child.setDateOfBirth(calendar.getTimeInMillis());
+            if (childGender.isChecked()) {
+                child.setGender(Constants.GENDER_MALE);
+            } else {
+                child.setGender(Constants.GENDER_FEMALE);
+            }
+
+            // Call back to process
+            handler.onAddChildFinish(child);
+        }
+
     }
 
 
