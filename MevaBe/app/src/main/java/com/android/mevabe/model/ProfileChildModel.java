@@ -6,9 +6,29 @@ import java.io.Serializable;
  * Created by leducthuy on 1/18/17.
  */
 public class ProfileChildModel implements Serializable {
+    private int id;
     private String name;
     private long dateOfBirth;
     private int gender;
+
+    public ProfileChildModel() {
+        
+    }
+
+    public ProfileChildModel(int id, String name, long dateOfBirth, int gender) {
+        this.id = id;
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public long getDateOfBirth() {
         return dateOfBirth;

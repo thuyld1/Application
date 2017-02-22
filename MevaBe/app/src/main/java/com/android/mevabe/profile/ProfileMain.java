@@ -1,6 +1,7 @@
 package com.android.mevabe.profile;
 
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,9 +14,12 @@ import com.android.mevabe.common.AppConfig;
 import com.android.mevabe.common.utils.AppUtil;
 import com.android.mevabe.model.MyProfile;
 import com.android.mevabe.model.ProfileChildModel;
+import com.android.mevabe.services.DBService;
 import com.android.mevabe.view.FragmentLoginRequired;
 import com.facebook.Profile;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 /**
  * Created by thuyld on 12/14/16.
@@ -28,6 +32,8 @@ public class ProfileMain extends FragmentLoginRequired implements View.OnClickLi
     private RecyclerView childListView;
     private ProfileChildrenViewAdapter childViewAdapter;
     private ImageView addChildButton;
+
+    private DBService dbService;
 
 
     @Override
@@ -53,6 +59,31 @@ public class ProfileMain extends FragmentLoginRequired implements View.OnClickLi
         childViewAdapter.refreshItems(myProfile.getChildren());
 
         addChildButton.setOnClickListener(this);
+
+        // Bind child for view
+        if (myProfile != null && myProfile.getMyPro() != null) {
+            // Get list child from DB
+            List<ProfileChildModel> res = dbService.getMyChildren(myProfile.getMyPro().getId());
+            myProfile.setChildren(res);
+
+            // Bind to view
+            childViewAdapter.refreshItems(res);
+        }
+
+    }
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Create DB service
+        dbService = new DBService(getContext());
+    }
+
+    public void onDestroy() {
+        super.onDestroy();
+
+        // Close DB
+        dbService.closeDB();
     }
 
 
@@ -92,5 +123,8 @@ public class ProfileMain extends FragmentLoginRequired implements View.OnClickLi
         // Add to list children
         myProfile.getChildren().add(child);
         childViewAdapter.appendItem(child);
+
+        // Save new child to DB
+        dbService.addChild(myProfile.getMyPro(), child);
     }
 }
