@@ -139,7 +139,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String[] sqls = sb.toString().split("END");
         Log.i(AppConfig.LOG_TAG, "CREATE DB SQL: ");
         for (String sql : sqls) {
-            Log.d(AppConfig.LOG_TAG, sql);
+            Log.i(AppConfig.LOG_TAG, sql);
             db.execSQL(sql + ";");
         }
     }
