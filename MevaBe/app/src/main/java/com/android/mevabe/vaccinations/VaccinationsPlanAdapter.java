@@ -19,6 +19,9 @@ public class VaccinationsPlanAdapter extends RecyclerView.Adapter<RecyclerView.V
     protected List<VaccinationsPlanModel> listItems;
     protected Activity context;
 
+    private String vaccinFormat;
+    private String vaccinPeriodFormat;
+
     /**
      * Constructor
      *
@@ -27,6 +30,9 @@ public class VaccinationsPlanAdapter extends RecyclerView.Adapter<RecyclerView.V
     public VaccinationsPlanAdapter(Activity context) {
         this.listItems = new ArrayList<>();
         this.context = context;
+
+        vaccinFormat = context.getString(R.string.vaccinations_name);
+        vaccinPeriodFormat = context.getString(R.string.vaccinations_period);
     }
 
     @Override
@@ -101,8 +107,8 @@ public class VaccinationsPlanAdapter extends RecyclerView.Adapter<RecyclerView.V
         public void bindData(final VaccinationsPlanModel data) {
             //Setting text view title
             childInfo.setText(data.getChildInfo());
-            vaccinName.setText(data.getVaccinName());
-            vaccinPeriod.setText(data.getVaccinPeriod());
+            vaccinName.setText(String.format(vaccinFormat, data.getVaccinName()));
+            vaccinPeriod.setText(String.format(vaccinPeriodFormat, data.getVaccinPeriod()));
             vaccinDes.setText(data.getVaccinDes());
 
         }

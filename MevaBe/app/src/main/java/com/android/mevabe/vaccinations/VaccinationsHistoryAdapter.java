@@ -23,6 +23,9 @@ public class VaccinationsHistoryAdapter extends RecyclerView.Adapter<RecyclerVie
     protected List<VaccinationsHistoryModel> listItems;
     protected Activity context;
 
+    private SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+    private String vaccinInjectionDateFormat;
+
     /**
      * Constructor
      *
@@ -31,6 +34,8 @@ public class VaccinationsHistoryAdapter extends RecyclerView.Adapter<RecyclerVie
     public VaccinationsHistoryAdapter(Activity context) {
         this.listItems = new ArrayList<>();
         this.context = context;
+
+        vaccinInjectionDateFormat = context.getString(R.string.vaccinations_injection_date);
     }
 
     @Override
@@ -108,29 +113,35 @@ public class VaccinationsHistoryAdapter extends RecyclerView.Adapter<RecyclerVie
             // Setting vaccinations status
             switch (data.getInjectionStatus()) {
                 case Constants.VACCIN_INJECTION_DATE_INPROGRESS:
+                    String formatNA = context.getString(R.string.vaccinations_injection_na);
+                    vaccinName.setText(String.format(formatNA, data.getVaccinName()));
                     vaccinationsStatus.setImageResource(R.drawable.vaccinations_history_na);
                     break;
                 case Constants.VACCIN_INJECTION_DATE_OK:
+                    String formatOK = context.getString(R.string.vaccinations_injection_ok);
+                    vaccinName.setText(String.format(formatOK, data.getVaccinName()));
                     vaccinationsStatus.setImageResource(R.drawable.vaccinations_history_ok);
                     break;
                 case Constants.VACCIN_INJECTION_DATE_OVER:
+                    String formatOver = context.getString(R.string.vaccinations_injection_over);
+                    vaccinName.setText(String.format(formatOver, data.getVaccinName()));
                     vaccinationsStatus.setImageResource(R.drawable.vaccinations_history_over);
                     break;
                 default:
+                    String format = context.getString(R.string.vaccinations_injection_na);
+                    vaccinName.setText(String.format(format, data.getVaccinName()));
                     vaccinationsStatus.setImageResource(R.drawable.vaccinations_history_na);
                     break;
             }
 
             //Setting text view title
             childInfo.setText(data.getChildInfo());
-            vaccinName.setText(data.getVaccinName());
             vaccinDes.setText(data.getVaccinDes());
 
             if (data.getInjectionDate() > 0) {
                 Calendar cal = Calendar.getInstance();
                 cal.setTimeInMillis(data.getInjectionDate());
-                SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                injectionDate.setText(df.format(cal.getTime()));
+                injectionDate.setText(String.format(vaccinInjectionDateFormat, df.format(cal.getTime())));
             }
         }
     }

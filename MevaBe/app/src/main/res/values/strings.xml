@@ -33,4 +33,15 @@
     <string name="child_gender">Giới tính:</string>
     <string name="child_gender_male">Nam</string>
     <string name="child_gender_female">Nữ</string>
+
+
+    <!-- Vaccinations Screen -->
+    <string name="vaccinations_name">Vaccine: %s</string>
+    <string name="vaccinations_period">Độ tuổi: %s</string>
+
+    <string name="vaccinations_injection_na">Vaccine: %s (Chưa tiêm)</string>
+    <string name="vaccinations_injection_ok">Vaccine: %s (Đã tiêm)</string>
+    <string name="vaccinations_injection_over">Vaccine: %s (Bỏ lỡ)</string>
+    <string name="vaccinations_injection_date">Ngày tiêm: %s</string>
+
 </resources>
