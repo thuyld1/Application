@@ -10,6 +10,7 @@ import com.android.mevabe.R;
 import com.android.mevabe.view.FragmentLoginRequired;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -22,6 +23,7 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
 
     private RecyclerView lichTiemView;
     private VaccinationsPlanAdapter planAdapder;
+    private VaccinationsHistoryAdapter historyAdapter;
 
     @Override
     public int getLayoutContentViewXML() {
@@ -38,15 +40,13 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
         // Set layout manager
         lichTiemView.setLayoutManager(new LinearLayoutManager(getContext()));
         planAdapder = new VaccinationsPlanAdapter(getActivity());
-        lichTiemView.setAdapter(planAdapder);
-
+        historyAdapter = new VaccinationsHistoryAdapter(getActivity());
 
         // Set default tab is plan tab
-        btnHeaderSelected = btnHeaderHistory;
         btnHeaderPlan.setOnClickListener(this);
         btnHeaderHistory.setOnClickListener(this);
+        btnHeaderSelected = btnHeaderHistory;
         onClick(btnHeaderPlan);
-
 
         List<VaccinationsPlanModel> list = new ArrayList<>();
         VaccinationsPlanModel item = null;
@@ -55,6 +55,16 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
             list.add(item);
         }
         planAdapder.refreshItems(list);
+
+        List<VaccinationsHistoryModel> listHistory = new ArrayList<>();
+        VaccinationsHistoryModel itemHistory = null;
+        long date = Calendar.getInstance().getTimeInMillis();
+        for (int i = 0; i < 100; i++) {
+            itemHistory = new VaccinationsHistoryModel(null, "Quinvacen", date, "Phòng quai bị, Rubela, thuỷ đậu, sốt phát ban");
+            itemHistory.setInjectionStatus(i%4);
+            listHistory.add(itemHistory);
+        }
+        historyAdapter.refreshItems(listHistory);
     }
 
     // ********* HEADER CONTROL *********** //
@@ -64,6 +74,13 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
             btnHeaderSelected.setTextColor(Color.BLACK);
             btnHeaderSelected = (TextView) v;
             btnHeaderSelected.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+            // Case user select history injection
+            if (btnHeaderSelected.equals(btnHeaderHistory)) {
+                lichTiemView.setAdapter(historyAdapter);
+            } else {
+                lichTiemView.setAdapter(planAdapder);
+            }
         }
 
     }

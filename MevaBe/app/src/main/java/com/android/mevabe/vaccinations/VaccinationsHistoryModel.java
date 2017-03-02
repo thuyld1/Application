@@ -12,6 +12,7 @@ public class VaccinationsHistoryModel extends BaseModel implements Serializable 
     private String vaccinName;
     private String vaccinDes;
     private long injectionDate;
+    private int injectionStatus;
 
     private ProfileChildModel child;
 
@@ -71,6 +72,14 @@ public class VaccinationsHistoryModel extends BaseModel implements Serializable 
 
     public void setChild(ProfileChildModel child) {
         this.child = child;
+    }
+
+    public int getInjectionStatus() {
+        return injectionStatus;
+    }
+
+    public void setInjectionStatus(int injectionStatus) {
+        this.injectionStatus = injectionStatus;
     }
 }
 

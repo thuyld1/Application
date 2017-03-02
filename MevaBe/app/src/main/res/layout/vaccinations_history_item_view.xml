@@ -9,13 +9,13 @@
     android:paddingTop="@dimen/vaccinations_padding_top_bottom">
 
     <ImageView
-        android:id="@+id/thumbnail"
+        android:id="@+id/vaccinationsStatus"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="@dimen/content_space"
         android:background="@color/colorPrimary"
         android:scaleType="centerCrop"
-        android:src="@drawable/vaccinations_plan_add" />
+        android:src="@drawable/vaccinations_history_na" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,17 +61,6 @@
             android:textSize="14dp" />
 
         <TextView
-            android:id="@+id/vaccinPeriod"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:paddingTop="@dimen/vaccinations_content_space"
-            android:text="Description sample"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="#444"
-            android:textSize="14dp" />
-
-        <TextView
             android:id="@+id/vaccinDes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -82,5 +71,14 @@
             android:textColor="#444"
             android:textSize="14dp" />
 
+        <TextView
+            android:id="@+id/injectionDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:paddingTop="@dimen/vaccinations_content_space"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="#444"
+            android:textSize="14dp" />
     </LinearLayout>
 </LinearLayout>
