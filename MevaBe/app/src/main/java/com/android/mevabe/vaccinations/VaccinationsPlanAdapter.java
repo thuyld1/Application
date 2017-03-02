@@ -1,4 +1,4 @@
-package com.android.mevabe.lichtiem;
+package com.android.mevabe.vaccinations;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * LichTiemPlanAdapter controls view of list "Lịch tiêm"
+ * VaccinationsPlanAdapter controls view of list "Lịch tiêm"
  */
-public class LichTiemPlanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    protected List<LichTiemModel> listItems;
+public class VaccinationsPlanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    protected List<VaccinationsPlanModel> listItems;
     protected Activity context;
 
     /**
@@ -24,7 +24,7 @@ public class LichTiemPlanAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
      *
      * @param context Context
      */
-    public LichTiemPlanAdapter(Activity context) {
+    public VaccinationsPlanAdapter(Activity context) {
         this.listItems = new ArrayList<>();
         this.context = context;
     }
@@ -32,7 +32,7 @@ public class LichTiemPlanAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View layout = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout
-                .lich_tiem_plan_item_view, null);
+                .vaccinations_plan_item_view, null);
         RecyclerView.ViewHolder view = new MyViewHolder(layout);
         return view;
 
@@ -40,7 +40,7 @@ public class LichTiemPlanAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        LichTiemModel item = (LichTiemModel) listItems.get(position);
+        VaccinationsPlanModel item = (VaccinationsPlanModel) listItems.get(position);
         if (item != null) {
             ((MyViewHolder) holder).bindData(item);
         }
@@ -70,7 +70,7 @@ public class LichTiemPlanAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     /**
      * Update data when load more has finished
      */
-    public synchronized void appendItem(LichTiemModel result) {
+    public synchronized void appendItem(VaccinationsPlanModel result) {
         if (result != null) {
             listItems.add(result);
         }
@@ -86,24 +86,24 @@ public class LichTiemPlanAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     // ************* View Holder *********** //
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView childInfo;
-        private TextView vacxinName;
-        private TextView vacxinPeriod;
-        private TextView vacxinDes;
+        private TextView vaccinName;
+        private TextView vaccinPeriod;
+        private TextView vaccinDes;
 
         public MyViewHolder(View view) {
             super(view);
             this.childInfo = (TextView) view.findViewById(R.id.child_info);
-            this.vacxinName = (TextView) view.findViewById(R.id.vacxinName);
-            this.vacxinPeriod = (TextView) view.findViewById(R.id.vacxinPeriod);
-            this.vacxinDes = (TextView) view.findViewById(R.id.vacxinDes);
+            this.vaccinName = (TextView) view.findViewById(R.id.vaccinName);
+            this.vaccinPeriod = (TextView) view.findViewById(R.id.vaccinPeriod);
+            this.vaccinDes = (TextView) view.findViewById(R.id.vaccinDes);
         }
 
-        public void bindData(final LichTiemModel data) {
+        public void bindData(final VaccinationsPlanModel data) {
             //Setting text view title
             childInfo.setText(data.getChildInfo());
-            vacxinName.setText(data.getVacxinName());
-            vacxinPeriod.setText(data.getVacxinPeriod());
-            vacxinDes.setText(data.getVacxinDes());
+            vaccinName.setText(data.getVaccinName());
+            vaccinPeriod.setText(data.getVaccinPeriod());
+            vaccinDes.setText(data.getVaccinDes());
 
         }
     }

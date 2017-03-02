@@ -5,8 +5,8 @@
               android:layout_height="wrap_content"
               android:background="@drawable/bg_bottom_border"
               android:orientation="horizontal"
-              android:paddingBottom="@dimen/lich_tiem_padding_top_bottom"
-              android:paddingTop="@dimen/lich_tiem_padding_top_bottom">
+              android:paddingBottom="@dimen/vaccinations_padding_top_bottom"
+              android:paddingTop="@dimen/vaccinations_padding_top_bottom">
 
     <ImageView
         android:id="@+id/thumbnail"
@@ -40,7 +40,7 @@
                 android:id="@+id/child_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/lich_tiem_content_space"
+                android:layout_marginLeft="@dimen/vaccinations_content_space"
                 android:maxLines="1"
                 android:text="Title Sample"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
@@ -50,33 +50,33 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/vacxinName"
+            android:id="@+id/vaccinName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:paddingTop="@dimen/lich_tiem_content_space"
+            android:paddingTop="@dimen/vaccinations_content_space"
             android:text="Description sample"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="#444"
             android:textSize="14dp"/>
 
         <TextView
-            android:id="@+id/vacxinPeriod"
+            android:id="@+id/vaccinPeriod"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:paddingTop="@dimen/lich_tiem_content_space"
+            android:paddingTop="@dimen/vaccinations_content_space"
             android:text="Description sample"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="#444"
             android:textSize="14dp"/>
 
         <TextView
-            android:id="@+id/vacxinDes"
+            android:id="@+id/vaccinDes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="2"
-            android:paddingTop="@dimen/lich_tiem_content_space"
+            android:paddingTop="@dimen/vaccinations_content_space"
             android:text="Description sample"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="#444"

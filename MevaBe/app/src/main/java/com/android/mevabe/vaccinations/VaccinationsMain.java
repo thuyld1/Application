@@ -1,4 +1,4 @@
-package com.android.mevabe.lichtiem;
+package com.android.mevabe.vaccinations;
 
 import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,17 +15,17 @@ import java.util.List;
 /**
  * Created by thuyld on 12/14/16.
  */
-public class LichTiemMain extends FragmentLoginRequired implements View.OnClickListener {
+public class VaccinationsMain extends FragmentLoginRequired implements View.OnClickListener {
     private TextView btnHeaderSelected;
     private TextView btnHeaderPlan;
     private TextView btnHeaderHistory;
 
     private RecyclerView lichTiemView;
-    private LichTiemPlanAdapter planAdapder;
+    private VaccinationsPlanAdapter planAdapder;
 
     @Override
     public int getLayoutContentViewXML() {
-        return R.layout.lich_tiem;
+        return R.layout.vaccinations;
     }
 
     @Override
@@ -33,11 +33,11 @@ public class LichTiemMain extends FragmentLoginRequired implements View.OnClickL
         // Bind view
         btnHeaderPlan = (TextView) layoutView.findViewById(R.id.btn_plan);
         btnHeaderHistory = (TextView) layoutView.findViewById(R.id.btn_history);
-        lichTiemView = (RecyclerView) layoutView.findViewById(R.id.lich_tiem_data_view);
+        lichTiemView = (RecyclerView) layoutView.findViewById(R.id.vaccinations_data_view);
 
         // Set layout manager
         lichTiemView.setLayoutManager(new LinearLayoutManager(getContext()));
-        planAdapder = new LichTiemPlanAdapter(getActivity());
+        planAdapder = new VaccinationsPlanAdapter(getActivity());
         lichTiemView.setAdapter(planAdapder);
 
 
@@ -48,10 +48,10 @@ public class LichTiemMain extends FragmentLoginRequired implements View.OnClickL
         onClick(btnHeaderPlan);
 
 
-        List<LichTiemModel> list = new ArrayList<>();
-        LichTiemModel item = null;
+        List<VaccinationsPlanModel> list = new ArrayList<>();
+        VaccinationsPlanModel item = null;
         for (int i = 0; i < 100; i++) {
-            item = new LichTiemModel(null, "Quinvacen", "3-5T", "Phòng quai bị, Rubela, thuỷ đậu, sốt phát ban");
+            item = new VaccinationsPlanModel(null, "Quinvacen", "3-5T", "Phòng quai bị, Rubela, thuỷ đậu, sốt phát ban");
             list.add(item);
         }
         planAdapder.refreshItems(list);

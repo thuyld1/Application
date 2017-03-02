@@ -16,7 +16,7 @@ import com.android.mevabe.bacsi.BacSiMain;
 import com.android.mevabe.common.AppConfig;
 import com.android.mevabe.dashboard.DashBoard;
 import com.android.mevabe.lichsuthuoc.LichSuThuocMain;
-import com.android.mevabe.lichtiem.LichTiemMain;
+import com.android.mevabe.vaccinations.VaccinationsMain;
 import com.android.mevabe.profile.ProfileMain;
 import com.android.mevabe.view.FragmentBase;
 import com.android.mevabe.view.FragmentLoginRequired;
@@ -153,7 +153,7 @@ public class MainActivity2 extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new DashBoard(), getString(R.string.left_menu_dashboard));
         adapter.addFragment(new BacSiMain(), getString(R.string.left_menu_bac_sy));
-        adapter.addFragment(new LichTiemMain(), getString(R.string.left_menu_lich_tiem));
+        adapter.addFragment(new VaccinationsMain(), getString(R.string.left_menu_lich_tiem));
         adapter.addFragment(new LichSuThuocMain(), getString(R.string.left_menu_su_dung_thuoc));
         adapter.addFragment(new ProfileMain(), getString(R.string.left_menu_profile));
         viewPager.setAdapter(adapter);

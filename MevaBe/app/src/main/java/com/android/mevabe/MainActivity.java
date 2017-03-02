@@ -16,7 +16,7 @@ import com.android.mevabe.view.FragmentBase;
 import com.android.mevabe.view.OnDoubleClickListener;
 import com.android.mevabe.dashboard.DashBoard;
 import com.android.mevabe.lichsuthuoc.LichSuThuocMain;
-import com.android.mevabe.lichtiem.LichTiemMain;
+import com.android.mevabe.vaccinations.VaccinationsMain;
 
 /**
  * MainActivity2 class controls main application activity
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity
             currentContent = new DashBoard();
             toolbar.setTitle(R.string.left_menu_dashboard);
         } else if (id == R.id.nav_lich_tiem) {
-            currentContent = new LichTiemMain();
+            currentContent = new VaccinationsMain();
             toolbar.setTitle(R.string.left_menu_lich_tiem);
         } else if (id == R.id.nav_su_dung_thuoc) {
             currentContent = new LichSuThuocMain();
