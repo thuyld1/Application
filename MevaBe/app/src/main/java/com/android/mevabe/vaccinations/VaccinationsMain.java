@@ -1,5 +1,6 @@
 package com.android.mevabe.vaccinations;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +8,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.android.mevabe.R;
+import com.android.mevabe.WebViewActivity;
+import com.android.mevabe.common.Constants;
+import com.android.mevabe.model.VaccinationsHistoryModel;
+import com.android.mevabe.model.VaccinationsPlanModel;
+import com.android.mevabe.model.WebViewModel;
 import com.android.mevabe.view.FragmentLoginRequired;
 
 import java.util.ArrayList;
@@ -16,7 +22,7 @@ import java.util.List;
 /**
  * Created by thuyld on 12/14/16.
  */
-public class VaccinationsMain extends FragmentLoginRequired implements View.OnClickListener {
+public class VaccinationsMain extends FragmentLoginRequired implements View.OnClickListener, VaccinationsPlanAdapter.IVaccinationsPlanHandler {
     private TextView btnHeaderSelected;
     private TextView btnHeaderPlan;
     private TextView btnHeaderHistory;
@@ -39,7 +45,7 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
 
         // Set layout manager
         lichTiemView.setLayoutManager(new LinearLayoutManager(getContext()));
-        planAdapder = new VaccinationsPlanAdapter(getActivity());
+        planAdapder = new VaccinationsPlanAdapter(getActivity(), this);
         historyAdapter = new VaccinationsHistoryAdapter(getActivity());
 
         // Set default tab is plan tab
@@ -51,7 +57,7 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
         List<VaccinationsPlanModel> list = new ArrayList<>();
         VaccinationsPlanModel item = null;
         for (int i = 0; i < 100; i++) {
-            item = new VaccinationsPlanModel(null, "Quinvacen", "3-5T", "Phòng quai bị, Rubela, thuỷ đậu, sốt phát ban");
+            item = new VaccinationsPlanModel(null, "Quinvacen", "3-5T", "Phòng quai bị, Rubela, thuỷ đậu, sốt phát ban", "http://dantri.com.vn");
             list.add(item);
         }
         planAdapder.refreshItems(list);
@@ -61,7 +67,7 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
         long date = Calendar.getInstance().getTimeInMillis();
         for (int i = 0; i < 100; i++) {
             itemHistory = new VaccinationsHistoryModel(null, "Quinvacen", date, "Phòng quai bị, Rubela, thuỷ đậu, sốt phát ban");
-            itemHistory.setInjectionStatus(i%4);
+            itemHistory.setInjectionStatus(i % 4);
             listHistory.add(itemHistory);
         }
         historyAdapter.refreshItems(listHistory);
@@ -83,6 +89,16 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
             }
         }
 
+    }
+
+    // ******** VaccinationsPlanAdapter.IVaccinationsPlanHandler ******** //
+    @Override
+    public void onItemClick(VaccinationsPlanModel item) {
+        WebViewActivity act = new WebViewActivity();
+        Intent intent = new Intent(getContext(), WebViewActivity.class);
+        WebViewModel info = new WebViewModel(item.getVaccinName(), item.getVaccinURL());
+        intent.putExtra(Constants.INTENT_DATA, info);
+        startActivity(intent);
     }
 
 }

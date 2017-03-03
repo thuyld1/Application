@@ -9,6 +9,8 @@ import com.android.mevabe.R;
 import com.android.mevabe.WebViewActivity;
 import com.android.mevabe.common.AppConfig;
 import com.android.mevabe.common.Constants;
+import com.android.mevabe.model.DBFeedModel;
+import com.android.mevabe.model.WebViewModel;
 import com.android.mevabe.services.APIService;
 import com.android.mevabe.view.FragmentBase;
 import com.android.mevabe.view.LoadMoreRecyclerView;
@@ -76,9 +78,9 @@ public class DashBoard extends FragmentBase implements DBRecyclerViewAdapter.IDa
 
         String url = "http://stacktips.com/?json=get_category_posts&slug=news&count=5";
         APIService service = new APIService();
-        service.callAPI(url, new APIService.IAPIServiceHandler<List<DBFeedItem>>() {
+        service.callAPI(url, new APIService.IAPIServiceHandler<List<DBFeedModel>>() {
             @Override
-            public void onSuccess(List<DBFeedItem> result) {
+            public void onSuccess(List<DBFeedModel> result) {
                 adapter.refreshItems(result);
 
                 // Stop refreshing UI
@@ -96,9 +98,9 @@ public class DashBoard extends FragmentBase implements DBRecyclerViewAdapter.IDa
 
         String url = "http://stacktips.com/?json=get_category_posts&slug=news&count=2";
         APIService service = new APIService();
-        service.callAPI(url, new APIService.IAPIServiceHandler<List<DBFeedItem>>() {
+        service.callAPI(url, new APIService.IAPIServiceHandler<List<DBFeedModel>>() {
             @Override
-            public void onSuccess(final List<DBFeedItem> result) {
+            public void onSuccess(final List<DBFeedModel> result) {
                 adapter.appendItems(result);
 
                 // Stop loading
@@ -109,10 +111,11 @@ public class DashBoard extends FragmentBase implements DBRecyclerViewAdapter.IDa
 
     // ******** DBRecyclerViewAdapter.IDashBoardListHandler ******** //
     @Override
-    public void onItemClick(DBFeedItem item) {
+    public void onItemClick(DBFeedModel item) {
         WebViewActivity act = new WebViewActivity();
         Intent intent = new Intent(getContext(), WebViewActivity.class);
-        intent.putExtra(Constants.INTENT_DATA, item);
+        WebViewModel info = new WebViewModel(item.getTitle(), item.getUrl());
+        intent.putExtra(Constants.INTENT_DATA, info);
         startActivity(intent);
     }
 

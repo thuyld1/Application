@@ -7,7 +7,7 @@ package com.android.mevabe.common;
 public class AppConfig {
     public static final String LOG_TAG = "android";
 
-    public static final String DB_NAME = "mevabe.db";
+    public static final String DB_NAME = "mevabe.sqlite";
     public static final String DB_PATH = "/data/data/com.android.mevabe/databases/" + DB_NAME;
     public static final String SCRIPT_NAME = "mevabe.sql";
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.mevabe.R;
+import com.android.mevabe.model.VaccinationsPlanModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,15 @@ import java.util.List;
  * VaccinationsPlanAdapter controls view of list "Lịch tiêm"
  */
 public class VaccinationsPlanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    /**
+     * IVaccinationsPlanHandler interface for callback
+     */
+    public interface IVaccinationsPlanHandler {
+        void onItemClick(VaccinationsPlanModel item);
+    }
+
+    private IVaccinationsPlanHandler handler;
+
     protected List<VaccinationsPlanModel> listItems;
     protected Activity context;
 
@@ -27,9 +37,10 @@ public class VaccinationsPlanAdapter extends RecyclerView.Adapter<RecyclerView.V
      *
      * @param context Context
      */
-    public VaccinationsPlanAdapter(Activity context) {
+    public VaccinationsPlanAdapter(Activity context, IVaccinationsPlanHandler handler) {
         this.listItems = new ArrayList<>();
         this.context = context;
+        this.handler = handler;
 
         vaccinFormat = context.getString(R.string.vaccinations_name);
         vaccinPeriodFormat = context.getString(R.string.vaccinations_period);
@@ -93,6 +104,7 @@ public class VaccinationsPlanAdapter extends RecyclerView.Adapter<RecyclerView.V
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView childInfo;
         private TextView vaccinName;
+        private TextView moreInfo;
         private TextView vaccinPeriod;
         private TextView vaccinDes;
 
@@ -100,6 +112,7 @@ public class VaccinationsPlanAdapter extends RecyclerView.Adapter<RecyclerView.V
             super(view);
             this.childInfo = (TextView) view.findViewById(R.id.child_info);
             this.vaccinName = (TextView) view.findViewById(R.id.vaccinName);
+            this.moreInfo = (TextView) view.findViewById(R.id.moreInfo);
             this.vaccinPeriod = (TextView) view.findViewById(R.id.vaccinPeriod);
             this.vaccinDes = (TextView) view.findViewById(R.id.vaccinDes);
         }
@@ -110,6 +123,18 @@ public class VaccinationsPlanAdapter extends RecyclerView.Adapter<RecyclerView.V
             vaccinName.setText(String.format(vaccinFormat, data.getVaccinName()));
             vaccinPeriod.setText(String.format(vaccinPeriodFormat, data.getVaccinPeriod()));
             vaccinDes.setText(data.getVaccinDes());
+
+            // Add listener
+            if (handler != null) {
+                View.OnClickListener listener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        handler.onItemClick(data);
+                    }
+                };
+                vaccinName.setOnClickListener(listener);
+                moreInfo.setOnClickListener(listener);
+            }
 
         }
     }

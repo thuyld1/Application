@@ -9,8 +9,14 @@ import android.util.Log;
 
 import com.android.mevabe.common.AppConfig;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+
+import static com.android.mevabe.common.AppConfig.DB_NAME;
+import static com.android.mevabe.common.AppConfig.DB_PATH;
 
 /**
  * DatabaseHelper Class
@@ -28,7 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     public DatabaseHelper(Context context) {
 
-        super(context, AppConfig.DB_NAME, null, 1);
+        super(context, DB_NAME, null, 1);
         this.mHelperContext = context;
     }
 
@@ -67,7 +73,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase checkDB = null;
         try {
-            checkDB = SQLiteDatabase.openDatabase(AppConfig.DB_PATH, null,
+            checkDB = SQLiteDatabase.openDatabase(DB_PATH, null,
                     SQLiteDatabase.OPEN_READONLY);
 
         } catch (SQLiteException e) {
@@ -85,38 +91,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * Copies your database from your local assets-folder to the just
      * created empty database in the system folder, from where it can be
      * accessed and handled. This is done by transfering bytestream.
-     * */
-    // public void copyDataBase() throws IOException {
-    // Log.i(AppConfig.LOG_TAG, "Copying database");
-    //
-    // // Open your local db as the input stream
-    // InputStream myInput = mHelperContext.getAssets().open(DB_NAME);
-    //
-    // // Path to the just created empty db
-    // String outFileName = DB_PATH + DB_NAME;
-    // File out = new File(outFileName);
-    // if (!out.exists())
-    // out.createNewFile();
-    // // Open the empty db as the output stream
-    // OutputStream myOutput = new FileOutputStream(outFileName);
-    //
-    // // transfer bytes from the inputfile to the outputfile
-    // byte[] buffer = new byte[1024];
-    // int length;
-    // while ((length = myInput.read(buffer)) != -1) {
-    // myOutput.write(buffer, 0, length);
-    // }
-    // Log.i(AppConfig.LOG_TAG, "Database copied successfully");
-    //
-    // // Close the streams
-    // myOutput.flush();
-    // myOutput.close();
-    // myInput.close();
-    //
-    // this.close();
-    // Log.i(AppConfig.LOG_TAG, "DB exist: " + checkDataBase());
-    //
-    // }
+     */
+    public void copyDataBase() throws IOException {
+        Log.i(AppConfig.LOG_TAG, "Copying database");
+
+        // Open your local db as the input stream
+        InputStream myInput = mHelperContext.getAssets().open(DB_NAME);
+
+        // Path to the just created empty db
+        String outFileName = DB_PATH;
+        File out = new File(outFileName);
+        if (!out.exists()) {
+            out.createNewFile();
+        }
+        
+        // Open the empty db as the output stream
+        OutputStream myOutput = new FileOutputStream(outFileName);
+
+        // transfer bytes from the inputfile to the outputfile
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = myInput.read(buffer)) != -1) {
+            myOutput.write(buffer, 0, length);
+        }
+        Log.i(AppConfig.LOG_TAG, "Database copied successfully");
+
+        // Close the streams
+        myOutput.flush();
+        myOutput.close();
+        myInput.close();
+
+        this.close();
+        Log.i(AppConfig.LOG_TAG, "DB exist: " + checkDataBase());
+
+    }
 
     /**
      * Execute SQL command in sql file
@@ -148,7 +156,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         close();
 
         // Open the database
-        mDatabase = SQLiteDatabase.openDatabase(AppConfig.DB_PATH, null,
+        mDatabase = SQLiteDatabase.openDatabase(DB_PATH, null,
                 SQLiteDatabase.OPEN_READWRITE);
 
     }
@@ -167,8 +175,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         try {
 
-            // copyDataBase();
-            executeSQL(db);
+            copyDataBase();
+//            executeSQL(db);
         } catch (Exception e) {
             Log.e(AppConfig.LOG_TAG, e.getLocalizedMessage());
         }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.android.mevabe.R;
 import com.android.mevabe.common.Constants;
 import com.android.mevabe.common.RefreshLoadMoreAdapter;
+import com.android.mevabe.model.DBFeedModel;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -23,7 +24,7 @@ public class DBRecyclerViewAdapter extends RefreshLoadMoreAdapter {
      * IDashBoardListHandler interface for callback
      */
     public interface IDashBoardListHandler {
-        void onItemClick(DBFeedItem item);
+        void onItemClick(DBFeedModel item);
     }
 
     private IDashBoardListHandler handler;
@@ -82,7 +83,7 @@ public class DBRecyclerViewAdapter extends RefreshLoadMoreAdapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        DBFeedItem feedItem = (DBFeedItem) listItems.get(position);
+        DBFeedModel feedItem = (DBFeedModel) listItems.get(position);
         if (feedItem != null) {
             int type = feedItem.getViewType();
             switch (type) {
@@ -111,7 +112,7 @@ public class DBRecyclerViewAdapter extends RefreshLoadMoreAdapter {
             this.textView = (TextView) view.findViewById(R.id.title);
         }
 
-        public void bindData(final DBFeedItem data) {
+        public void bindData(final DBFeedModel data) {
             //Render image using Picasso library
             if (!TextUtils.isEmpty(data.getThumb())) {
                 Picasso.with(mContext).load(data.getThumb())
@@ -147,7 +148,7 @@ public class DBRecyclerViewAdapter extends RefreshLoadMoreAdapter {
             this.textView = (TextView) view.findViewById(R.id.title);
         }
 
-        public void bindData(final DBFeedItem data) {
+        public void bindData(final DBFeedModel data) {
             //Render image using Picasso library
             if (!TextUtils.isEmpty(data.getThumb())) {
                 Picasso.with(mContext).load(data.getThumb())

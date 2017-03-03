@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.android.mevabe.R;
 import com.android.mevabe.common.Constants;
+import com.android.mevabe.model.VaccinationsHistoryModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

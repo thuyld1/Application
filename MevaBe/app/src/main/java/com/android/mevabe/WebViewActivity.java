@@ -11,7 +11,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebViewClient;
 
 import com.android.mevabe.common.Constants;
-import com.android.mevabe.dashboard.DBFeedItem;
+import com.android.mevabe.model.WebViewModel;
 import com.android.mevabe.view.SwipeWebView;
 
 public class WebViewActivity extends AppCompatActivity {
@@ -46,7 +46,7 @@ public class WebViewActivity extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient());
 
         // Bind data to view
-        DBFeedItem item = (DBFeedItem) getIntent().getSerializableExtra(Constants.INTENT_DATA);
+        WebViewModel item = (WebViewModel) getIntent().getSerializableExtra(Constants.INTENT_DATA);
         if (item != null && item.getUrl() != null) {
             actionBar.setTitle(item.getTitle());
             webView.loadUrl(item.getUrl());

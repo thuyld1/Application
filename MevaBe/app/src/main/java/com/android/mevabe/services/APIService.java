@@ -1,7 +1,7 @@
 package com.android.mevabe.services;
 
 import com.android.mevabe.common.Constants;
-import com.android.mevabe.dashboard.DBFeedItem;
+import com.android.mevabe.model.DBFeedModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,17 +51,17 @@ public class APIService {
      * Parse JSON to class
      *
      * @param connectionResult
-     * @return List<DBFeedItem>
+     * @return List<DBFeedModel>
      */
-    private List<DBFeedItem> parseResult(ConnectionResult connectionResult) {
+    private List<DBFeedModel> parseResult(ConnectionResult connectionResult) {
         try {
             JSONObject response = new JSONObject(connectionResult.getResult());
             JSONArray posts = response.optJSONArray("posts");
-            List<DBFeedItem> feedsList = new ArrayList<>();
+            List<DBFeedModel> feedsList = new ArrayList<>();
 
             for (int i = 0; i < posts.length(); i++) {
                 JSONObject post = posts.optJSONObject(i);
-                DBFeedItem item = new DBFeedItem();
+                DBFeedModel item = new DBFeedModel();
                 item.setViewType(Constants.FEED_VIEW_TYPE_LEFT);
                 item.setTitle(post.optString("title"));
                 item.setThumb(post.optString("thumbnail"));
