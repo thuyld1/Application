@@ -16,6 +16,7 @@ import com.android.mevabe.bacsi.BacSiMain;
 import com.android.mevabe.common.AppConfig;
 import com.android.mevabe.dashboard.DashBoard;
 import com.android.mevabe.lichsuthuoc.LichSuThuocMain;
+import com.android.mevabe.services.db.DBService;
 import com.android.mevabe.vaccinations.VaccinationsMain;
 import com.android.mevabe.profile.ProfileMain;
 import com.android.mevabe.view.FragmentBase;
@@ -31,6 +32,8 @@ public class MainActivity2 extends AppCompatActivity {
     private AccessTokenTracker accessTokenTracker;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+
+    private DBService dbService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +83,9 @@ public class MainActivity2 extends AppCompatActivity {
                 notifyAccountChanged();
             }
         };
+
+        // Create DB service
+        dbService = new DBService(this);
     }
 
     /**
@@ -147,6 +153,9 @@ public class MainActivity2 extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         accessTokenTracker.stopTracking();
+
+        // Close DB
+        dbService.closeDB();
     }
 
     private void setupViewPager(ViewPager viewPager) {

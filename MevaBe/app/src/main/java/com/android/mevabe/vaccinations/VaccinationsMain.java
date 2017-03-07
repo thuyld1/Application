@@ -10,9 +10,11 @@ import android.widget.TextView;
 import com.android.mevabe.R;
 import com.android.mevabe.WebViewActivity;
 import com.android.mevabe.common.Constants;
+import com.android.mevabe.model.MyProfile;
 import com.android.mevabe.model.VaccinationsHistoryModel;
 import com.android.mevabe.model.VaccinationsPlanModel;
 import com.android.mevabe.model.WebViewModel;
+import com.android.mevabe.services.db.DBVacinations;
 import com.android.mevabe.view.FragmentLoginRequired;
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ import java.util.List;
  * Created by thuyld on 12/14/16.
  */
 public class VaccinationsMain extends FragmentLoginRequired implements View.OnClickListener, VaccinationsPlanAdapter.IVaccinationsPlanHandler {
+    // For view control
     private TextView btnHeaderSelected;
     private TextView btnHeaderPlan;
     private TextView btnHeaderHistory;
@@ -31,6 +34,10 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
     private VaccinationsPlanAdapter planAdapder;
     private VaccinationsHistoryAdapter historyAdapter;
 
+    private MyProfile myProfile;
+    private DBVacinations dbVacinations;
+
+
     @Override
     public int getLayoutContentViewXML() {
         return R.layout.vaccinations;
@@ -38,6 +45,10 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
 
     @Override
     public void initView(View layoutView) {
+        // Create db service
+        dbVacinations = new DBVacinations();
+        myProfile = getMyProfile();
+
         // Bind view
         btnHeaderPlan = (TextView) layoutView.findViewById(R.id.btn_plan);
         btnHeaderHistory = (TextView) layoutView.findViewById(R.id.btn_history);
@@ -54,12 +65,7 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
         btnHeaderSelected = btnHeaderHistory;
         onClick(btnHeaderPlan);
 
-        List<VaccinationsPlanModel> list = new ArrayList<>();
-        VaccinationsPlanModel item = null;
-        for (int i = 0; i < 100; i++) {
-            item = new VaccinationsPlanModel(null, "Quinvacen", "3-5T", "Phòng quai bị, Rubela, thuỷ đậu, sốt phát ban", "http://dantri.com.vn");
-            list.add(item);
-        }
+        List<VaccinationsPlanModel> list = dbVacinations.getVaccinationsPlan(myProfile, null);
         planAdapder.refreshItems(list);
 
         List<VaccinationsHistoryModel> listHistory = new ArrayList<>();

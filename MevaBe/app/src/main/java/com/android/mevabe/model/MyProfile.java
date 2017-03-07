@@ -21,6 +21,22 @@ public class MyProfile implements Serializable {
         children = new ArrayList<>();
     }
 
+    /**
+     * Find child by child ID
+     *
+     * @param childID long
+     * @return ProfileChildModel
+     */
+    public ProfileChildModel getChild(long childID) {
+        for (ProfileChildModel child : children) {
+            if (child.getId() == childID) {
+                return child;
+            }
+        }
+
+        return null;
+    }
+
     public List<ProfileChildModel> getChildren() {
         return children;
     }

@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by leducthuy on 1/18/17.
  */
 public class ProfileChildModel implements Serializable {
-    private int id;
+    private long id;
     private String name;
     private long dateOfBirth;
     private int gender;
@@ -15,18 +15,18 @@ public class ProfileChildModel implements Serializable {
         
     }
 
-    public ProfileChildModel(int id, String name, long dateOfBirth, int gender) {
+    public ProfileChildModel(long id, String name, long dateOfBirth, int gender) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

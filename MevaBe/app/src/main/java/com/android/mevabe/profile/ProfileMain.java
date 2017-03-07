@@ -1,7 +1,6 @@
 package com.android.mevabe.profile;
 
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,7 +13,7 @@ import com.android.mevabe.common.AppConfig;
 import com.android.mevabe.common.utils.AppUtil;
 import com.android.mevabe.model.MyProfile;
 import com.android.mevabe.model.ProfileChildModel;
-import com.android.mevabe.services.DBService;
+import com.android.mevabe.services.db.DBProfile;
 import com.android.mevabe.view.FragmentLoginRequired;
 import com.facebook.Profile;
 import com.squareup.picasso.Picasso;
@@ -32,8 +31,7 @@ public class ProfileMain extends FragmentLoginRequired implements View.OnClickLi
     private RecyclerView childListView;
     private ProfileChildrenViewAdapter childViewAdapter;
     private ImageView addChildButton;
-
-    private DBService dbService;
+    private DBProfile dbService;
 
 
     @Override
@@ -45,6 +43,7 @@ public class ProfileMain extends FragmentLoginRequired implements View.OnClickLi
     public void initView(View layoutView) {
         // Map data
         myProfile = getMyProfile();
+        dbService = new DBProfile();
 
         // Bind view
         avatar = (ImageView) layoutView.findViewById(R.id.avatar);
@@ -71,21 +70,6 @@ public class ProfileMain extends FragmentLoginRequired implements View.OnClickLi
         }
 
     }
-
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // Create DB service
-        dbService = new DBService(getContext());
-    }
-
-    public void onDestroy() {
-        super.onDestroy();
-
-        // Close DB
-        dbService.closeDB();
-    }
-
 
     @Override
     public void onAccountChange(Profile profile) {

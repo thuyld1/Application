@@ -6,6 +6,8 @@ import java.io.Serializable;
  * Created by leducthuy on 3/1/17.
  */
 public class VaccinationsPlanModel extends BaseModel implements Serializable {
+    private long vaccinID;
+    private long vaccinCode;
     private String vaccinName;
     private String vaccinPeriod;
     private String vaccinDes;
@@ -18,13 +20,17 @@ public class VaccinationsPlanModel extends BaseModel implements Serializable {
      * Constructor
      *
      * @param child        ProfileChildModel
+     * @param vaccinID     long
+     * @param vaccinCode   long
      * @param vaccinName   String
      * @param vaccinPeriod String
      * @param vaccinDes    String
      * @param vaccinURL    String
      */
-    public VaccinationsPlanModel(ProfileChildModel child, String vaccinName, String vaccinPeriod, String vaccinDes, String vaccinURL) {
+    public VaccinationsPlanModel(ProfileChildModel child, long vaccinID, long vaccinCode, String vaccinName, String vaccinPeriod, String vaccinDes, String vaccinURL) {
         this.child = child;
+        this.vaccinID = vaccinID;
+        this.vaccinCode = vaccinCode;
         this.vaccinName = vaccinName;
         this.vaccinPeriod = vaccinPeriod;
         this.vaccinDes = vaccinDes;
