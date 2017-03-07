@@ -1,4 +1,4 @@
-package com.android.mevabe.services;
+package com.android.mevabe.services.db;
 
 import android.content.Context;
 import android.database.SQLException;
@@ -179,6 +179,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //            executeSQL(db);
         } catch (Exception e) {
             Log.e(AppConfig.LOG_TAG, e.getLocalizedMessage());
+            e.printStackTrace();
         }
     }
 

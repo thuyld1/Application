@@ -16,9 +16,8 @@ import com.android.mevabe.bacsi.BacSiMain;
 import com.android.mevabe.common.AppConfig;
 import com.android.mevabe.dashboard.DashBoard;
 import com.android.mevabe.lichsuthuoc.LichSuThuocMain;
-import com.android.mevabe.services.db.DBService;
-import com.android.mevabe.vaccinations.VaccinationsMain;
 import com.android.mevabe.profile.ProfileMain;
+import com.android.mevabe.vaccinations.VaccinationsMain;
 import com.android.mevabe.view.FragmentBase;
 import com.android.mevabe.view.FragmentLoginRequired;
 import com.facebook.AccessToken;
@@ -33,7 +32,7 @@ public class MainActivity2 extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
-    private DBService dbService;
+//    private DBService dbService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +84,7 @@ public class MainActivity2 extends AppCompatActivity {
         };
 
         // Create DB service
-        dbService = new DBService(this);
+//        dbService = new DBService(this);
     }
 
     /**
@@ -155,7 +154,7 @@ public class MainActivity2 extends AppCompatActivity {
         accessTokenTracker.stopTracking();
 
         // Close DB
-        dbService.closeDB();
+//        dbService.closeDB();
     }
 
     private void setupViewPager(ViewPager viewPager) {
