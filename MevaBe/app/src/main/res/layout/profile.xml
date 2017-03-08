@@ -1,50 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorBG"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.android.mevabe.MainActivity">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorBG"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:context="com.android.mevabe.MainActivity">
     <!--For content view-->
     <LinearLayout
         android:id="@+id/content_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:textAlignment="center"
         android:visibility="gone">
 
         <!--For account information-->
-        <ImageView
-            android:id="@+id/avatar"
-            android:layout_width="wrap_content"
-            android:layout_height="180dp"
-            android:adjustViewBounds="true"
-            android:background="@drawable/placeholder"
-            android:scaleType="fitCenter" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/profile_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentLeft="true"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"/>
 
-        <com.facebook.login.widget.LoginButton
-            android:id="@+id/logout_button"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_marginTop="10dp" />
+            <TextView
+                android:id="@+id/profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="108dp"/>
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/logout_button"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_below="@+id/profile_name"
+                android:layout_marginLeft="108dp"
+                android:layout_marginTop="10dp"/>
+        </RelativeLayout>
 
         <!--For children information-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:orientation="horizontal">
 
             <TextView
@@ -53,25 +61,35 @@
                 android:text="Thông tin của bé "
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="#444"
-                android:textSize="16dp" />
+                android:textSize="20dp"
+                android:textStyle="bold"/>
 
             <ImageView
                 android:id="@+id/children_add_button"
                 android:layout_width="wrap_content"
-                android:layout_height="25dp"
+                android:layout_height="30dp"
                 android:layout_marginLeft="5dp"
                 android:adjustViewBounds="true"
                 android:background="@drawable/bg_rounded_small_corners"
                 android:scaleType="fitCenter"
-                android:src="@drawable/profile_child_add" />
+                android:src="@drawable/profile_child_add"/>
         </LinearLayout>
 
 
-        <android.support.v7.widget.RecyclerView
+        <com.android.mevabe.view.RecyclerViewSupportEmpty
             android:id="@+id/profile_children_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"/>
+
+        <TextView
+            android:id="@+id/child_empty_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Cập nhật ngay thông tin của bé để sử dụng nhiều chức năng thú vị bạn nhé ^^"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="#444"
+            android:textSize="16dp"/>
     </LinearLayout>
 
     <!-- For login layout -->
@@ -80,6 +98,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/login_required_view" />
+        <include layout="@layout/login_required_view"/>
     </RelativeLayout>
 </RelativeLayout>

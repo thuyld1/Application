@@ -1,4 +1,4 @@
-package com.android.mevabe.common;
+package com.android.mevabe.view;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;

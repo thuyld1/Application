@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -12,7 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.mevabe.R;
-import com.android.mevabe.common.AppConfig;
+import com.android.mevabe.common.utils.LogUtil;
 
 /**
  * Created by anhdt on 1/11/16.
@@ -53,7 +52,7 @@ public class LoadMoreFooter extends FrameLayout {
     }
 
     public void setOnLoadMore(boolean isLoadMore) {
-        Log.d(AppConfig.LOG_TAG, "setOnLoadMore() isLoadMore " + isLoadMore);
+        LogUtil.debug("setOnLoadMore() isLoadMore " + isLoadMore);
         if (isLoadMore) {
             tvMore.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);

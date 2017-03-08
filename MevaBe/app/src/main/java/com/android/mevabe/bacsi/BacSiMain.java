@@ -2,15 +2,14 @@ package com.android.mevabe.bacsi;
 
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.View;
 
 import com.android.mevabe.R;
 import com.android.mevabe.WebViewActivity;
-import com.android.mevabe.common.AppConfig;
 import com.android.mevabe.common.Constants;
-import com.android.mevabe.model.DBFeedModel;
+import com.android.mevabe.common.utils.LogUtil;
 import com.android.mevabe.dashboard.DBRecyclerViewAdapter;
+import com.android.mevabe.model.DBFeedModel;
 import com.android.mevabe.services.APIService;
 import com.android.mevabe.view.FragmentBase;
 import com.android.mevabe.view.LoadMoreRecyclerView;
@@ -63,7 +62,7 @@ public class BacSiMain extends FragmentBase implements DBRecyclerViewAdapter.IDa
 
     @Override
     public void onToolBarClicked(View v) {
-        Log.i(AppConfig.LOG_TAG, "onToolBarClicked");
+        LogUtil.debug("onToolBarClicked");
         if (mRecyclerView != null) {
             mRecyclerView.smoothScrollToPosition(0);
         }

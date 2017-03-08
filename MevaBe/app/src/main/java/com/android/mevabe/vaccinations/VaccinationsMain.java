@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.android.mevabe.R;
 import com.android.mevabe.WebViewActivity;
 import com.android.mevabe.common.Constants;
+import com.android.mevabe.common.utils.LogUtil;
 import com.android.mevabe.model.MyProfile;
 import com.android.mevabe.model.VaccinationsHistoryModel;
 import com.android.mevabe.model.VaccinationsPlanModel;
@@ -30,7 +31,7 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
     private TextView btnHeaderPlan;
     private TextView btnHeaderHistory;
 
-    private RecyclerView lichTiemView;
+    private RecyclerView vaccinationsView;
     private VaccinationsPlanAdapter planAdapder;
     private VaccinationsHistoryAdapter historyAdapter;
 
@@ -52,10 +53,10 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
         // Bind view
         btnHeaderPlan = (TextView) layoutView.findViewById(R.id.btn_plan);
         btnHeaderHistory = (TextView) layoutView.findViewById(R.id.btn_history);
-        lichTiemView = (RecyclerView) layoutView.findViewById(R.id.vaccinations_data_view);
+        vaccinationsView = (RecyclerView) layoutView.findViewById(R.id.vaccinations_data_view);
 
         // Set layout manager
-        lichTiemView.setLayoutManager(new LinearLayoutManager(getContext()));
+        vaccinationsView.setLayoutManager(new LinearLayoutManager(getContext()));
         planAdapder = new VaccinationsPlanAdapter(getActivity(), this);
         historyAdapter = new VaccinationsHistoryAdapter(getActivity());
 
@@ -79,6 +80,14 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
         historyAdapter.refreshItems(listHistory);
     }
 
+    @Override
+    public void onToolBarClicked(View v) {
+        LogUtil.debug("onToolBarClicked");
+        if (vaccinationsView != null) {
+            vaccinationsView.smoothScrollToPosition(0);
+        }
+    }
+
     // ********* HEADER CONTROL *********** //
     @Override
     public void onClick(View v) {
@@ -89,9 +98,9 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
 
             // Case user select history injection
             if (btnHeaderSelected.equals(btnHeaderHistory)) {
-                lichTiemView.setAdapter(historyAdapter);
+                vaccinationsView.setAdapter(historyAdapter);
             } else {
-                lichTiemView.setAdapter(planAdapder);
+                vaccinationsView.setAdapter(planAdapder);
             }
         }
 

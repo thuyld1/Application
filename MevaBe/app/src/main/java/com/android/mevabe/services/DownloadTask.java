@@ -1,9 +1,8 @@
 package com.android.mevabe.services;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
-import com.android.mevabe.common.AppConfig;
+import com.android.mevabe.common.utils.LogUtil;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -38,7 +37,7 @@ public class DownloadTask extends AsyncTask<String, Void, ConnectionResult> {
                 result.setResult(response.toString());
             }
         } catch (Exception e) {
-            Log.e(AppConfig.LOG_TAG, e.getLocalizedMessage());
+            LogUtil.error(e);
             result.setCode(-1);
         }
         return result;

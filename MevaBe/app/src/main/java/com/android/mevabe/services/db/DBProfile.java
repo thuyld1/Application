@@ -3,9 +3,8 @@ package com.android.mevabe.services.db;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import com.android.mevabe.common.AppConfig;
+import com.android.mevabe.common.utils.LogUtil;
 import com.android.mevabe.model.ProfileChildModel;
 import com.facebook.Profile;
 
@@ -40,8 +39,7 @@ public class DBProfile {
             db.setTransactionSuccessful();
             child.setId(id);
         } catch (Exception e) {
-            Log.e(AppConfig.LOG_TAG, e.getMessage());
-            e.printStackTrace();
+            LogUtil.error(e);
         } finally {
             db.endTransaction();
         }
@@ -54,7 +52,7 @@ public class DBProfile {
      * @return List<ProfileChildModel>
      */
     public List<ProfileChildModel> getMyChildren(String parentID) {
-        Log.i(AppConfig.LOG_TAG, "DB: getChildren: parentID = " + parentID);
+        LogUtil.debug("DB: getChildren: parentID = " + parentID);
         List<ProfileChildModel> result = new ArrayList<>();
         SQLiteDatabase db = DBService.getReadableDatabase();
 
@@ -82,9 +80,9 @@ public class DBProfile {
     /**
      * Delete child item by ID
      *
-     * @param id int
+     * @param id long
      */
-    public void deleteChild(int id) {
+    public void deleteChild(long id) {
         String whereClause = DBConstants.ID + "=" + id;
         DBService.getWritableDatabase().delete(DBConstants.TB_CHILDREN,
                 whereClause, null);

@@ -5,9 +5,9 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.android.mevabe.common.AppConfig;
+import com.android.mevabe.common.utils.LogUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -44,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     public void createDataBase() throws IOException {
         boolean dbExist = checkDataBase();
-        Log.i(AppConfig.LOG_TAG, "dbExist : " + dbExist);
+        LogUtil.debug("dbExist : " + dbExist);
 
         if (dbExist) {
             // do nothing - database already exist
@@ -92,7 +92,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * accessed and handled. This is done by transfering bytestream.
      */
     public void copyDataBase() throws IOException {
-        Log.i(AppConfig.LOG_TAG, "Copying database");
+        LogUtil.debug("Copying database");
 
         // Path to the just created empty db
         File out = new File(DB_PATH);
@@ -111,14 +111,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         while ((length = myInput.read(buffer)) != -1) {
             myOutput.write(buffer, 0, length);
         }
-        Log.i(AppConfig.LOG_TAG, "Database copied successfully");
+        LogUtil.debug("Database copied successfully");
 
         // Close the streams
         myOutput.flush();
         myOutput.close();
         myInput.close();
 
-        Log.i(AppConfig.LOG_TAG, "DB exist: " + checkDataBase());
+        LogUtil.debug("DB exist: " + checkDataBase());
 
     }
 
@@ -141,9 +141,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         String[] sqls = sb.toString().split("END");
-        Log.i(AppConfig.LOG_TAG, "CREATE DB SQL: ");
+        LogUtil.debug("CREATE DB SQL: ");
         for (String sql : sqls) {
-            Log.i(AppConfig.LOG_TAG, sql);
+            LogUtil.debug(sql);
             db.execSQL(sql + ";");
         }
     }

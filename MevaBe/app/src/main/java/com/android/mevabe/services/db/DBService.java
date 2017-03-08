@@ -2,9 +2,8 @@ package com.android.mevabe.services.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import com.android.mevabe.common.AppConfig;
+import com.android.mevabe.common.utils.LogUtil;
 
 public class DBService {
     private static DBService singleton;
@@ -21,8 +20,7 @@ public class DBService {
             mDatabaseHelper.createDataBase();
             mDatabaseHelper.openDataBase();
         } catch (Exception e) {
-            Log.e(AppConfig.LOG_TAG, e.getLocalizedMessage());
-            e.printStackTrace();
+            LogUtil.error(e);
         }
 
         singleton = this;

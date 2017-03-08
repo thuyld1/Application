@@ -9,11 +9,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.android.mevabe.bacsi.BacSiMain;
-import com.android.mevabe.common.AppConfig;
+import com.android.mevabe.common.utils.LogUtil;
 import com.android.mevabe.dashboard.DashBoard;
 import com.android.mevabe.lichsuthuoc.LichSuThuocMain;
 import com.android.mevabe.profile.ProfileMain;
@@ -53,14 +52,14 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onTabSelected(TabLayout.Tab tab) {
-                        Log.i(AppConfig.LOG_TAG, "onTabSelected");
+                        LogUtil.debug("onTabSelected");
                         super.onTabSelected(tab);
                         selectedTab = tab;
                     }
 
                     @Override
                     public void onTabReselected(TabLayout.Tab tab) {
-                        Log.i(AppConfig.LOG_TAG, "onTabReselected");
+                        LogUtil.debug("onTabReselected");
                         super.onTabReselected(tab);
 
                         // Fire on toolbar click event

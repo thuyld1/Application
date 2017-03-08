@@ -2,9 +2,8 @@ package com.android.mevabe.services.db;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import com.android.mevabe.common.AppConfig;
+import com.android.mevabe.common.utils.LogUtil;
 import com.android.mevabe.model.MyProfile;
 import com.android.mevabe.model.ProfileChildModel;
 import com.android.mevabe.model.VaccinationsPlanModel;
@@ -25,7 +24,7 @@ public class DBVacinations {
      * @return List<VaccinationsPlanModel>
      */
     public List<VaccinationsPlanModel> getVaccinationsPlan(MyProfile myProfile, ProfileChildModel child) {
-        Log.i(AppConfig.LOG_TAG, "DBVacinations: getVaccinationsPlan");
+        LogUtil.debug("DBVacinations: getVaccinationsPlan");
         List<VaccinationsPlanModel> result = new ArrayList<>();
         SQLiteDatabase db = DBService.getReadableDatabase();
 

@@ -5,6 +5,7 @@ package com.android.mevabe.common;
  * Created by leducthuy on 12/28/16.
  */
 public class AppConfig {
+    public static final boolean LOG_ALLOW = true;
     public static final String LOG_TAG = "android";
 
     public static final String DB_NAME = "mevabe.sqlite";

@@ -1,20 +1,21 @@
 package com.android.mevabe.profile;
 
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.mevabe.R;
-import com.android.mevabe.common.AppConfig;
 import com.android.mevabe.common.utils.AppUtil;
+import com.android.mevabe.common.utils.DialogUtil;
+import com.android.mevabe.common.utils.LogUtil;
 import com.android.mevabe.model.MyProfile;
 import com.android.mevabe.model.ProfileChildModel;
 import com.android.mevabe.services.db.DBProfile;
 import com.android.mevabe.view.FragmentLoginRequired;
+import com.android.mevabe.view.RecyclerViewSupportEmpty;
 import com.facebook.Profile;
 import com.squareup.picasso.Picasso;
 
@@ -23,12 +24,13 @@ import java.util.List;
 /**
  * Created by thuyld on 12/14/16.
  */
-public class ProfileMain extends FragmentLoginRequired implements View.OnClickListener, AddChildDialog.IAddChildDialogCallback {
+public class ProfileMain extends FragmentLoginRequired implements View.OnClickListener, AddChildDialog
+        .IAddChildDialogCallback, ProfileChildrenViewAdapter.IProfileChildrenViewHandler {
     private MyProfile myProfile;
     private ImageView avatar;
     private TextView profileName;
 
-    private RecyclerView childListView;
+    private RecyclerViewSupportEmpty childListView;
     private ProfileChildrenViewAdapter childViewAdapter;
     private ImageView addChildButton;
     private DBProfile dbService;
@@ -48,12 +50,16 @@ public class ProfileMain extends FragmentLoginRequired implements View.OnClickLi
         // Bind view
         avatar = (ImageView) layoutView.findViewById(R.id.avatar);
         profileName = (TextView) layoutView.findViewById(R.id.profile_name);
-        childListView = (RecyclerView) layoutView.findViewById(R.id.profile_children_view);
+        childListView = (RecyclerViewSupportEmpty) layoutView.findViewById(R.id.profile_children_view);
+        profileName = (TextView) layoutView.findViewById(R.id.profile_name);
+        TextView emptyChildView = (TextView) layoutView.findViewById(R.id.child_empty_view);
         addChildButton = (ImageView) layoutView.findViewById(R.id.children_add_button);
+
 
         // Set layout manager
         childListView.setLayoutManager(new LinearLayoutManager(getContext()));
-        childViewAdapter = new ProfileChildrenViewAdapter(getActivity());
+        childListView.setEmptyView(emptyChildView);
+        childViewAdapter = new ProfileChildrenViewAdapter(getActivity(), this);
         childListView.setAdapter(childViewAdapter);
         childViewAdapter.refreshItems(myProfile.getChildren());
 
@@ -77,9 +83,9 @@ public class ProfileMain extends FragmentLoginRequired implements View.OnClickLi
 
         // Update profile information in case login successfully
         if (hasCreatedView && profile != null) {
-            int width = AppUtil.dpToPx(getContext(), 180);
+            int width = AppUtil.dpToPx(getContext(), 100);
             Uri avatarPath = profile.getProfilePictureUri(width, width);
-            Log.i(AppConfig.LOG_TAG, "Profile avatar path:  " + avatarPath);
+            LogUtil.debug("Profile avatar path:  " + avatarPath);
             if (avatarPath != null) {
                 Picasso.with(getContext()).load(avatarPath)
                         .error(R.drawable.placeholder)
@@ -110,5 +116,28 @@ public class ProfileMain extends FragmentLoginRequired implements View.OnClickLi
 
         // Save new child to DB
         dbService.addChild(myProfile.getMyPro(), child);
+    }
+
+    // ****** IProfileChildrenViewHandler ******* //
+    @Override
+    public void onItemDelete(final ProfileChildModel child) {
+        // Show confirm dialog
+        String message = String.format("Are you sure you want to delete child [%s] ?", child.getName());
+        DialogUtil.showYesCancel(getContext(), message, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Delete from list children
+                myProfile.getChildren().remove(child);
+                childViewAdapter.removeItem(child);
+
+                // Delete child from DB
+                dbService.deleteChild(child.getId());
+            }
+        });
+
+    }
+
+    @Override
+    public void onItemEdit(ProfileChildModel child) {
+
     }
 }

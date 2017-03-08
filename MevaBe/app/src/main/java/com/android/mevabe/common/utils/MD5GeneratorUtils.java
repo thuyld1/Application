@@ -1,9 +1,5 @@
 package com.android.mevabe.common.utils;
 
-import android.util.Log;
-
-import com.android.mevabe.common.AppConfig;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -34,7 +30,7 @@ public class MD5GeneratorUtils {
         try {
             digest = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
-            Log.e(AppConfig.LOG_TAG, "Exception while getting digest : " + e);
+            LogUtil.error("Exception while getting digest : ", e);
             return null;
         }
 
@@ -42,7 +38,7 @@ public class MD5GeneratorUtils {
         try {
             is = new FileInputStream(updateFile);
         } catch (FileNotFoundException e) {
-            Log.e(AppConfig.LOG_TAG, "Exception while getting FileInputStream " + e);
+            LogUtil.error("Exception while getting FileInputStream ", e);
             return null;
         }
 
@@ -64,7 +60,7 @@ public class MD5GeneratorUtils {
             try {
                 is.close();
             } catch (IOException e) {
-                Log.e(AppConfig.LOG_TAG, "Exception on closing MD5 input stream " + e);
+                LogUtil.error("Exception on closing MD5 input stream ", e);
             }
         }
     }
