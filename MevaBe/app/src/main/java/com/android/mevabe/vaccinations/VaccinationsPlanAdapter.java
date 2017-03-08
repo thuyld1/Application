@@ -49,7 +49,7 @@ public class VaccinationsPlanAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View layout = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout
-                .vaccinations_plan_item_view, null);
+                .vaccinations_plan_item_view, viewGroup, false);
         RecyclerView.ViewHolder view = new MyViewHolder(layout);
         return view;
 

@@ -26,8 +26,8 @@
             android:layout_width="wrap_content"
             android:layout_height="180dp"
             android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/profile_avatar" />
+            android:background="@drawable/placeholder"
+            android:scaleType="fitCenter" />
 
         <TextView
             android:id="@+id/profile_name"
@@ -41,21 +41,37 @@
             android:layout_marginTop="10dp" />
 
         <!--For children information-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Thông tin của bé "
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textColor="#444"
+                android:textSize="16dp" />
+
+            <ImageView
+                android:id="@+id/children_add_button"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="5dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/bg_rounded_small_corners"
+                android:scaleType="fitCenter"
+                android:src="@drawable/profile_child_add" />
+        </LinearLayout>
+
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/profile_children_view"
-            android:scrollbars="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <ImageView
-            android:id="@+id/children_add_button"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/profile_avatar_plus" />
-
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical" />
     </LinearLayout>
 
     <!-- For login layout -->

@@ -75,15 +75,15 @@ public class ProfileMain extends FragmentLoginRequired implements View.OnClickLi
     public void onAccountChange(Profile profile) {
         super.onAccountChange(profile);
 
-        // Update profile information incase login successfully
+        // Update profile information in case login successfully
         if (hasCreatedView && profile != null) {
             int width = AppUtil.dpToPx(getContext(), 180);
             Uri avatarPath = profile.getProfilePictureUri(width, width);
             Log.i(AppConfig.LOG_TAG, "Profile avatar path:  " + avatarPath);
             if (avatarPath != null) {
                 Picasso.with(getContext()).load(avatarPath)
-                        .error(R.drawable.profile_avatar)
-                        .placeholder(R.drawable.profile_avatar)
+                        .error(R.drawable.placeholder)
+                        .placeholder(R.drawable.placeholder)
                         .into(avatar);
             }
             profileName.setText(profile.getName());

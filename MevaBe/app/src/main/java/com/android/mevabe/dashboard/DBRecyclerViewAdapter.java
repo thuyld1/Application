@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.android.mevabe.R;
 import com.android.mevabe.common.Constants;
 import com.android.mevabe.common.RefreshLoadMoreAdapter;
+import com.android.mevabe.common.RoundedTransformation;
 import com.android.mevabe.model.DBFeedModel;
 import com.squareup.picasso.Picasso;
 
@@ -49,28 +50,28 @@ public class DBRecyclerViewAdapter extends RefreshLoadMoreAdapter {
         switch (viewType) {
             case Constants.FEED_VIEW_TYPE_ADD: {
                 View layout = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout
-                        .dashboard_item_update_info, null);
+                        .dashboard_item_update_info, viewGroup, false);
                 view = new TypeNewsViewHolder(layout);
                 break;
             }
 
             case Constants.FEED_VIEW_TYPE_BIG: {
                 View layout = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout
-                        .dashboard_item_viewtypebig, null);
+                        .dashboard_item_viewtypebig, viewGroup, false);
                 view = new TypeNewsViewHolder(layout);
                 break;
             }
 
             case Constants.FEED_VIEW_TYPE_LEFT: {
                 View layout = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout
-                        .dashboard_item_viewtypeleft, null);
+                        .dashboard_item_viewtypeleft, viewGroup, false);
                 view = new TypeNewsViewHolder(layout);
                 break;
             }
 
             case Constants.FEED_VIEW_TYPE_RIGHT: {
                 View layout = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout
-                        .dashboard_item_viewtyperight, null);
+                        .dashboard_item_viewtyperight, viewGroup, false);
                 view = new TypeNewsViewHolder(layout);
                 break;
             }
@@ -118,6 +119,7 @@ public class DBRecyclerViewAdapter extends RefreshLoadMoreAdapter {
                 Picasso.with(mContext).load(data.getThumb())
                         .error(R.drawable.placeholder)
                         .placeholder(R.drawable.placeholder)
+                        .transform(new RoundedTransformation(5, 0))
                         .into(imageView);
             }
 

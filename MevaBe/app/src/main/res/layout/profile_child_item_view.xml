@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/content_id"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/bg_bottom_border"
-              android:orientation="horizontal"
-              android:paddingBottom="14dp"
-              android:paddingTop="14dp">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content_id"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_bottom_border"
+    android:paddingBottom="14dp"
+    android:paddingTop="14dp">
+
+    <ImageView
+        android:id="@+id/child_gender"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="@dimen/content_space"
+        android:background="@drawable/bg_rounded_corners"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profile_gender_male"
+        android:layout_alignParentLeft="true"/>
+
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/content_space"
-        android:layout_marginRight="@dimen/content_space"
+        android:layout_marginRight="128dp"
         android:orientation="vertical">
 
 
@@ -19,12 +29,13 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="middle"
             android:maxLines="2"
             android:text="Title Sample"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="#444"
             android:textSize="16dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/description"
@@ -35,7 +46,24 @@
             android:text="Description sample"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="#444"
-            android:textSize="14dp"/>
+            android:textSize="14dp" />
 
     </LinearLayout>
-</LinearLayout>
+
+    <ImageView
+        android:id="@+id/child_edit"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_rounded_corners"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profile_child_edit" />
+
+    <ImageView
+        android:id="@+id/child_delete"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="@dimen/content_space"
+        android:background="@drawable/bg_rounded_corners"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profile_child_delete" />
+</RelativeLayout>

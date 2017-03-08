@@ -42,7 +42,7 @@ public class VaccinationsHistoryAdapter extends RecyclerView.Adapter<RecyclerVie
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View layout = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout
-                .vaccinations_history_item_view, null);
+                .vaccinations_history_item_view, viewGroup, false);
         RecyclerView.ViewHolder view = new MyViewHolder(layout);
         return view;
 

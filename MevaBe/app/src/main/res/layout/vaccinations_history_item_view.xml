@@ -13,7 +13,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="@dimen/content_space"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/bg_rounded_corners"
         android:scaleType="centerCrop"
         android:src="@drawable/vaccinations_history_na" />
 
@@ -41,6 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/vaccinations_content_space"
+                android:ellipsize="middle"
                 android:maxLines="1"
                 android:text="Title Sample"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
@@ -53,6 +54,7 @@
             android:id="@+id/vaccinName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:maxLines="1"
             android:paddingTop="@dimen/vaccinations_content_space"
             android:text="Description sample"
@@ -64,6 +66,7 @@
             android:id="@+id/vaccinDes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:maxLines="2"
             android:paddingTop="@dimen/vaccinations_content_space"
             android:text="Description sample"
