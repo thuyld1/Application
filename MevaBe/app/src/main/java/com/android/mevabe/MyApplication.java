@@ -3,11 +3,13 @@ package com.android.mevabe;
 import android.app.Application;
 
 import com.android.mevabe.model.MyProfile;
+import com.android.mevabe.services.db.DBService;
 import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 
 public class MyApplication extends Application {
     private MyProfile profile;
+    private DBService dbService;
 
     @Override
     public void onCreate() {
@@ -16,12 +18,17 @@ public class MyApplication extends Application {
         // AppEventsLogger.activateApp(this);
 
         profile = new MyProfile(Profile.getCurrentProfile());
+
+        // Create DB service
+        dbService = new DBService(getApplicationContext());
     }
 
     @Override
     public void onTerminate() {
         super.onTerminate();
 
+        dbService.closeDB();
+        dbService = null;
         profile = null;
     }
 

@@ -1,7 +1,6 @@
 package com.android.mevabe.dashboard;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +12,6 @@ import com.android.mevabe.common.Constants;
 import com.android.mevabe.model.DBFeedModel;
 import com.android.mevabe.model.WebViewModel;
 import com.android.mevabe.services.APIService;
-import com.android.mevabe.services.db.DBService;
 import com.android.mevabe.view.FragmentBase;
 import com.android.mevabe.view.LoadMoreRecyclerView;
 import com.android.mevabe.view.RefreshLoadMoreLayout;
@@ -61,23 +59,6 @@ public class DashBoard extends FragmentBase implements DBRecyclerViewAdapter.IDa
         mRecyclerView.setAdapter(adapter);
         refreshItems();
     }
-
-    private  DBService dbService;
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // Create DB service
-        dbService = new DBService(getContext());
-    }
-
-    public void onDestroy() {
-        super.onDestroy();
-
-        // Close DB
-        dbService.closeDB();
-    }
-
-
 
     @Override
     public void onToolBarClicked(View v) {

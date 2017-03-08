@@ -48,17 +48,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (dbExist) {
             // do nothing - database already exist
-            this.getWritableDatabase();
-
+//            this.getWritableDatabase();
         } else {
 
             // By calling this method and empty database will be created
             // into the default system path
             // of your application so we are gonna be able to overwrite that
             // database with our database.
-            this.getReadableDatabase();
+//            this.getReadableDatabase();
 
-            // copyDataBase();
+            copyDataBase();
         }
 
     }
@@ -95,18 +94,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void copyDataBase() throws IOException {
         Log.i(AppConfig.LOG_TAG, "Copying database");
 
+        // Path to the just created empty db
+        File out = new File(DB_PATH);
+        out.mkdirs();
+        out.delete();
+
         // Open your local db as the input stream
         InputStream myInput = mHelperContext.getAssets().open(DB_NAME);
 
-        // Path to the just created empty db
-        String outFileName = DB_PATH;
-        File out = new File(outFileName);
-        if (!out.exists()) {
-            out.createNewFile();
-        }
-        
         // Open the empty db as the output stream
-        OutputStream myOutput = new FileOutputStream(outFileName);
+        OutputStream myOutput = new FileOutputStream(DB_PATH);
 
         // transfer bytes from the inputfile to the outputfile
         byte[] buffer = new byte[1024];
@@ -121,7 +118,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         myOutput.close();
         myInput.close();
 
-        this.close();
         Log.i(AppConfig.LOG_TAG, "DB exist: " + checkDataBase());
 
     }
@@ -173,14 +169,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        try {
+//        try {
 
-            copyDataBase();
+//            copyDataBase();
 //            executeSQL(db);
-        } catch (Exception e) {
-            Log.e(AppConfig.LOG_TAG, e.getLocalizedMessage());
-            e.printStackTrace();
-        }
+//        } catch (Exception e) {
+//            Log.e(AppConfig.LOG_TAG, e.getLocalizedMessage());
+//            e.printStackTrace();
+//        }
     }
 
     @Override

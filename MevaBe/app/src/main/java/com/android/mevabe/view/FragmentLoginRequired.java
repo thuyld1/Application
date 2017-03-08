@@ -18,6 +18,7 @@ import java.util.Arrays;
  * Created by thuyld on 12/14/16.
  */
 public abstract class FragmentLoginRequired extends FragmentBase {
+    protected boolean hasCreatedView = false;
     private CallbackManager callbackManager;
     private View contentView;
     private View loginView;
@@ -25,6 +26,7 @@ public abstract class FragmentLoginRequired extends FragmentBase {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        hasCreatedView = true;
         View layoutView = super.onCreateView(inflater, container, savedInstanceState);
 
 
@@ -49,7 +51,10 @@ public abstract class FragmentLoginRequired extends FragmentBase {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+
+        if (callbackManager != null) {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     /**
@@ -75,7 +80,9 @@ public abstract class FragmentLoginRequired extends FragmentBase {
      */
     public void onAccountChange(Profile profile) {
         // Update UI when account has change
-        changeUIForAccountChange(profile);
+        if (hasCreatedView) {
+            changeUIForAccountChange(profile);
+        }
     }
 
 

@@ -76,7 +76,7 @@ public class ProfileMain extends FragmentLoginRequired implements View.OnClickLi
         super.onAccountChange(profile);
 
         // Update profile information incase login successfully
-        if (profile != null) {
+        if (hasCreatedView && profile != null) {
             int width = AppUtil.dpToPx(getContext(), 180);
             Uri avatarPath = profile.getProfilePictureUri(width, width);
             Log.i(AppConfig.LOG_TAG, "Profile avatar path:  " + avatarPath);

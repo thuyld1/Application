@@ -1,147 +1,202 @@
 package com.android.mevabe;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.os.Handler;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.util.Log;
+import android.widget.Toast;
 
-import com.android.mevabe.view.FragmentBase;
-import com.android.mevabe.view.OnDoubleClickListener;
+import com.android.mevabe.bacsi.BacSiMain;
+import com.android.mevabe.common.AppConfig;
 import com.android.mevabe.dashboard.DashBoard;
 import com.android.mevabe.lichsuthuoc.LichSuThuocMain;
+import com.android.mevabe.profile.ProfileMain;
 import com.android.mevabe.vaccinations.VaccinationsMain;
+import com.android.mevabe.view.FragmentBase;
+import com.android.mevabe.view.FragmentLoginRequired;
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.Profile;
 
-/**
- * MainActivity2 class controls main application activity
- */
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import java.util.ArrayList;
+import java.util.List;
 
-    private Toolbar toolbar;
-    private DrawerLayout mainLayout;
-    private FragmentBase currentContent;
+public class MainActivity extends AppCompatActivity {
+    private AccessTokenTracker accessTokenTracker;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        // Set up
-        setContentView(R.layout.app_main_layout);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        mainLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
 
-        // Listener toolbar
-        toolbar.setClickable(true);
-        toolbar.setOnClickListener(new OnDoubleClickListener() {
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_menu_dashboard);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_menu_bac_si);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_menu_lich_tiem);
+        tabLayout.getTabAt(3).setIcon(R.drawable.ic_menu_lich_su_thuoc);
+        tabLayout.getTabAt(4).setIcon(R.drawable.ic_menu_profile);
+        tabLayout.setOnTabSelectedListener(
+                new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
+                    private TabLayout.Tab selectedTab;
+
+                    @Override
+                    public void onTabSelected(TabLayout.Tab tab) {
+                        Log.i(AppConfig.LOG_TAG, "onTabSelected");
+                        super.onTabSelected(tab);
+                        selectedTab = tab;
+                    }
+
+                    @Override
+                    public void onTabReselected(TabLayout.Tab tab) {
+                        Log.i(AppConfig.LOG_TAG, "onTabReselected");
+                        super.onTabReselected(tab);
+
+                        // Fire on toolbar click event
+                        if (selectedTab == null || selectedTab.equals(tab)) {
+                            FragmentBase screen = getCurrentScreen();
+                            screen.onToolBarClicked(null);
+                        }
+                    }
+                });
+
+        accessTokenTracker = new AccessTokenTracker() {
             @Override
-            public void onDoubleClick(View v) {
-                currentContent.onToolBarClicked(v);
+            protected void onCurrentAccessTokenChanged(
+                    AccessToken oldAccessToken,
+                    AccessToken currentAccessToken) {
+                // Notify to list fragment in case account has changed
+                notifyAccountChanged();
             }
-        });
+        };
 
-        // Add feed back button
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
-        // Build left menu
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, mainLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mainLayout.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        // Default create dashboard fragment
-        currentContent = new DashBoard();
-
-        // Add the dashboard to content view
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.content_area, currentContent).commit();
     }
+
+    /**
+     * Get current fragment
+     *
+     * @return FragmentBase
+     */
+    private FragmentBase getCurrentScreen() {
+        ViewPagerAdapter adapter = (ViewPagerAdapter) viewPager.getAdapter();
+        FragmentBase screen = (FragmentBase) adapter.getItem(viewPager.getCurrentItem());
+        return screen;
+    }
+
+    /**
+     * Notify to list fragment in case account has changed
+     */
+    private void notifyAccountChanged() {
+        // Get current profile
+        Profile profile = Profile.getCurrentProfile();
+
+        // Update data
+        ((MyApplication) getApplication()).setLoginProfile(profile);
+
+        // Notify to login required screen
+        ViewPagerAdapter adapter = (ViewPagerAdapter) viewPager.getAdapter();
+        for (Fragment fragment : adapter.getListFragment()) {
+            if (fragment instanceof FragmentLoginRequired) {
+                ((FragmentLoginRequired) fragment).onAccountChange(profile);
+            }
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        FragmentBase screen = getCurrentScreen();
+        if (screen != null) {
+            screen.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
+        if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
+            return;
         }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+    public void onDestroy() {
+        super.onDestroy();
+        accessTokenTracker.stopTracking();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new DashBoard(), getString(R.string.left_menu_dashboard));
+        adapter.addFragment(new BacSiMain(), getString(R.string.left_menu_bac_sy));
+        adapter.addFragment(new VaccinationsMain(), getString(R.string.left_menu_lich_tiem));
+        adapter.addFragment(new LichSuThuocMain(), getString(R.string.left_menu_su_dung_thuoc));
+        adapter.addFragment(new ProfileMain(), getString(R.string.left_menu_profile));
+        viewPager.setAdapter(adapter);
+    }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
         }
 
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-        if (id == R.id.nav_dashboard) {
-            currentContent = new DashBoard();
-            toolbar.setTitle(R.string.left_menu_dashboard);
-        } else if (id == R.id.nav_lich_tiem) {
-            currentContent = new VaccinationsMain();
-            toolbar.setTitle(R.string.left_menu_lich_tiem);
-        } else if (id == R.id.nav_su_dung_thuoc) {
-            currentContent = new LichSuThuocMain();
-            toolbar.setTitle(R.string.left_menu_su_dung_thuoc);
-        } else if (id == R.id.nav_kien_thuc) {
-            return false;
-        } else if (id == R.id.nav_bac_sy) {
-            return false;
-        } else if (id == R.id.nav_share) {
-            return false;
-        } else if (id == R.id.nav_send) {
-            return false;
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
         }
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
 
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.content_area, currentContent);
-        transaction.addToBackStack(null);
+        /**
+         * Add item to fragment
+         *
+         * @param fragment Fragment
+         * @param title    String
+         */
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
 
-        // Commit the transaction
-        transaction.commit();
+        public List<Fragment> getListFragment() {
+            return mFragmentList;
+        }
 
-
-        mainLayout.closeDrawer(GravityCompat.START);
-        return true;
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
     }
+
 }
