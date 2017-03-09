@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.android.mevabe.bacsi.BacSiMain;
+import com.android.mevabe.common.AppData;
 import com.android.mevabe.common.utils.LogUtil;
 import com.android.mevabe.dashboard.DashBoard;
 import com.android.mevabe.lichsuthuoc.LichSuThuocMain;
@@ -101,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         Profile profile = Profile.getCurrentProfile();
 
         // Update data
-        ((MyApplication) getApplication()).setLoginProfile(profile);
+        AppData.setLoginProfile(profile);
 
         // Notify to login required screen
         ViewPagerAdapter adapter = (ViewPagerAdapter) viewPager.getAdapter();

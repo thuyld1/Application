@@ -25,7 +25,7 @@ import java.util.List;
  * Created by thuyld on 12/14/16.
  */
 public class ProfileMain extends FragmentLoginRequired implements View.OnClickListener, AddChildDialog
-        .IAddChildDialogCallback, ProfileChildrenViewAdapter.IProfileChildrenViewHandler {
+        .IAddChildDialogCallback, EditChildDialog.IEditChildDialogCallback, ProfileChildrenViewAdapter.IProfileChildrenViewHandler {
     private MyProfile myProfile;
     private ImageView avatar;
     private TextView profileName;
@@ -118,6 +118,16 @@ public class ProfileMain extends FragmentLoginRequired implements View.OnClickLi
         dbService.addChild(myProfile.getMyPro(), child);
     }
 
+    // ****** IEditChildDialogCallback ******* //
+    @Override
+    public void onEditChildFinish(ProfileChildModel child) {
+        // Refresh child info
+        childViewAdapter.notifyDataSetChanged();
+
+        // Update child to DB
+        dbService.updateChild(child);
+    }
+
     // ****** IProfileChildrenViewHandler ******* //
     @Override
     public void onItemDelete(final ProfileChildModel child) {
@@ -138,6 +148,8 @@ public class ProfileMain extends FragmentLoginRequired implements View.OnClickLi
 
     @Override
     public void onItemEdit(ProfileChildModel child) {
-
+        // Show popup to edit child
+        EditChildDialog dialog = new EditChildDialog(getContext(), child, this);
+        dialog.show();
     }
 }

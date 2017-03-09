@@ -119,18 +119,25 @@ public class ProfileChildrenViewAdapter extends RecyclerView.Adapter<RecyclerVie
     class ChildViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ProfileChildModel data;
         private ImageView childGender;
-        private TextView title;
-        private TextView description;
+        private TextView childName;
+        private TextView childDateOfBirth;
+        private TextView childYearsOld;
         private ImageView btnDelete;
         private ImageView btnEdit;
+
+        private SimpleDateFormat dateFormat;
+        private Calendar cal = Calendar.getInstance();
 
         public ChildViewHolder(View view) {
             super(view);
             this.childGender = (ImageView) view.findViewById(R.id.child_gender);
-            this.title = (TextView) view.findViewById(R.id.title);
-            this.description = (TextView) view.findViewById(R.id.description);
+            this.childName = (TextView) view.findViewById(R.id.child_name);
+            this.childDateOfBirth = (TextView) view.findViewById(R.id.child_date_of_birth);
+            this.childYearsOld = (TextView) view.findViewById(R.id.child_years_old);
             this.btnDelete = (ImageView) view.findViewById(R.id.child_delete);
             this.btnEdit = (ImageView) view.findViewById(R.id.child_edit);
+
+            dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         }
 
         public void bindData(final ProfileChildModel data) {
@@ -144,14 +151,12 @@ public class ProfileChildrenViewAdapter extends RecyclerView.Adapter<RecyclerVie
             }
 
             //Setting text view title
-            title.setText(data.getName());
-
-            Calendar cal = Calendar.getInstance();
+            childName.setText(data.getName());
             cal.setTimeInMillis(data.getDateOfBirth());
-            SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-            description.setText(df.format(cal.getTime()));
+            childDateOfBirth.setText(dateFormat.format(cal.getTime()));
+            childYearsOld.setText(data.getYearsOld());
 
-
+            // Add action listener
             btnDelete.setOnClickListener(this);
             btnEdit.setOnClickListener(this);
         }

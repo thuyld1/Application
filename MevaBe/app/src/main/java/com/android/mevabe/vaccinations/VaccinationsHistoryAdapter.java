@@ -114,23 +114,23 @@ public class VaccinationsHistoryAdapter extends RecyclerView.Adapter<RecyclerVie
             // Setting vaccinations status
             switch (data.getInjectionStatus()) {
                 case Constants.VACCIN_INJECTION_DATE_INPROGRESS:
-                    String formatNA = context.getString(R.string.vaccinations_injection_na);
-                    vaccinName.setText(String.format(formatNA, data.getVaccinName()));
+                    String formatNA = context.getString(R.string.vaccinations_injection_na, data.getVaccinName());
+                    vaccinName.setText(formatNA);
                     vaccinationsStatus.setImageResource(R.drawable.vaccinations_history_na);
                     break;
                 case Constants.VACCIN_INJECTION_DATE_OK:
-                    String formatOK = context.getString(R.string.vaccinations_injection_ok);
-                    vaccinName.setText(String.format(formatOK, data.getVaccinName()));
+                    String formatOK = context.getString(R.string.vaccinations_injection_ok, data.getVaccinName());
+                    vaccinName.setText(formatOK);
                     vaccinationsStatus.setImageResource(R.drawable.vaccinations_history_ok);
                     break;
                 case Constants.VACCIN_INJECTION_DATE_OVER:
-                    String formatOver = context.getString(R.string.vaccinations_injection_over);
-                    vaccinName.setText(String.format(formatOver, data.getVaccinName()));
+                    String formatOver = context.getString(R.string.vaccinations_injection_over, data.getVaccinName());
+                    vaccinName.setText(formatOver);
                     vaccinationsStatus.setImageResource(R.drawable.vaccinations_history_over);
                     break;
                 default:
-                    String format = context.getString(R.string.vaccinations_injection_na);
-                    vaccinName.setText(String.format(format, data.getVaccinName()));
+                    String format = context.getString(R.string.vaccinations_injection_na, data.getVaccinName());
+                    vaccinName.setText(format);
                     vaccinationsStatus.setImageResource(R.drawable.vaccinations_history_na);
                     break;
             }

@@ -9,6 +9,7 @@ import com.android.mevabe.model.ProfileChildModel;
 import com.facebook.Profile;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -33,11 +34,39 @@ public class DBProfile {
             values.put(DBConstants.CHILD_NAME, child.getName());
             values.put(DBConstants.CHILD_BIRTH, child.getDateOfBirth());
             values.put(DBConstants.CHILD_GENDER, child.getGender());
-            values.put(DBConstants.UPDATED, 0);
+            values.put(DBConstants.UPDATED, Calendar.getInstance().getTimeInMillis());
             long id = db.insert(DBConstants.TB_CHILDREN, null, values);
 
             db.setTransactionSuccessful();
             child.setId(id);
+        } catch (Exception e) {
+            LogUtil.error(e);
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    /**
+     * Update child to DB
+     *
+     * @param child ProfileChildModel
+     */
+    public void updateChild(ProfileChildModel child) {
+        SQLiteDatabase db = DBService.getWritableDatabase();
+
+        db.beginTransaction();
+        try {
+            // Update item
+            ContentValues values = new ContentValues();
+            values.put(DBConstants.CHILD_NAME, child.getName());
+            values.put(DBConstants.CHILD_BIRTH, child.getDateOfBirth());
+            values.put(DBConstants.CHILD_GENDER, child.getGender());
+            values.put(DBConstants.UPDATED, Calendar.getInstance().getTimeInMillis());
+
+            String whereClause = DBConstants.ID + " = " + child.getId();
+            db.update(DBConstants.TB_CHILDREN, values, whereClause, null);
+
+            db.setTransactionSuccessful();
         } catch (Exception e) {
             LogUtil.error(e);
         } finally {
@@ -68,6 +97,8 @@ public class DBProfile {
             String name = cursor.getString(1);
             long birth = cursor.getLong(2);
             int gender = cursor.getInt(3);
+
+
             ProfileChildModel child = new ProfileChildModel(id, name, birth, gender);
             result.add(child);
         }

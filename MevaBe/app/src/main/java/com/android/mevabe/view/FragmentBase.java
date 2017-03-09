@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.mevabe.MyApplication;
+import com.android.mevabe.common.AppData;
 import com.android.mevabe.model.MyProfile;
 
 /**
@@ -34,8 +34,7 @@ public abstract class FragmentBase extends Fragment {
      * @return MyProfile
      */
     public MyProfile getMyProfile() {
-        MyApplication application = (MyApplication) getActivity().getApplication();
-        return application.getMyProfile();
+        return AppData.getMyProfile();
     }
 
 

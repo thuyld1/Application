@@ -27,7 +27,7 @@
 
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/child_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="middle"
@@ -39,11 +39,18 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/description"
+            android:id="@+id/child_date_of_birth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="3"
-            android:paddingTop="@dimen/content_space"
+            android:maxLines="1"
+            android:text="Description sample"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="#444"
+            android:textSize="14dp"/>
+        <TextView
+            android:id="@+id/child_years_old"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="Description sample"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="#444"

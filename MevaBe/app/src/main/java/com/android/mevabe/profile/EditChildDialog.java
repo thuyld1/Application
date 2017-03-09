@@ -22,15 +22,16 @@ import java.util.Calendar;
 /**
  * Created by thuyld on 1/18/17.
  */
-public class AddChildDialog extends Dialog implements android.view.View.OnClickListener {
+public class EditChildDialog extends Dialog implements View.OnClickListener {
     /**
-     * IAddChildDialogCallback interface for AddChildDialog call back
+     * IEditChildDialogCallback interface for EditChildDialog call back
      */
-    public interface IAddChildDialogCallback {
-        void onAddChildFinish(ProfileChildModel child);
+    public interface IEditChildDialogCallback {
+        void onEditChildFinish(ProfileChildModel child);
     }
 
-    private IAddChildDialogCallback handler;
+    private ProfileChildModel child;
+    private IEditChildDialogCallback handler;
 
     private Button addButton;
     private Button cancelButton;
@@ -46,10 +47,12 @@ public class AddChildDialog extends Dialog implements android.view.View.OnClickL
      * Constructor
      *
      * @param context Context
+     * @param child   ProfileChildModel
      * @param handler IEditChildDialogCallback
      */
-    public AddChildDialog(Context context, IAddChildDialogCallback handler) {
+    public EditChildDialog(Context context, ProfileChildModel child, IEditChildDialogCallback handler) {
         super(context);
+        this.child = child;
         this.handler = handler;
     }
 
@@ -63,6 +66,7 @@ public class AddChildDialog extends Dialog implements android.view.View.OnClickL
         // Show keyboard to input
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
+
 
     /**
      * Init view for dialog
@@ -79,12 +83,15 @@ public class AddChildDialog extends Dialog implements android.view.View.OnClickL
         cancelButton = (Button) findViewById(R.id.dialog_cancel);
         addButton.setOnClickListener(this);
         cancelButton.setOnClickListener(this);
+        addButton.setText(R.string.ok);
 
         // Bind input view
         childName = (EditText) findViewById(R.id.child_name);
         childDateOfBirth = (Button) findViewById(R.id.child_date_of_birth);
 
+        // Bind data to view
         calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(child.getDateOfBirth());
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -99,18 +106,17 @@ public class AddChildDialog extends Dialog implements android.view.View.OnClickL
                     }
                 };
         datePicker = new DatePickerDialog(getContext(), myDateListener, year, month, day);
-        datePicker.getDatePicker().setMaxDate(calendar.getTimeInMillis());
+        datePicker.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
         childDateOfBirth.setOnClickListener(this);
 
 
         childGender = (ToggleButton) findViewById(R.id.child_gender);
         childGender.setTextOff(getContext().getText(R.string.child_gender_female));
         childGender.setTextOn(getContext().getText(R.string.child_gender_male));
-        childGender.setChecked(false);
+        childGender.setChecked(child.getGender() == Constants.GENDER_MALE);
 
         // Add validate
-        addButton.setEnabled(false);
-        addButton.getBackground().setAlpha(128);
+        childName.setText(child.getName());
         childName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -155,8 +161,8 @@ public class AddChildDialog extends Dialog implements android.view.View.OnClickL
             datePicker.show();
 
         } else if (v.equals(addButton)) {
-            // Add child processing
-            addChild();
+            // Edit child processing
+            editChild();
 
             // Close dialog
             dismiss();
@@ -169,12 +175,11 @@ public class AddChildDialog extends Dialog implements android.view.View.OnClickL
     }
 
     /**
-     * Add child processing
+     * Edit child processing
      */
-    private void addChild() {
+    private void editChild() {
         if (handler != null) {
-            // Get child information
-            ProfileChildModel child = new ProfileChildModel();
+            // Update child information
             child.setName(childName.getText().toString().trim());
             child.setDateOfBirth(calendar.getTimeInMillis());
             if (childGender.isChecked()) {
@@ -184,7 +189,7 @@ public class AddChildDialog extends Dialog implements android.view.View.OnClickL
             }
 
             // Call back to process
-            handler.onAddChildFinish(child);
+            handler.onEditChildFinish(child);
         }
 
     }
