@@ -112,24 +112,24 @@ public class VaccinationsHistoryAdapter extends RecyclerView.Adapter<RecyclerVie
 
         public void bindData(final VaccinationsHistoryModel data) {
             // Setting vaccinations status
-            switch (data.getInjectionStatus()) {
+            switch (data.getStatus()) {
                 case Constants.VACCIN_INJECTION_DATE_INPROGRESS:
-                    String formatNA = context.getString(R.string.vaccinations_injection_na, data.getVaccinName());
+                    String formatNA = context.getString(R.string.vaccinations_injection_na, data.getVaccineName());
                     vaccinName.setText(formatNA);
                     vaccinationsStatus.setImageResource(R.drawable.vaccinations_history_na);
                     break;
                 case Constants.VACCIN_INJECTION_DATE_OK:
-                    String formatOK = context.getString(R.string.vaccinations_injection_ok, data.getVaccinName());
+                    String formatOK = context.getString(R.string.vaccinations_injection_ok, data.getVaccineName());
                     vaccinName.setText(formatOK);
                     vaccinationsStatus.setImageResource(R.drawable.vaccinations_history_ok);
                     break;
                 case Constants.VACCIN_INJECTION_DATE_OVER:
-                    String formatOver = context.getString(R.string.vaccinations_injection_over, data.getVaccinName());
+                    String formatOver = context.getString(R.string.vaccinations_injection_over, data.getVaccineName());
                     vaccinName.setText(formatOver);
                     vaccinationsStatus.setImageResource(R.drawable.vaccinations_history_over);
                     break;
                 default:
-                    String format = context.getString(R.string.vaccinations_injection_na, data.getVaccinName());
+                    String format = context.getString(R.string.vaccinations_injection_na, data.getVaccineName());
                     vaccinName.setText(format);
                     vaccinationsStatus.setImageResource(R.drawable.vaccinations_history_na);
                     break;
@@ -137,11 +137,11 @@ public class VaccinationsHistoryAdapter extends RecyclerView.Adapter<RecyclerVie
 
             //Setting text view title
             childInfo.setText(data.getChildInfo());
-            vaccinDes.setText(data.getVaccinDes());
+            vaccinDes.setText(data.getVaccineShortDes());
 
-            if (data.getInjectionDate() > 0) {
+            if (data.getInDate() > 0) {
                 Calendar cal = Calendar.getInstance();
-                cal.setTimeInMillis(data.getInjectionDate());
+                cal.setTimeInMillis(data.getInDate());
                 injectionDate.setText(String.format(vaccinInjectionDateFormat, df.format(cal.getTime())));
             }
         }

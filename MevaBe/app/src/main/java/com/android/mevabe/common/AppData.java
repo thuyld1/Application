@@ -2,7 +2,9 @@ package com.android.mevabe.common;
 
 import android.content.Context;
 
+import com.android.mevabe.common.utils.LogUtil;
 import com.android.mevabe.model.MyProfile;
+import com.android.mevabe.services.db.DBProfile;
 import com.android.mevabe.services.db.DBService;
 import com.facebook.Profile;
 
@@ -14,6 +16,7 @@ public class AppData {
     public static Context context;
     private static MyProfile profile;
     private static DBService dbService;
+    private static DBProfile dbProfile;
 
     /**
      * Initial application data
@@ -26,6 +29,10 @@ public class AppData {
 
         // Create DB service
         dbService = new DBService(context);
+        dbProfile = new DBProfile();
+
+        // Apdate login account
+        setLoginProfile(Profile.getCurrentProfile());
     }
 
     /**
@@ -33,18 +40,29 @@ public class AppData {
      */
     public static void onTerminate() {
         AppData.context = null;
+        profile = null;
 
         dbService.closeDB();
         dbService = null;
-        profile = null;
+        dbProfile = null;
+
     }
 
-    // ****** Login profile controll ***** //
+    // ****** Login profile control ***** //
     public static MyProfile getMyProfile() {
         return profile;
     }
 
     public static void setLoginProfile(Profile loginProfile) {
+        LogUtil.debug("AppData: setLoginProfile => " + loginProfile);
         profile.setMyPro(loginProfile);
+
+        // Get list children of account
+        if (loginProfile != null) {
+            profile.setChildren(dbProfile.getMyChildren(loginProfile.getId()));
+        } else {
+            // Clear old data if empty profile information
+            profile.getChildren().clear();
+        }
     }
 }

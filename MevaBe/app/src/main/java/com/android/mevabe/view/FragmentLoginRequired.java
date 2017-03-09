@@ -58,22 +58,6 @@ public abstract class FragmentLoginRequired extends FragmentBase {
     }
 
     /**
-     * Update UI when account has changed
-     *
-     * @param profile Profile
-     */
-    private void changeUIForAccountChange(Profile profile) {
-        // Show content in case login already
-        if (profile != null) {
-            contentView.setVisibility(View.VISIBLE);
-            loginView.setVisibility(View.GONE);
-        } else {
-            contentView.setVisibility(View.GONE);
-            loginView.setVisibility(View.VISIBLE);
-        }
-    }
-
-    /**
      * Handle in case user log in/log out
      *
      * @param profile Profile
@@ -81,9 +65,26 @@ public abstract class FragmentLoginRequired extends FragmentBase {
     public void onAccountChange(Profile profile) {
         // Update UI when account has change
         if (hasCreatedView) {
-            changeUIForAccountChange(profile);
+            // Show content in case login already
+            if (profile != null) {
+                contentView.setVisibility(View.VISIBLE);
+                loginView.setVisibility(View.GONE);
+            } else {
+                contentView.setVisibility(View.GONE);
+                loginView.setVisibility(View.VISIBLE);
+            }
+
+            // Update logic of view
+            onAccountChangeFinish(profile);
         }
     }
+
+    /**
+     * Update logic when account has changed
+     *
+     * @param profile Profile
+     */
+    public abstract void onAccountChangeFinish(Profile profile);
 
 
 }

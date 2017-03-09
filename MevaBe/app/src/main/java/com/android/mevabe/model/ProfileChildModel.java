@@ -41,6 +41,7 @@ public class ProfileChildModel implements Serializable {
 
     public void setDateOfBirth(long dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+        this.yearsOld = YearsOldUtil.getYearsOld(AppData.context, dateOfBirth);
     }
 
     public int getGender() {

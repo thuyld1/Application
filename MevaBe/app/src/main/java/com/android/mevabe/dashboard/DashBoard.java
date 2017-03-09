@@ -63,6 +63,7 @@ public class DashBoard extends FragmentBase implements DBRecyclerViewAdapter.IDa
     public void onToolBarClicked(View v) {
         LogUtil.debug("onToolBarClicked");
         if (mRecyclerView != null) {
+
             mRecyclerView.smoothScrollToPosition(0);
         }
     }

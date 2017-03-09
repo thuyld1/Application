@@ -53,14 +53,12 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onTabSelected(TabLayout.Tab tab) {
-                        LogUtil.debug("onTabSelected");
                         super.onTabSelected(tab);
                         selectedTab = tab;
                     }
 
                     @Override
                     public void onTabReselected(TabLayout.Tab tab) {
-                        LogUtil.debug("onTabReselected");
                         super.onTabReselected(tab);
 
                         // Fire on toolbar click event
@@ -77,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     AccessToken oldAccessToken,
                     AccessToken currentAccessToken) {
                 // Notify to list fragment in case account has changed
+                LogUtil.debug("AccessTokenTracker: onCurrentAccessTokenChanged");
                 notifyAccountChanged();
             }
         };
@@ -100,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
     private void notifyAccountChanged() {
         // Get current profile
         Profile profile = Profile.getCurrentProfile();
+        LogUtil.debug("MyActivity: notifyAccountChanged() - profile: " + profile);
 
         // Update data
         AppData.setLoginProfile(profile);

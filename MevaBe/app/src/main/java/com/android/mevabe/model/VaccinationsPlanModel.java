@@ -40,7 +40,7 @@ public class VaccinationsPlanModel extends BaseModel implements Serializable {
     public String getChildInfo() {
         String childInfo = "";
         if (child != null) {
-            childInfo = child.getName();
+            childInfo = String.format("%s (%s)", child.getName(), child.getYearsOld());
         }
 
         return childInfo;

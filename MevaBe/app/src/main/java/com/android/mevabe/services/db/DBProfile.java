@@ -81,7 +81,7 @@ public class DBProfile {
      * @return List<ProfileChildModel>
      */
     public List<ProfileChildModel> getMyChildren(String parentID) {
-        LogUtil.debug("DB: getChildren: parentID = " + parentID);
+        LogUtil.debug("DBProfile: getChildren() => parentID = " + parentID);
         List<ProfileChildModel> result = new ArrayList<>();
         SQLiteDatabase db = DBService.getReadableDatabase();
 

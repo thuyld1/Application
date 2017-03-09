@@ -10,6 +10,7 @@ import com.android.mevabe.common.Constants;
 import com.android.mevabe.common.utils.LogUtil;
 import com.android.mevabe.dashboard.DBRecyclerViewAdapter;
 import com.android.mevabe.model.DBFeedModel;
+import com.android.mevabe.model.WebViewModel;
 import com.android.mevabe.services.APIService;
 import com.android.mevabe.view.FragmentBase;
 import com.android.mevabe.view.LoadMoreRecyclerView;
@@ -113,7 +114,8 @@ public class BacSiMain extends FragmentBase implements DBRecyclerViewAdapter.IDa
     public void onItemClick(DBFeedModel item) {
         WebViewActivity act = new WebViewActivity();
         Intent intent = new Intent(getContext(), WebViewActivity.class);
-        intent.putExtra(Constants.INTENT_DATA, item);
+        WebViewModel info = new WebViewModel(item.getTitle(), item.getUrl());
+        intent.putExtra(Constants.INTENT_DATA, info);
         startActivity(intent);
     }
 

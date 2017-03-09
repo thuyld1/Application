@@ -9,17 +9,16 @@ import android.widget.TextView;
 
 import com.android.mevabe.R;
 import com.android.mevabe.WebViewActivity;
+import com.android.mevabe.common.AppData;
 import com.android.mevabe.common.Constants;
-import com.android.mevabe.common.utils.LogUtil;
 import com.android.mevabe.model.MyProfile;
 import com.android.mevabe.model.VaccinationsHistoryModel;
 import com.android.mevabe.model.VaccinationsPlanModel;
 import com.android.mevabe.model.WebViewModel;
 import com.android.mevabe.services.db.DBVacinations;
 import com.android.mevabe.view.FragmentLoginRequired;
+import com.facebook.Profile;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -35,7 +34,6 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
     private VaccinationsPlanAdapter planAdapder;
     private VaccinationsHistoryAdapter historyAdapter;
 
-    private MyProfile myProfile;
     private DBVacinations dbVacinations;
 
 
@@ -48,7 +46,6 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
     public void initView(View layoutView) {
         // Create db service
         dbVacinations = new DBVacinations();
-        myProfile = getMyProfile();
 
         // Bind view
         btnHeaderPlan = (TextView) layoutView.findViewById(R.id.btn_plan);
@@ -66,23 +63,35 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
         btnHeaderSelected = btnHeaderHistory;
         onClick(btnHeaderPlan);
 
-        List<VaccinationsPlanModel> list = dbVacinations.getVaccinationsPlan(myProfile, null);
-        planAdapder.refreshItems(list);
+        // Bind data to view
+        MyProfile myProfile = AppData.getMyProfile();
+        if (myProfile != null) {
+            // Bind vaccinations plan
+            List<VaccinationsPlanModel> list = dbVacinations.getVaccinationsPlan(myProfile, null);
+            planAdapder.refreshItems(list);
 
-        List<VaccinationsHistoryModel> listHistory = new ArrayList<>();
-        VaccinationsHistoryModel itemHistory = null;
-        long date = Calendar.getInstance().getTimeInMillis();
-        for (int i = 0; i < 100; i++) {
-            itemHistory = new VaccinationsHistoryModel(null, "Quinvacen", date, "Phòng quai bị, Rubela, thuỷ đậu, sốt phát ban");
-            itemHistory.setInjectionStatus(i % 4);
-            listHistory.add(itemHistory);
+            // Bind vaccinations history
+            List<VaccinationsHistoryModel> history = dbVacinations.getVaccinationsHistory(myProfile, null);
+            historyAdapter.refreshItems(history);
         }
-        historyAdapter.refreshItems(listHistory);
+    }
+
+    @Override
+    public void onAccountChangeFinish(Profile profile) {
+        // Refresh data only for case logged in
+        if (profile != null) {
+            // Refresh list vaccinations plan
+            List<VaccinationsPlanModel> list = dbVacinations.getVaccinationsPlan(AppData.getMyProfile(), null);
+            planAdapder.refreshItems(list);
+
+            // Refresh list vaccinations history
+            List<VaccinationsHistoryModel> history = dbVacinations.getVaccinationsHistory(AppData.getMyProfile(), null);
+            historyAdapter.refreshItems(history);
+        }
     }
 
     @Override
     public void onToolBarClicked(View v) {
-        LogUtil.debug("onToolBarClicked");
         if (vaccinationsView != null) {
             vaccinationsView.smoothScrollToPosition(0);
         }
