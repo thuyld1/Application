@@ -126,7 +126,8 @@ public class ProfileMain extends FragmentLoginRequired implements View.OnClickLi
     @Override
     public void onItemDelete(final ProfileChildModel child) {
         // Show confirm dialog
-        String message = String.format("Are you sure you want to delete child [%s] ?", child.getName());
+        String message = String.format("Are you sure you want to delete child \"%s\"?/n(All vaccination history and " +
+                "medical history will be removed)", child.getName());
         DialogUtil.showYesCancel(getContext(), message, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 // Delete from list children

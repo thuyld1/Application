@@ -114,8 +114,27 @@ public class DBProfile {
      * @param id long
      */
     public void deleteChild(long id) {
-        String whereClause = DBConstants.ID + "=" + id;
-        DBService.getWritableDatabase().delete(DBConstants.TB_CHILDREN,
-                whereClause, null);
+        SQLiteDatabase db = DBService.getWritableDatabase();
+
+        db.beginTransaction();
+        try {
+            // Delete child item
+            ContentValues values = new ContentValues();
+
+
+            String whereClause = DBConstants.ID + "=" + id;
+            db.update(DBConstants.TB_CHILDREN,values, whereClause, null);
+
+            // Delete vaccinations information of child
+            String vacHistoryWhere = DBConstants.VACHIS_CHILD_ID + "=" + id;
+            db.delete(DBConstants.TB_VACCINATION_HISTORY, vacHistoryWhere, null);
+
+
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            LogUtil.error(e);
+        } finally {
+            db.endTransaction();
+        }
     }
 }

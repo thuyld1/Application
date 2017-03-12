@@ -5,6 +5,9 @@ public class DBConstants {
     public static final String UPDATED = "updated";
     public static final String STATUS = "status";
 
+    public static final int STATUS_NORMAL = 0;
+    public static final int STATUS_DELETE = 9;
+
     // Table children
     public static final String TB_CHILDREN = "children";
     public static final String CHILD_PARENT_ID = "p_id";
