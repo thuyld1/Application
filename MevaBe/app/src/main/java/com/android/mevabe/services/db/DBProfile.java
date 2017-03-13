@@ -21,8 +21,10 @@ public class DBProfile {
      *
      * @param myPro Profile
      * @param child ProfileChildModel
+     * @return add child result
      */
-    public void addChild(Profile myPro, ProfileChildModel child) {
+    public boolean addChild(Profile myPro, ProfileChildModel child) {
+        boolean result = true;
         SQLiteDatabase db = DBService.getWritableDatabase();
 
         db.beginTransaction();
@@ -40,16 +42,20 @@ public class DBProfile {
             // Add vaccinations plan for new child
             if (id >= 0) {
                 addVaccinationsPlan(id);
+            } else {
+                result = false;
             }
-
 
             db.setTransactionSuccessful();
             child.setId(id);
         } catch (Exception e) {
             LogUtil.error(e);
+            result = false;
         } finally {
             db.endTransaction();
         }
+
+        return result;
     }
 
     /**
@@ -120,7 +126,7 @@ public class DBProfile {
         List<ProfileChildModel> result = new ArrayList<>();
         SQLiteDatabase db = DBService.getReadableDatabase();
 
-        String selectionFormat = "%s = %d AND %s = %d";
+        String selectionFormat = "%s = %s AND %s = %d";
         String selection = String.format(selectionFormat, DBConstants.CHILD_PARENT_ID, parentID, DBConstants.STATUS, DBConstants.STATUS_NORMAL);
         Cursor cursor = db.query(DBConstants.TB_CHILDREN,
                 new String[]{DBConstants.ID, DBConstants.CHILD_NAME, DBConstants.CHILD_BIRTH, DBConstants
