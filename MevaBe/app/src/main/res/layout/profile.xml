@@ -86,7 +86,7 @@
             android:id="@+id/child_empty_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Cập nhật ngay thông tin của bé để sử dụng nhiều chức năng thú vị bạn nhé ^^"
+            android:text="@string/empty_child"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="#444"
             android:textSize="16dp"/>
@@ -98,6 +98,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/login_required_view"/>
+        <include layout="@layout/common_login_required_view"/>
     </RelativeLayout>
+
+
 </RelativeLayout>

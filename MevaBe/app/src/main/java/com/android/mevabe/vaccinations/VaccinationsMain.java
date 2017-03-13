@@ -3,7 +3,6 @@ package com.android.mevabe.vaccinations;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,6 +16,7 @@ import com.android.mevabe.model.VaccinationsPlanModel;
 import com.android.mevabe.model.WebViewModel;
 import com.android.mevabe.services.db.DBVacinations;
 import com.android.mevabe.view.FragmentLoginRequired;
+import com.android.mevabe.view.RecyclerViewSupportEmpty;
 import com.facebook.Profile;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
     private TextView btnHeaderPlan;
     private TextView btnHeaderHistory;
 
-    private RecyclerView vaccinationsView;
+    private RecyclerViewSupportEmpty vaccinationsView;
     private VaccinationsPlanAdapter planAdapder;
     private VaccinationsHistoryAdapter historyAdapter;
 
@@ -50,7 +50,9 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
         // Bind view
         btnHeaderPlan = (TextView) layoutView.findViewById(R.id.btn_plan);
         btnHeaderHistory = (TextView) layoutView.findViewById(R.id.btn_history);
-        vaccinationsView = (RecyclerView) layoutView.findViewById(R.id.vaccinations_data_view);
+        vaccinationsView = (RecyclerViewSupportEmpty) layoutView.findViewById(R.id.vaccinations_data_view);
+        TextView emptyView = (TextView) layoutView.findViewById(R.id.empty_data);
+        vaccinationsView.setEmptyView(emptyView);
 
         // Set layout manager
         vaccinationsView.setLayoutManager(new LinearLayoutManager(getContext()));

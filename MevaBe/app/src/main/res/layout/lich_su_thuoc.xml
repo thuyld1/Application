@@ -10,8 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.android.mevabe.MainActivity"
-    tools:showIn="@layout/app_main_content">
+    tools:context="com.android.mevabe.MainActivity">
 
     <RelativeLayout
         android:id="@+id/content_view"
@@ -26,10 +25,22 @@
     </RelativeLayout>
 
 
+    <!-- For login view -->
     <RelativeLayout
         android:id="@+id/login_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <include layout="@layout/login_required_view" />
+
+        <include layout="@layout/common_login_required_view" />
+    </RelativeLayout>
+
+    <!-- For empty child layout -->
+    <RelativeLayout
+        android:id="@+id/empty_child_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <include layout="@layout/common_empty_child_view" />
     </RelativeLayout>
 </RelativeLayout>

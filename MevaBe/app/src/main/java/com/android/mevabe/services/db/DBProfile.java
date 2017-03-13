@@ -37,6 +37,12 @@ public class DBProfile {
             values.put(DBConstants.UPDATED, Calendar.getInstance().getTimeInMillis());
             long id = db.insert(DBConstants.TB_CHILDREN, null, values);
 
+            // Add vaccinations plan for new child
+            if (id >= 0) {
+                addVaccinationsPlan(id);
+            }
+
+
             db.setTransactionSuccessful();
             child.setId(id);
         } catch (Exception e) {
@@ -45,6 +51,35 @@ public class DBProfile {
             db.endTransaction();
         }
     }
+
+    /**
+     * Add vaccinations plan for new child
+     *
+     * @param childID long
+     */
+    private void addVaccinationsPlan(long childID) {
+        // Get list vaccines available
+        LogUtil.debug("DBProfile: insertVaccinationsPlan() => childID = " + childID);
+        SQLiteDatabase db = DBService.getReadableDatabase();
+        String selection = DBConstants.STATUS + "=" + DBConstants.STATUS_NORMAL;
+        Cursor cursor = db.query(DBConstants.TB_VACCINES,
+                new String[]{DBConstants.ID}, selection, null, null,
+                null, null);
+
+        // Parse data from DB
+        SQLiteDatabase dbWriter = DBService.getWritableDatabase();
+        while (cursor.moveToNext()) {
+            long vaccineID = cursor.getLong(0);
+
+            // Add new item
+            ContentValues values = new ContentValues();
+            values.put(DBConstants.VACPLAN_CHILD_ID, childID);
+            values.put(DBConstants.VACPLAN_VACCINE_ID, vaccineID);
+            dbWriter.insert(DBConstants.TB_VACCINATION_PLAN, null, values);
+        }
+        cursor.close();
+    }
+
 
     /**
      * Update child to DB
@@ -85,21 +120,22 @@ public class DBProfile {
         List<ProfileChildModel> result = new ArrayList<>();
         SQLiteDatabase db = DBService.getReadableDatabase();
 
-        String selection = DBConstants.CHILD_PARENT_ID + "=" + parentID;
+        String selectionFormat = "%s = %d AND %s = %d";
+        String selection = String.format(selectionFormat, DBConstants.CHILD_PARENT_ID, parentID, DBConstants.STATUS, DBConstants.STATUS_NORMAL);
         Cursor cursor = db.query(DBConstants.TB_CHILDREN,
                 new String[]{DBConstants.ID, DBConstants.CHILD_NAME, DBConstants.CHILD_BIRTH, DBConstants
                         .CHILD_GENDER}, selection, null, null,
                 null, null);
 
         // Parse data from DB
+        ProfileChildModel child = null;
         while (cursor.moveToNext()) {
             long id = cursor.getLong(0);
             String name = cursor.getString(1);
             long birth = cursor.getLong(2);
             int gender = cursor.getInt(3);
 
-
-            ProfileChildModel child = new ProfileChildModel(id, name, birth, gender);
+            child = new ProfileChildModel(id, name, birth, gender);
             result.add(child);
         }
         cursor.close();
@@ -114,21 +150,24 @@ public class DBProfile {
      * @param id long
      */
     public void deleteChild(long id) {
+        LogUtil.debug("DBProfile: deleteChild() => childID = " + id);
         SQLiteDatabase db = DBService.getWritableDatabase();
 
         db.beginTransaction();
         try {
             // Delete child item
             ContentValues values = new ContentValues();
-
+            values.put(DBConstants.STATUS, DBConstants.STATUS_DELETE);
 
             String whereClause = DBConstants.ID + "=" + id;
-            db.update(DBConstants.TB_CHILDREN,values, whereClause, null);
+            db.update(DBConstants.TB_CHILDREN, values, whereClause, null);
 
             // Delete vaccinations information of child
-            String vacHistoryWhere = DBConstants.VACHIS_CHILD_ID + "=" + id;
-            db.delete(DBConstants.TB_VACCINATION_HISTORY, vacHistoryWhere, null);
+            String vacPlanWhere = DBConstants.VACPLAN_CHILD_ID + "=" + id;
+            db.delete(DBConstants.TB_VACCINATION_PLAN, vacPlanWhere, null);
 
+            String vacHistoryWhere = DBConstants.VACHIS_CHILD_ID + "=" + id;
+            db.update(DBConstants.TB_VACCINATION_HISTORY, values, vacHistoryWhere, null);
 
             db.setTransactionSuccessful();
         } catch (Exception e) {
