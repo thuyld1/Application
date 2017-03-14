@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBG"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.android.mevabe.MainActivity">
+
+    <!-- Header view -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:padding="@dimen/content_space">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_marginLeft="@dimen/content_space"
+            android:src="@drawable/ic_menu_lich_tiem" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="90dp"
+            android:text="@string/left_menu_lich_tiem"
+            android:textAllCaps="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="#fff"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <!-- Vaccine information of child -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_bottom_border"
+        android:orientation="vertical"
+        android:padding="@dimen/content_space">
+
+        <TextView
+            android:id="@+id/child_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/vaccinations_content_space"
+            android:ellipsize="middle"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="#444"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/vaccinName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="middle"
+            android:maxLines="1"
+            android:paddingTop="@dimen/vaccinations_content_space"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="#444"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/vaccinDes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/vaccinations_content_space"
+            android:text="Description sample"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="#444"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/moreInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:background="@color/colorPrimary"
+            android:maxLines="1"
+            android:paddingBottom="2dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:paddingTop="2dp"
+            android:text="MORE"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="#fff"
+            android:textSize="11dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/vaccinPeriod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:paddingTop="@dimen/vaccinations_content_space"
+            android:text="Description sample"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="#444"
+            android:textSize="14dp" />
+    </LinearLayout>
+
+    <!-- Setting information -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_bottom_border"
+        android:orientation="vertical"
+        android:padding="@dimen/content_space">
+        <!-- Setting Injection Date -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/in_date_thumb"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentLeft="true"
+                android:background="@drawable/bg_rounded_corners"
+                android:scaleType="centerCrop"
+                android:src="@drawable/vaccinations_plan_add" />
+
+            <TextView
+                android:id="@+id/in_date_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/content_space"
+                android:layout_toRightOf="@id/in_date_thumb"
+                android:text="Select injection date"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textColor="#444"
+                android:textSize="14dp" />
+
+            <Button
+                android:id="@+id/in_date_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/in_date_title"
+                android:layout_marginLeft="@dimen/content_space"
+                android:layout_toRightOf="@id/in_date_thumb"
+                android:text="@string/add"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textColor="#fff"
+                android:textSize="14dp" />
+
+        </RelativeLayout>
+
+        <!-- Setting Place -->
+        <EditText
+            android:id="@+id/in_place"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
+        <!-- Setting Note -->
+        <EditText
+            android:id="@+id/in_note"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

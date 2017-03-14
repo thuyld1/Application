@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/vaccinations_padding_top_bottom">
 
     <ImageView
-        android:id="@+id/thumbnail"
+        android:id="@+id/add_vaccine_plan"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="@dimen/content_space"

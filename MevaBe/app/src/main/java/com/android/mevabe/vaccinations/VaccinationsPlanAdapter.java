@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.mevabe.R;
@@ -21,7 +22,9 @@ public class VaccinationsPlanAdapter extends RecyclerView.Adapter<RecyclerView.V
      * IVaccinationsPlanHandler interface for callback
      */
     public interface IVaccinationsPlanHandler {
-        void onItemClick(VaccinationsPlanModel item);
+        void showVaccineInfo(VaccinationsPlanModel item);
+
+        void addVaccinePlan(VaccinationsPlanModel item);
     }
 
     private IVaccinationsPlanHandler handler;
@@ -102,6 +105,7 @@ public class VaccinationsPlanAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     // ************* View Holder *********** //
     class MyViewHolder extends RecyclerView.ViewHolder {
+        private ImageView addVaccinePlan;
         private TextView childInfo;
         private TextView vaccinName;
         private TextView moreInfo;
@@ -110,6 +114,7 @@ public class VaccinationsPlanAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         public MyViewHolder(View view) {
             super(view);
+            this.addVaccinePlan = (ImageView) view.findViewById(R.id.add_vaccine_plan);
             this.childInfo = (TextView) view.findViewById(R.id.child_info);
             this.vaccinName = (TextView) view.findViewById(R.id.vaccinName);
             this.moreInfo = (TextView) view.findViewById(R.id.moreInfo);
@@ -126,14 +131,24 @@ public class VaccinationsPlanAdapter extends RecyclerView.Adapter<RecyclerView.V
 
             // Add listener
             if (handler != null) {
+                // Set "Show vaccine information" listener
                 View.OnClickListener listener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        handler.onItemClick(data);
+                        handler.showVaccineInfo(data);
                     }
                 };
                 vaccinName.setOnClickListener(listener);
                 moreInfo.setOnClickListener(listener);
+
+                // Set "Add add vaccine plan for child" listener
+                View.OnClickListener addVaccineListener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        handler.addVaccinePlan(data);
+                    }
+                };
+                addVaccinePlan.setOnClickListener(addVaccineListener);
             }
 
         }

@@ -25,6 +25,8 @@ import java.util.List;
  * Created by thuyld on 12/14/16.
  */
 public class VaccinationsMain extends FragmentLoginRequired implements View.OnClickListener, VaccinationsPlanAdapter.IVaccinationsPlanHandler {
+    private final int VACCINE_ADD_PLAN_CODE = 2017;
+
     // For view control
     private TextView btnHeaderSelected;
     private TextView btnHeaderPlan;
@@ -119,12 +121,22 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
 
     // ******** VaccinationsPlanAdapter.IVaccinationsPlanHandler ******** //
     @Override
-    public void onItemClick(VaccinationsPlanModel item) {
+    public void showVaccineInfo(VaccinationsPlanModel item) {
+        // Show details of vaccine in webview
         WebViewActivity act = new WebViewActivity();
         Intent intent = new Intent(getContext(), WebViewActivity.class);
         WebViewModel info = new WebViewModel(item.getVaccinName(), item.getVaccinURL());
         intent.putExtra(Constants.INTENT_DATA, info);
         startActivity(intent);
+    }
+
+    @Override
+    public void addVaccinePlan(VaccinationsPlanModel item) {
+        // Open add vaccine for child view
+        VaccinationsAddPlan act = new VaccinationsAddPlan();
+        Intent intent = new Intent(getContext(), VaccinationsAddPlan.class);
+        intent.putExtra(Constants.INTENT_DATA, item);
+        startActivityForResult(intent, VACCINE_ADD_PLAN_CODE);
     }
 
 }
