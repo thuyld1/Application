@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="15dp">
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="center_horizontal"
+              android:orientation="vertical"
+              android:padding="15dp">
 
     <TableLayout
         android:layout_width="wrap_content"
@@ -18,15 +18,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/child_name" />
+                android:text="@string/child_name"/>
 
             <EditText
                 android:id="@+id/child_name"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
+                android:inputType="textCapWords"
                 android:maxLength="20"
                 android:maxLines="1"
-                android:minWidth="300dp" />
+                android:minWidth="300dp"/>
         </TableRow>
 
         <!-- Date of birth -->
@@ -37,12 +38,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/child_date_of_birth" />
+                android:text="@string/child_date_of_birth"/>
 
             <Button
                 android:id="@+id/child_date_of_birth"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
         </TableRow>
 
         <!-- Gender -->
@@ -53,12 +54,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/child_gender" />
+                android:text="@string/child_gender"/>
 
             <ToggleButton
                 android:id="@+id/child_gender"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
         </TableRow>
 
     </TableLayout>
@@ -78,16 +79,16 @@
             android:text="@string/cancel"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="#444"
-            android:textSize="14dp" />
+            android:textSize="14dp"/>
 
         <Button
             android:id="@+id/dialog_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/add"
             android:backgroundTint="@color/colorPrimary"
+            android:text="@string/add"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="#fff"
-            android:textSize="14dp" />
+            android:textSize="14dp"/>
     </LinearLayout>
 </LinearLayout>

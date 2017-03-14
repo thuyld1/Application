@@ -73,6 +73,10 @@ public class VaccinationsPlanAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     // ************* Update data *********** //
+
+    /**
+     * Refresh data by new list data
+     */
     public void refreshItems(List result) {
         if (result != null) {
             listItems.clear();
@@ -100,6 +104,24 @@ public class VaccinationsPlanAdapter extends RecyclerView.Adapter<RecyclerView.V
                 notifyDataSetChanged();
             }
         });
+    }
+
+    /**
+     * Remove one item of list
+     *
+     * @param result VaccinationsPlanModel
+     */
+    public void removeItem(VaccinationsPlanModel result) {
+        if (result != null) {
+            listItems.remove(result);
+
+            context.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    notifyDataSetChanged();
+                }
+            });
+        }
     }
 
 

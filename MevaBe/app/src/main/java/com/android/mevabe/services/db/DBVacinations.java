@@ -1,5 +1,6 @@
 package com.android.mevabe.services.db;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -158,8 +159,43 @@ public class DBVacinations {
             cursor.close();
         }
 
-
         return result;
     }
 
+    /**
+     * Add vaccine plan for child
+     *
+     * @param childID       long
+     * @param vaccineID     long
+     * @param injectionDate long
+     * @param place         String
+     * @param note          String
+     * @return boolean
+     */
+    public boolean addVaccinePlan(long childID, long vaccineID, long injectionDate, String place, String note) {
+        boolean result = false;
+        SQLiteDatabase db = DBService.getWritableDatabase();
+
+        db.beginTransaction();
+        try {
+            // Add new item
+            ContentValues values = new ContentValues();
+            values.put(DBConstants.VACHIS_CHILD_ID, childID);
+            values.put(DBConstants.VACHIS_VACCINE_ID, vaccineID);
+            values.put(DBConstants.VACHIS_INJECTION_DATE, injectionDate);
+            values.put(DBConstants.VACHIS_INJECTION_PLACE, place);
+            values.put(DBConstants.VACHIS_INJECTION_NOTE, note);
+            long id = db.insert(DBConstants.TB_VACCINATION_HISTORY, null, values);
+            result = id >= 0;
+
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            LogUtil.error(e);
+        } finally {
+            db.endTransaction();
+        }
+
+        LogUtil.info("DBVacinations: addVaccinePlan => " + (result ? "SUCCESS" : "FAIL"));
+        return result;
+    }
 }

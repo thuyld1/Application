@@ -1,5 +1,6 @@
 package com.android.mevabe.vaccinations;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,7 +26,7 @@ import java.util.List;
  * Created by thuyld on 12/14/16.
  */
 public class VaccinationsMain extends FragmentLoginRequired implements View.OnClickListener, VaccinationsPlanAdapter.IVaccinationsPlanHandler {
-    private final int VACCINE_ADD_PLAN_CODE = 2017;
+    public static final int VACCINE_ADD_PLAN_CODE = 2017;
 
     // For view control
     private TextView btnHeaderSelected;
@@ -77,6 +78,19 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
             // Bind vaccinations history
             List<VaccinationsHistoryModel> history = dbVacinations.getVaccinationsHistory(myProfile, null);
             historyAdapter.refreshItems(history);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Case go back from add vaccine plan screen success
+        if (requestCode == VACCINE_ADD_PLAN_CODE && resultCode == Activity.RESULT_OK) {
+            // Remove child of vaccinations plan
+            VaccinationsPlanModel item = (VaccinationsPlanModel) data.getSerializableExtra
+                    (Constants.INTENT_DATA);
+            planAdapder.removeItem(item);
         }
     }
 
