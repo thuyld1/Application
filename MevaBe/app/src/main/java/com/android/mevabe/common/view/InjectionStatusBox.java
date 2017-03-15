@@ -30,14 +30,23 @@ public class InjectionStatusBox extends FrameLayout {
 
     public InjectionStatusBox(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        // Build GUI for view
+        buildGUI();
     }
 
     public InjectionStatusBox(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
+        // Build GUI for view
+        buildGUI();
     }
 
     public InjectionStatusBox(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+
+        // Build GUI for view
+        buildGUI();
     }
 
     /**
@@ -46,7 +55,7 @@ public class InjectionStatusBox extends FrameLayout {
     private void buildGUI() {
         // Load layer for view
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        View layout = inflater.inflate(R.layout.view_injection_status_box, this, true);
+        View layout = inflater.inflate(R.layout.view_injection_status_box, this, false);
         addView(layout);
 
         // Bind view
@@ -88,7 +97,7 @@ public class InjectionStatusBox extends FrameLayout {
 
                 // Calculate day count down
                 long countDown = inDate.getTimeInMillis() - current.getTimeInMillis();
-                inDayCountDown.setText("" + (countDown / 24 * 60 * 60 * 1000));
+                inDayCountDown.setText("" + (countDown / (24 * 60 * 60 * 1000)));
             }
 
         } else {
