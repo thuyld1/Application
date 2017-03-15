@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/status_box_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_rounded_corners">
+
+    <ImageView
+        android:id="@+id/status_thumb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/vaccinations_history_ok"
+        android:visibility="gone"/>
+
+    <com.android.mevabe.common.view.AutoResizeTextView
+        android:id="@+id/in_day_countdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="4"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textColor="#fff"
+        android:textSize="40sp"
+        android:textStyle="bold"/>
+
+    <com.android.mevabe.common.view.AutoResizeTextView
+        android:id="@+id/in_title_countdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:text="Ngày"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textColor="#fff"
+        android:textSize="16sp"/>
+
+</RelativeLayout>

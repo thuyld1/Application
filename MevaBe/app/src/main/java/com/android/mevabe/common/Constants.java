@@ -9,6 +9,7 @@ public class Constants {
     // Common constants
     public static final String INTENT_DATA = "myData";
 
+    public static final String VACCINE_INJECTION_DATE_FORMAT = "EEE dd-MM-yyyy";
 
     // For display data in dashboard
     public static final int FEED_VIEW_TYPE_ADD = 1;
@@ -24,8 +25,8 @@ public class Constants {
     public static final int GENDER_FEMALE = 0;
     public static final int GENDER_MALE = 1;
 
-    public static final int VACCIN_INJECTION_DATE_NA = 0;
-    public static final int VACCIN_INJECTION_DATE_INPROGRESS = 1;
-    public static final int VACCIN_INJECTION_DATE_OK = 2;
-    public static final int VACCIN_INJECTION_DATE_OVER = 3;
+    public static final int VACCINE_INJECTION_DATE_NA = 0;
+    public static final int VACCINE_INJECTION_DATE_INPROGRESS = 1;
+    public static final int VACCINE_INJECTION_DATE_OK = 2;
+    public static final int VACCINE_INJECTION_DATE_OVER = 3;
 }

@@ -1,4 +1,4 @@
-package com.android.mevabe;
+package com.android.mevabe.common.view;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -10,9 +10,9 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebViewClient;
 
+import com.android.mevabe.R;
 import com.android.mevabe.common.Constants;
-import com.android.mevabe.model.WebViewModel;
-import com.android.mevabe.view.SwipeWebView;
+import com.android.mevabe.common.model.WebViewModel;
 
 public class WebViewActivity extends AppCompatActivity {
     private SwipeWebView webView;

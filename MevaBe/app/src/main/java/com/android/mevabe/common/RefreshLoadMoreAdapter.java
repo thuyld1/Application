@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.android.mevabe.model.BaseModel;
-import com.android.mevabe.view.LoadMoreFooter;
+import com.android.mevabe.common.model.BaseModel;
+import com.android.mevabe.common.view.LoadMoreFooter;
 
 import java.util.ArrayList;
 import java.util.List;

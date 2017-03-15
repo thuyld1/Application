@@ -12,11 +12,11 @@ import com.android.mevabe.common.AppData;
 import com.android.mevabe.common.utils.AppUtil;
 import com.android.mevabe.common.utils.DialogUtil;
 import com.android.mevabe.common.utils.LogUtil;
-import com.android.mevabe.model.MyProfile;
-import com.android.mevabe.model.ProfileChildModel;
-import com.android.mevabe.services.db.DBProfile;
-import com.android.mevabe.view.FragmentLoginRequired;
-import com.android.mevabe.view.RecyclerViewSupportEmpty;
+import com.android.mevabe.common.model.MyProfile;
+import com.android.mevabe.common.model.ProfileChildModel;
+import com.android.mevabe.common.services.db.DBProfile;
+import com.android.mevabe.common.view.FragmentLoginRequired;
+import com.android.mevabe.common.view.RecyclerViewSupportEmpty;
 import com.facebook.Profile;
 import com.squareup.picasso.Picasso;
 

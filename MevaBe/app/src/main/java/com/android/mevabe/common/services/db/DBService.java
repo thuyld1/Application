@@ -1,4 +1,4 @@
-package com.android.mevabe.services.db;
+package com.android.mevabe.common.services.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

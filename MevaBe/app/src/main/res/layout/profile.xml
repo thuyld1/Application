@@ -76,7 +76,7 @@
         </LinearLayout>
 
 
-        <com.android.mevabe.view.RecyclerViewSupportEmpty
+        <com.android.mevabe.common.view.RecyclerViewSupportEmpty
             android:id="@+id/profile_children_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

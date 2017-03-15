@@ -9,15 +9,15 @@
     tools:context="com.android.mevabe.MainActivity"
     tools:showIn="@layout/app_main_content">
 
-    <com.android.mevabe.view.RefreshLoadMoreLayout
+    <com.android.mevabe.common.view.RefreshLoadMoreLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.android.mevabe.view.LoadMoreRecyclerView
+        <com.android.mevabe.common.view.LoadMoreRecyclerView
             android:id="@+id/itemsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical" />
-    </com.android.mevabe.view.RefreshLoadMoreLayout>
+    </com.android.mevabe.common.view.RefreshLoadMoreLayout>
 </RelativeLayout>

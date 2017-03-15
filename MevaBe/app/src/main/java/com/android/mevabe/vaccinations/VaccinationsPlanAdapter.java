@@ -9,9 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.mevabe.R;
-import com.android.mevabe.model.VaccinationsPlanModel;
+import com.android.mevabe.common.model.VaccinationsPlanModel;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -109,11 +110,19 @@ public class VaccinationsPlanAdapter extends RecyclerView.Adapter<RecyclerView.V
     /**
      * Remove one item of list
      *
-     * @param result VaccinationsPlanModel
+     * @param planID long
      */
-    public void removeItem(VaccinationsPlanModel result) {
-        if (result != null) {
-            listItems.remove(result);
+    public void removeItem(long planID) {
+        if (planID > 0) {
+            Iterator<VaccinationsPlanModel> iterator = listItems.iterator();
+            VaccinationsPlanModel plan = null;
+            while (iterator.hasNext()) {
+                plan = iterator.next();
+                if (plan.getPlanID() == planID) {
+                    iterator.remove();
+                    break;
+                }
+            }
 
             context.runOnUiThread(new Runnable() {
                 @Override

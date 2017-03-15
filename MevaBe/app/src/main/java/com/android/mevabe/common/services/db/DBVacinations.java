@@ -1,14 +1,14 @@
-package com.android.mevabe.services.db;
+package com.android.mevabe.common.services.db;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.android.mevabe.common.utils.LogUtil;
-import com.android.mevabe.model.MyProfile;
-import com.android.mevabe.model.ProfileChildModel;
-import com.android.mevabe.model.VaccinationsHistoryModel;
-import com.android.mevabe.model.VaccinationsPlanModel;
+import com.android.mevabe.common.model.MyProfile;
+import com.android.mevabe.common.model.ProfileChildModel;
+import com.android.mevabe.common.model.VaccinationsHistoryModel;
+import com.android.mevabe.common.model.VaccinationsPlanModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class DBVacinations {
         List<VaccinationsPlanModel> result = new ArrayList<>();
         SQLiteDatabase db = DBService.getReadableDatabase();
 
-        String sql = "SELECT p.c_id, v._id, v.v_code, v.v_name, v.v_period, v.v_short_des, v.v_url FROM " +
+        String sql = "SELECT p._id, p.c_id, v._id, v.v_code, v.v_name, v.v_period, v.v_short_des, v.v_url FROM " +
                 "vaccinations_plan p INNER JOIN vaccines v on p.v_id = v._id WHERE p.status = 0 %s AND v.status = 0;";
 
         String selection = null;
@@ -44,13 +44,15 @@ public class DBVacinations {
             // Parse data from DB
             while (cursor.moveToNext()) {
                 i = 0;
+                long planID = cursor.getLong(i++);
                 long vaccinID = cursor.getLong(++i);
                 long vaccinCode = cursor.getLong(++i);
                 String vaccineName = cursor.getString(++i);
                 String vaccinePeriod = cursor.getString(++i);
                 String vaccineShortDes = cursor.getString(++i);
                 String vaccineURL = cursor.getString(++i);
-                item = new VaccinationsPlanModel(child, vaccinID, vaccinCode, vaccineName, vaccinePeriod, vaccineShortDes, vaccineURL);
+                item = new VaccinationsPlanModel(child, planID, vaccinID, vaccinCode, vaccineName, vaccinePeriod,
+                        vaccineShortDes, vaccineURL);
                 result.add(item);
             }
             cursor.close();
@@ -64,7 +66,8 @@ public class DBVacinations {
             // Parse data from DB
             while (cursor.moveToNext()) {
                 i = 0;
-                long childID = cursor.getLong(i);
+                long planID = cursor.getLong(i);
+                long childID = cursor.getLong(++i);
                 long vaccinID = cursor.getLong(++i);
                 long vaccinCode = cursor.getLong(++i);
                 String vaccineName = cursor.getString(++i);
@@ -72,7 +75,8 @@ public class DBVacinations {
                 String vaccineShortDes = cursor.getString(++i);
                 String vaccineURL = cursor.getString(++i);
                 child = myProfile.getChild(childID);
-                item = new VaccinationsPlanModel(child, vaccinID, vaccinCode, vaccineName, vaccinePeriod, vaccineShortDes, vaccineURL);
+                item = new VaccinationsPlanModel(child, planID, vaccinID, vaccinCode, vaccineName, vaccinePeriod,
+                        vaccineShortDes, vaccineURL);
                 result.add(item);
             }
             cursor.close();
@@ -165,6 +169,7 @@ public class DBVacinations {
     /**
      * Add vaccine plan for child
      *
+     * @param planID        long
      * @param childID       long
      * @param vaccineID     long
      * @param injectionDate long
@@ -172,7 +177,8 @@ public class DBVacinations {
      * @param note          String
      * @return boolean
      */
-    public boolean addVaccinePlan(long childID, long vaccineID, long injectionDate, String place, String note) {
+    public boolean addVaccinePlan(long planID, long childID, long vaccineID, long injectionDate, String place, String
+            note) {
         boolean result = false;
         SQLiteDatabase db = DBService.getWritableDatabase();
 
@@ -187,6 +193,14 @@ public class DBVacinations {
             values.put(DBConstants.VACHIS_INJECTION_NOTE, note);
             long id = db.insert(DBConstants.TB_VACCINATION_HISTORY, null, values);
             result = id >= 0;
+
+            // Update plan status
+            if (result) {
+                ContentValues planValues = new ContentValues();
+                planValues.put(DBConstants.STATUS, DBConstants.STATUS_DELETE);
+                String where = DBConstants.ID + "=" + planID;
+                db.update(DBConstants.TB_VACCINATION_PLAN, planValues, where, null);
+            }
 
             db.setTransactionSuccessful();
         } catch (Exception e) {

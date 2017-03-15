@@ -1,4 +1,4 @@
-package com.android.mevabe.model;
+package com.android.mevabe.common.model;
 
 import java.io.Serializable;
 
@@ -6,6 +6,7 @@ import java.io.Serializable;
  * Created by leducthuy on 3/1/17.
  */
 public class VaccinationsPlanModel extends BaseModel implements Serializable {
+    private long planID;
     private long vaccinID;
     private long vaccinCode;
     private String vaccinName;
@@ -20,6 +21,7 @@ public class VaccinationsPlanModel extends BaseModel implements Serializable {
      * Constructor
      *
      * @param child        ProfileChildModel
+     * @param planID       long
      * @param vaccinID     long
      * @param vaccinCode   long
      * @param vaccinName   String
@@ -27,9 +29,11 @@ public class VaccinationsPlanModel extends BaseModel implements Serializable {
      * @param vaccinDes    String
      * @param vaccinURL    String
      */
-    public VaccinationsPlanModel(ProfileChildModel child, long vaccinID, long vaccinCode, String vaccinName, String vaccinPeriod, String vaccinDes, String vaccinURL) {
+    public VaccinationsPlanModel(ProfileChildModel child, long planID, long vaccinID, long vaccinCode, String
+            vaccinName, String vaccinPeriod, String vaccinDes, String vaccinURL) {
         this.child = child;
         this.childID = child.getId();
+        this.planID = planID;
         this.vaccinID = vaccinID;
         this.vaccinCode = vaccinCode;
         this.vaccinName = vaccinName;
@@ -109,5 +113,13 @@ public class VaccinationsPlanModel extends BaseModel implements Serializable {
 
     public void setChildID(long childID) {
         this.childID = childID;
+    }
+
+    public long getPlanID() {
+        return planID;
+    }
+
+    public void setPlanID(long planID) {
+        this.planID = planID;
     }
 }

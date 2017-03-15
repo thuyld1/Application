@@ -8,16 +8,16 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.android.mevabe.R;
-import com.android.mevabe.WebViewActivity;
+import com.android.mevabe.common.view.WebViewActivity;
 import com.android.mevabe.common.AppData;
 import com.android.mevabe.common.Constants;
-import com.android.mevabe.model.MyProfile;
-import com.android.mevabe.model.VaccinationsHistoryModel;
-import com.android.mevabe.model.VaccinationsPlanModel;
-import com.android.mevabe.model.WebViewModel;
-import com.android.mevabe.services.db.DBVacinations;
-import com.android.mevabe.view.FragmentLoginRequired;
-import com.android.mevabe.view.RecyclerViewSupportEmpty;
+import com.android.mevabe.common.model.MyProfile;
+import com.android.mevabe.common.model.VaccinationsHistoryModel;
+import com.android.mevabe.common.model.VaccinationsPlanModel;
+import com.android.mevabe.common.model.WebViewModel;
+import com.android.mevabe.common.services.db.DBVacinations;
+import com.android.mevabe.common.view.FragmentLoginRequired;
+import com.android.mevabe.common.view.RecyclerViewSupportEmpty;
 import com.facebook.Profile;
 
 import java.util.List;
@@ -67,18 +67,6 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
         btnHeaderHistory.setOnClickListener(this);
         btnHeaderSelected = btnHeaderHistory;
         onClick(btnHeaderPlan);
-
-        // Bind data to view
-        MyProfile myProfile = AppData.getMyProfile();
-        if (myProfile != null) {
-            // Bind vaccinations plan
-            List<VaccinationsPlanModel> list = dbVacinations.getVaccinationsPlan(myProfile, null);
-            planAdapder.refreshItems(list);
-
-            // Bind vaccinations history
-            List<VaccinationsHistoryModel> history = dbVacinations.getVaccinationsHistory(myProfile, null);
-            historyAdapter.refreshItems(history);
-        }
     }
 
     @Override
@@ -88,9 +76,8 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
         // Case go back from add vaccine plan screen success
         if (requestCode == VACCINE_ADD_PLAN_CODE && resultCode == Activity.RESULT_OK) {
             // Remove child of vaccinations plan
-            VaccinationsPlanModel item = (VaccinationsPlanModel) data.getSerializableExtra
-                    (Constants.INTENT_DATA);
-            planAdapder.removeItem(item);
+            long planID = data.getLongExtra(Constants.INTENT_DATA, -1);
+            planAdapder.removeItem(planID);
         }
     }
 
@@ -126,8 +113,18 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
             // Case user select history injection
             if (btnHeaderSelected.equals(btnHeaderHistory)) {
                 vaccinationsView.setAdapter(historyAdapter);
+
+                // Bind vaccinations history
+                MyProfile myProfile = AppData.getMyProfile();
+                List<VaccinationsHistoryModel> history = dbVacinations.getVaccinationsHistory(myProfile, null);
+                historyAdapter.refreshItems(history);
             } else {
                 vaccinationsView.setAdapter(planAdapder);
+
+                // Bind vaccinations plan
+                MyProfile myProfile = AppData.getMyProfile();
+                List<VaccinationsPlanModel> list = dbVacinations.getVaccinationsPlan(myProfile, null);
+                planAdapder.refreshItems(list);
             }
         }
 

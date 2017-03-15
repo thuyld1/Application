@@ -13,8 +13,8 @@ import android.widget.TextView;
 import com.android.mevabe.R;
 import com.android.mevabe.common.Constants;
 import com.android.mevabe.common.RefreshLoadMoreAdapter;
-import com.android.mevabe.view.RoundedTransformation;
-import com.android.mevabe.model.DBFeedModel;
+import com.android.mevabe.common.view.RoundedTransformation;
+import com.android.mevabe.common.model.DBFeedModel;
 import com.squareup.picasso.Picasso;
 
 /**

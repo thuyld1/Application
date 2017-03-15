@@ -15,13 +15,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.mevabe.BaseActivity;
+import com.android.mevabe.common.view.BaseActivity;
 import com.android.mevabe.R;
-import com.android.mevabe.WebViewActivity;
+import com.android.mevabe.common.view.WebViewActivity;
 import com.android.mevabe.common.Constants;
-import com.android.mevabe.model.VaccinationsPlanModel;
-import com.android.mevabe.model.WebViewModel;
-import com.android.mevabe.services.db.DBVacinations;
+import com.android.mevabe.common.model.VaccinationsPlanModel;
+import com.android.mevabe.common.model.WebViewModel;
+import com.android.mevabe.common.services.db.DBVacinations;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -108,7 +108,7 @@ public class VaccinationsAddPlan extends BaseActivity implements View.OnClickLis
         // Set up select injection data
         calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-        dateFormat = new SimpleDateFormat("EEEEEEEEEE dd/MM/yyyy");
+        dateFormat = new SimpleDateFormat(Constants.VACCINE_INJECTION_DATE_FORMAT);
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -181,18 +181,22 @@ public class VaccinationsAddPlan extends BaseActivity implements View.OnClickLis
         }
     }
 
+    /**
+     * Add vaccine plan for child
+     */
     private void addVaccinePlan() {
         // Add vaccine plan for child
         String place = getTextString(inPlace);
         String note = getTextString(inNote);
-        boolean result = dbVacinations.addVaccinePlan(data.getChildID(), data.getVaccinID(), calendar.getTimeInMillis(), place, note);
+        boolean result = dbVacinations.addVaccinePlan(data.getPlanID(), data.getChildID(), data.getVaccinID(), calendar
+                .getTimeInMillis(), place, note);
         if (result) {
             // Show success message
             Toast.makeText(this, getString(R.string.vaccinations_add_successful), Toast.LENGTH_SHORT).show();
 
             // Go back to list vaccine plan
             Intent returnIntent = new Intent();
-            returnIntent.putExtra(Constants.INTENT_DATA, data);
+            returnIntent.putExtra(Constants.INTENT_DATA, data.getPlanID());
             setResult(Activity.RESULT_OK, returnIntent);
             finish();
         } else {

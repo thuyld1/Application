@@ -3,7 +3,7 @@ package com.android.mevabe.lichsuthuoc;
 import android.view.View;
 
 import com.android.mevabe.R;
-import com.android.mevabe.view.FragmentLoginRequired;
+import com.android.mevabe.common.view.FragmentLoginRequired;
 import com.facebook.Profile;
 
 /**

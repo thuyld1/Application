@@ -1,11 +1,11 @@
-package com.android.mevabe.services.db;
+package com.android.mevabe.common.services.db;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.android.mevabe.common.utils.LogUtil;
-import com.android.mevabe.model.ProfileChildModel;
+import com.android.mevabe.common.model.ProfileChildModel;
 import com.facebook.Profile;
 
 import java.util.ArrayList;

@@ -5,16 +5,16 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
 import com.android.mevabe.R;
-import com.android.mevabe.WebViewActivity;
+import com.android.mevabe.common.view.WebViewActivity;
 import com.android.mevabe.common.Constants;
 import com.android.mevabe.common.utils.LogUtil;
 import com.android.mevabe.dashboard.DBRecyclerViewAdapter;
-import com.android.mevabe.model.DBFeedModel;
-import com.android.mevabe.model.WebViewModel;
-import com.android.mevabe.services.APIService;
-import com.android.mevabe.view.FragmentBase;
-import com.android.mevabe.view.LoadMoreRecyclerView;
-import com.android.mevabe.view.RefreshLoadMoreLayout;
+import com.android.mevabe.common.model.DBFeedModel;
+import com.android.mevabe.common.model.WebViewModel;
+import com.android.mevabe.common.services.APIService;
+import com.android.mevabe.common.view.FragmentBase;
+import com.android.mevabe.common.view.LoadMoreRecyclerView;
+import com.android.mevabe.common.view.RefreshLoadMoreLayout;
 
 import java.util.List;
 

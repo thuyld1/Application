@@ -1,4 +1,4 @@
-package com.android.mevabe;
+package com.android.mevabe.common.view;
 
 import android.support.v7.app.AppCompatActivity;
 

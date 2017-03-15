@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.android.mevabe.R;
 import com.android.mevabe.common.Constants;
-import com.android.mevabe.model.ProfileChildModel;
+import com.android.mevabe.common.model.ProfileChildModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
