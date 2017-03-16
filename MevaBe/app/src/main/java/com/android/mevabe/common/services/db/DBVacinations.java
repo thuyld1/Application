@@ -219,16 +219,12 @@ public class DBVacinations {
     }
 
     /**
-     * Add vaccine plan for child
+     * Update vaccine plan for child
      *
-     * @param planID        long
-     * @param injectionDate long
-     * @param status        int
-     * @param place         String
-     * @param note          String
+     * @param data VaccinationsHistoryModel
      * @return boolean
      */
-    public boolean updateVaccinePlan(long planID, long injectionDate, int status, String place, String note) {
+    public boolean updateVaccinePlan(VaccinationsHistoryModel data) {
         boolean result = false;
         SQLiteDatabase db = DBService.getWritableDatabase();
 
@@ -236,13 +232,13 @@ public class DBVacinations {
         try {
             // Update item
             ContentValues values = new ContentValues();
-            values.put(DBConstants.VACHIS_INJECTION_DATE, injectionDate);
-            values.put(DBConstants.VACHIS_INJECTION_STATUS, status);
-            values.put(DBConstants.VACHIS_INJECTION_PLACE, place);
-            values.put(DBConstants.VACHIS_INJECTION_NOTE, note);
+            values.put(DBConstants.VACHIS_INJECTION_DATE, data.getInDate());
+            values.put(DBConstants.VACHIS_INJECTION_STATUS, data.getInStatus());
+            values.put(DBConstants.VACHIS_INJECTION_PLACE, data.getInPlace());
+            values.put(DBConstants.VACHIS_INJECTION_NOTE, data.getInNote());
             values.put(DBConstants.UPDATED, Calendar.getInstance().getTimeInMillis());
 
-            String where = DBConstants.ID + "=" + planID;
+            String where = DBConstants.ID + "=" + data.getId();
             int effects = db.update(DBConstants.TB_VACCINATION_HISTORY, values, where, null);
             result = effects > 0;
 
@@ -254,6 +250,44 @@ public class DBVacinations {
         }
 
         LogUtil.info("DBVacinations: updateVaccinePlan => " + (result ? "SUCCESS" : "FAIL"));
+        return result;
+    }
+
+    /**
+     * Delete vaccine plan for child
+     *
+     * @param data VaccinationsHistoryModel
+     * @return boolean
+     */
+    public boolean deleteVaccinePlan(VaccinationsHistoryModel data) {
+        boolean result = false;
+        SQLiteDatabase db = DBService.getWritableDatabase();
+
+        db.beginTransaction();
+        try {
+            // Delete plan from history table
+            String where = DBConstants.ID + "=" + data.getId();
+            int effects = db.delete(DBConstants.TB_VACCINATION_HISTORY, where, null);
+            result = effects > 0;
+
+            // Update plan status
+            if (result) {
+                ContentValues planValues = new ContentValues();
+                planValues.put(DBConstants.STATUS, DBConstants.STATUS_NORMAL);
+                String whereInPlan = "%s = %d AND %s = %d";
+                whereInPlan = String.format(whereInPlan, DBConstants.VACPLAN_CHILD_ID, data.getChild().getId(),
+                        DBConstants.VACPLAN_VACCINE_ID, data.getVaccineID());
+                db.update(DBConstants.TB_VACCINATION_PLAN, planValues, whereInPlan, null);
+            }
+
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            LogUtil.error(e);
+        } finally {
+            db.endTransaction();
+        }
+
+        LogUtil.info("DBVacinations: deleteVaccinePlan => " + (result ? "SUCCESS" : "FAIL"));
         return result;
     }
 }

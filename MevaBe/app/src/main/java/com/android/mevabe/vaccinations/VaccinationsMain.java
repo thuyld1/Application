@@ -61,7 +61,7 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
         // Set layout manager
         vaccinationsView.setLayoutManager(new LinearLayoutManager(getContext()));
         planAdapder = new VaccinationsPlanAdapter(getActivity(), this);
-        historyAdapter = new VaccinationsHistoryAdapter(getActivity());
+        historyAdapter = new VaccinationsHistoryAdapter(getActivity(), this);
 
         // Set default tab is plan tab
         btnHeaderPlan.setOnClickListener(this);
@@ -74,11 +74,32 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        // Do nothing in case not success
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+
         // Case go back from add vaccine plan screen success
-        if (requestCode == VACCINE_ADD_PLAN_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == VACCINE_ADD_PLAN_CODE) {
             // Remove child of vaccinations plan
             long planID = data.getLongExtra(Constants.INTENT_DATA, -1);
             planAdapder.removeItem(planID);
+            return;
+        }
+
+        // Case go back from update vaccine plan screen success
+        if (requestCode == VACCINE_EDIT_PLAN_CODE) {
+            // Case user delete vaccinations plan
+            if (data.hasExtra(Constants.INTENT_DATA_DELETE)) {
+                long dataId = data.getLongExtra(Constants.INTENT_DATA, -1);
+                historyAdapter.removeItem(dataId);
+            } else {
+                // Case user update vaccinations plan
+                VaccinationsHistoryModel intentData = (VaccinationsHistoryModel) data.getSerializableExtra(Constants
+                        .INTENT_DATA);
+                historyAdapter.updateItem(intentData);
+            }
+            return;
         }
     }
 

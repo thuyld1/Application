@@ -98,13 +98,13 @@ public class VaccinationsPlanAdapter extends RecyclerView.Adapter<RecyclerView.V
     public synchronized void appendItem(VaccinationsPlanModel result) {
         if (result != null) {
             listItems.add(result);
+            context.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    notifyDataSetChanged();
+                }
+            });
         }
-        context.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                notifyDataSetChanged();
-            }
-        });
     }
 
     /**

@@ -2,6 +2,7 @@ package com.android.mevabe.vaccinations;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -19,6 +20,7 @@ import com.android.mevabe.common.Constants;
 import com.android.mevabe.common.model.VaccinationsHistoryModel;
 import com.android.mevabe.common.model.WebViewModel;
 import com.android.mevabe.common.services.db.DBVacinations;
+import com.android.mevabe.common.utils.DialogUtil;
 import com.android.mevabe.common.view.BaseActivity;
 import com.android.mevabe.common.view.InjectionStatusBox;
 import com.android.mevabe.common.view.WebViewActivity;
@@ -51,6 +53,7 @@ public class VaccinationsEditPlan extends BaseActivity implements View.OnClickLi
 
     // Block control buttons
     private Button btnCancel;
+    private Button btnDelete;
     private Button btnAdd;
 
     // Data
@@ -61,7 +64,7 @@ public class VaccinationsEditPlan extends BaseActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.vaccinations_add_plan);
+        setContentView(R.layout.vaccinations_edit_plan);
 
         // Get data
         this.data = (VaccinationsHistoryModel) getIntent().getSerializableExtra
@@ -99,9 +102,8 @@ public class VaccinationsEditPlan extends BaseActivity implements View.OnClickLi
 
         // Map view: control buttons
         this.btnCancel = (Button) findViewById(R.id.btn_cancel);
+        this.btnDelete = (Button) findViewById(R.id.btn_delete);
         this.btnAdd = (Button) findViewById(R.id.btn_add);
-        btnAdd.setText(R.string.ok);
-
 
         // Set up action control
         View.OnClickListener cancelListener = new View.OnClickListener() {
@@ -115,6 +117,7 @@ public class VaccinationsEditPlan extends BaseActivity implements View.OnClickLi
         moreInfo.setOnClickListener(this);
         inDateBtn.setOnClickListener(this);
         btnAdd.setOnClickListener(this);
+        btnDelete.setOnClickListener(this);
         inStatusOK.setOnClickListener(this);
         inStatusNA.setOnClickListener(this);
 
@@ -153,9 +156,10 @@ public class VaccinationsEditPlan extends BaseActivity implements View.OnClickLi
         vaccinDes.setText(data.getVaccineShortDes());
 
         // Set default status is not finish injection yet
-        inStatusNA.bindData(Constants.VACCINE_INJECTION_STATUS_NA, calendar.getTimeInMillis());
+        inStatusNA.bindData(Constants.VACCINE_INJECTION_STATUS_NA, data.getInDate());
+        inStatusNA.setSelected(data.getInStatus() == Constants.VACCINE_INJECTION_STATUS_NA);
         inStatusOK.bindData(Constants.VACCINE_INJECTION_STATUS_OK, 0);
-        inStatusOK.setSelected(false);
+        inStatusOK.setSelected(data.getInStatus() == Constants.VACCINE_INJECTION_STATUS_OK);
 
         inPlace.setText(data.getInPlace());
         inNote.setText(data.getInNote());
@@ -198,6 +202,9 @@ public class VaccinationsEditPlan extends BaseActivity implements View.OnClickLi
         } else if (v.equals(btnAdd)) {
             // Update data to DB
             updateVaccinePlan();
+        } else if (v.equals(btnDelete)) {
+            // Delete plan data
+            deleteVaccinePlan();
         } else if (v.equals(inStatusNA)) {
             // Case user choose status not finish
             if (!inStatusNA.isSelected()) {
@@ -217,26 +224,61 @@ public class VaccinationsEditPlan extends BaseActivity implements View.OnClickLi
      * Update vaccine plan for child
      */
     private void updateVaccinePlan() {
-        // Add vaccine plan for child
-        String place = getTextString(inPlace);
-        String note = getTextString(inNote);
-        int inStatus = Constants.VACCINE_INJECTION_STATUS_OK;
+        // Update vaccine plan for child
+        data.setInDate(calendar.getTimeInMillis());
         if (inStatusNA.isSelected()) {
-            inStatus = Constants.VACCINE_INJECTION_STATUS_NA;
+            data.setInStatus(Constants.VACCINE_INJECTION_STATUS_NA);
+        } else {
+            data.setInStatus(Constants.VACCINE_INJECTION_STATUS_OK);
         }
-        boolean result = dbVacinations.updateVaccinePlan(data.getId(), calendar.getTimeInMillis(), inStatus, place, note);
+        data.setInPlace(getTextString(inPlace));
+        data.setInNote(getTextString(inNote));
+
+        boolean result = dbVacinations.updateVaccinePlan(data);
         if (result) {
             // Show success message
-            Toast.makeText(this, getString(R.string.vaccinations_add_successful), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.vaccinations_edit_successful), Toast.LENGTH_SHORT).show();
 
             // Go back to list vaccine plan
             Intent returnIntent = new Intent();
+            returnIntent.putExtra(Constants.INTENT_DATA, data);
             setResult(Activity.RESULT_OK, returnIntent);
             finish();
         } else {
             // Show error message
-            Toast.makeText(this, getString(R.string.vaccinations_add_fail), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.vaccinations_edit_fail), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    /**
+     * Delete vaccine plan for child
+     */
+    private void deleteVaccinePlan() {
+        // Show confirm dialog
+        String message = "Are you sure you want to delete this vaccine plan?";
+        DialogUtil.showYesCancel(this, message, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Update vaccine plan for child
+                boolean result = dbVacinations.deleteVaccinePlan(data);
+                if (result) {
+                    // Show success message
+                    Toast.makeText(VaccinationsEditPlan.this, getString(R.string.vaccinations_edit_successful), Toast
+                            .LENGTH_SHORT).show();
+
+                    // Go back to list vaccine plan
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra(Constants.INTENT_DATA_DELETE, true);
+                    returnIntent.putExtra(Constants.INTENT_DATA, data.getId());
+                    setResult(Activity.RESULT_OK, returnIntent);
+                    finish();
+                } else {
+                    // Show error message
+                    Toast.makeText(VaccinationsEditPlan.this, getString(R.string.vaccinations_edit_fail), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
     }
 
     /**

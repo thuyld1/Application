@@ -7,7 +7,8 @@ package com.android.mevabe.common;
 
 public class Constants {
     // Common constants
-    public static final String INTENT_DATA = "myData";
+    public static final String INTENT_DATA = "INTENT_DATA";
+    public static final String INTENT_DATA_DELETE = "INTENT_DATA_DELETE";
 
     public static final String VACCINE_INJECTION_DATE_FORMAT = "EEE dd-MM-yyyy";
 

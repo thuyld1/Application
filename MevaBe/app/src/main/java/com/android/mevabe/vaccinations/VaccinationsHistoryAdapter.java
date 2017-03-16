@@ -15,7 +15,10 @@ import com.android.mevabe.common.view.InjectionStatusBox;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
+
+import static android.R.attr.data;
 
 /**
  * VaccinationsHistoryAdapter controls view of list "Chọn lịch tiêm" tab
@@ -39,10 +42,12 @@ public class VaccinationsHistoryAdapter extends RecyclerView.Adapter<RecyclerVie
      * Constructor
      *
      * @param context Context
+     * @param handler IVaccinationsHistoryHandler
      */
-    public VaccinationsHistoryAdapter(Activity context) {
+    public VaccinationsHistoryAdapter(Activity context, IVaccinationsHistoryHandler handler) {
         this.listItems = new ArrayList<>();
         this.context = context;
+        this.handler = handler;
 
         vaccinInjectionDateFormat = context.getString(R.string.vaccinations_injection_date);
     }
@@ -86,18 +91,89 @@ public class VaccinationsHistoryAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     /**
-     * Update data when load more has finished
+     * Append item into list data
      */
-    public synchronized void appendItem(VaccinationsHistoryModel result) {
-        if (result != null) {
-            listItems.add(result);
+    public synchronized void appendItem(VaccinationsHistoryModel data) {
+        if (data != null) {
+            listItems.add(data);
+            context.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    notifyDataSetChanged();
+                }
+            });
         }
-        context.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                notifyDataSetChanged();
+    }
+
+    /**
+     * Update item data into one of list data
+     */
+    public synchronized void updateItem(VaccinationsHistoryModel data) {
+        if (data != null) {
+            Iterator<VaccinationsHistoryModel> iterator = listItems.iterator();
+            VaccinationsHistoryModel item = null;
+            while (iterator.hasNext()) {
+                item = iterator.next();
+                if (item.getId() == data.getId()) {
+                    item.updateSettingInfo(data);
+                    break;
+                }
             }
-        });
+            context.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    notifyDataSetChanged();
+                }
+            });
+        }
+    }
+
+    /**
+     * Remove item data from list data
+     */
+    public synchronized void removeItem(VaccinationsHistoryModel data) {
+        if (data != null) {
+            Iterator<VaccinationsHistoryModel> iterator = listItems.iterator();
+            VaccinationsHistoryModel item = null;
+            while (iterator.hasNext()) {
+                item = iterator.next();
+                if (item.getId() == data.getId()) {
+                    iterator.remove();
+                    break;
+                }
+            }
+
+            context.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    notifyDataSetChanged();
+                }
+            });
+        }
+    }
+
+    /**
+     * Remove item data from list data
+     */
+    public synchronized void removeItem(long dataId) {
+        if (dataId >= 0) {
+            Iterator<VaccinationsHistoryModel> iterator = listItems.iterator();
+            VaccinationsHistoryModel item = null;
+            while (iterator.hasNext()) {
+                item = iterator.next();
+                if (item.getId() == dataId) {
+                    iterator.remove();
+                    break;
+                }
+            }
+
+            context.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    notifyDataSetChanged();
+                }
+            });
+        }
     }
 
 

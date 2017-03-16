@@ -41,6 +41,13 @@ public class VaccinationsHistoryModel extends BaseModel implements Serializable 
         return childInfo;
     }
 
+    public void updateSettingInfo(VaccinationsHistoryModel other) {
+        this.inDate = other.getInDate();
+        this.inStatus = other.getInStatus();
+        this.inNote = other.getInNote();
+        this.inPlace = other.getInPlace();
+    }
+
     public ProfileChildModel getChild() {
         return child;
     }
