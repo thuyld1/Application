@@ -63,6 +63,16 @@ public class VaccinationsAddPlan extends BaseActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vaccinations_add_plan);
 
+        // Get data
+        this.data = (VaccinationsPlanModel) getIntent().getSerializableExtra
+                (Constants.INTENT_DATA);
+
+        // Finish screen if data invalid
+        if (data == null) {
+            finish();
+            return;
+        }
+
         // Set up toolbar
         setTitle(getString(R.string.vaccinations_add_screen_title));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -135,16 +145,6 @@ public class VaccinationsAddPlan extends BaseActivity implements View.OnClickLis
      * Bind data to view
      */
     private void bindData() {
-        // Get data
-        this.data = (VaccinationsPlanModel) getIntent().getSerializableExtra
-                (Constants.INTENT_DATA);
-
-        // Finish screen if data invalid
-        if (data == null) {
-            finish();
-            return;
-        }
-
         // Show  text vaccine information for child
         childInfo.setText(data.getChildInfo());
         vaccinName.setText(String.format(getString(R.string.vaccinations_name), data.getVaccinName()));

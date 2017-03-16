@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class VaccinationsHistoryModel extends BaseModel implements Serializable {
     private ProfileChildModel child;
 
-    private long historyID;
+    private long id;
     private long inDate;
     private int inStatus;
     private String inPlace;
@@ -47,14 +47,6 @@ public class VaccinationsHistoryModel extends BaseModel implements Serializable 
 
     public void setChild(ProfileChildModel child) {
         this.child = child;
-    }
-
-    public long getHistoryID() {
-        return historyID;
-    }
-
-    public void setHistoryID(long historyID) {
-        this.historyID = historyID;
     }
 
     public long getInDate() {
@@ -143,6 +135,14 @@ public class VaccinationsHistoryModel extends BaseModel implements Serializable 
 
     public void setInStatus(int inStatus) {
         this.inStatus = inStatus;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }
 

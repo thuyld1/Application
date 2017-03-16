@@ -4,13 +4,14 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.android.mevabe.common.utils.LogUtil;
 import com.android.mevabe.common.model.MyProfile;
 import com.android.mevabe.common.model.ProfileChildModel;
 import com.android.mevabe.common.model.VaccinationsHistoryModel;
 import com.android.mevabe.common.model.VaccinationsPlanModel;
+import com.android.mevabe.common.utils.LogUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -117,7 +118,7 @@ public class DBVacinations {
 
                 // Parse data from cursor
                 i = 0;
-                item.setHistoryID(cursor.getLong(i));
+                item.setId(cursor.getLong(i));
                 ++i;
                 item.setInDate(cursor.getLong(++i));
                 item.setInStatus(cursor.getInt(++i));
@@ -147,7 +148,7 @@ public class DBVacinations {
 
                 // Parse data from cursor
                 i = 0;
-                item.setHistoryID(cursor.getLong(i));
+                item.setId(cursor.getLong(i));
                 item.setChild(myProfile.getChild(cursor.getLong(++i)));
                 item.setInDate(cursor.getLong(++i));
                 item.setInStatus(cursor.getInt(++i));
@@ -214,6 +215,45 @@ public class DBVacinations {
         }
 
         LogUtil.info("DBVacinations: addVaccinePlan => " + (result ? "SUCCESS" : "FAIL"));
+        return result;
+    }
+
+    /**
+     * Add vaccine plan for child
+     *
+     * @param planID        long
+     * @param injectionDate long
+     * @param status        int
+     * @param place         String
+     * @param note          String
+     * @return boolean
+     */
+    public boolean updateVaccinePlan(long planID, long injectionDate, int status, String place, String note) {
+        boolean result = false;
+        SQLiteDatabase db = DBService.getWritableDatabase();
+
+        db.beginTransaction();
+        try {
+            // Update item
+            ContentValues values = new ContentValues();
+            values.put(DBConstants.VACHIS_INJECTION_DATE, injectionDate);
+            values.put(DBConstants.VACHIS_INJECTION_STATUS, status);
+            values.put(DBConstants.VACHIS_INJECTION_PLACE, place);
+            values.put(DBConstants.VACHIS_INJECTION_NOTE, note);
+            values.put(DBConstants.UPDATED, Calendar.getInstance().getTimeInMillis());
+
+            String where = DBConstants.ID + "=" + planID;
+            int effects = db.update(DBConstants.TB_VACCINATION_HISTORY, values, where, null);
+            result = effects > 0;
+
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            LogUtil.error(e);
+        } finally {
+            db.endTransaction();
+        }
+
+        LogUtil.info("DBVacinations: updateVaccinePlan => " + (result ? "SUCCESS" : "FAIL"));
         return result;
     }
 }

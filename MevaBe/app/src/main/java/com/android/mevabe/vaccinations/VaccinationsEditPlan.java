@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.android.mevabe.R;
 import com.android.mevabe.common.Constants;
 import com.android.mevabe.common.model.VaccinationsHistoryModel;
-import com.android.mevabe.common.model.VaccinationsPlanModel;
 import com.android.mevabe.common.model.WebViewModel;
 import com.android.mevabe.common.services.db.DBVacinations;
 import com.android.mevabe.common.view.BaseActivity;
@@ -64,6 +63,16 @@ public class VaccinationsEditPlan extends BaseActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vaccinations_add_plan);
 
+        // Get data
+        this.data = (VaccinationsHistoryModel) getIntent().getSerializableExtra
+                (Constants.INTENT_DATA);
+
+        // Finish screen if data invalid
+        if (data == null) {
+            finish();
+            return;
+        }
+
         // Set up toolbar
         setTitle(getString(R.string.vaccinations_add_screen_title));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -91,6 +100,7 @@ public class VaccinationsEditPlan extends BaseActivity implements View.OnClickLi
         // Map view: control buttons
         this.btnCancel = (Button) findViewById(R.id.btn_cancel);
         this.btnAdd = (Button) findViewById(R.id.btn_add);
+        btnAdd.setText(R.string.ok);
 
 
         // Set up action control
@@ -110,7 +120,7 @@ public class VaccinationsEditPlan extends BaseActivity implements View.OnClickLi
 
         // Set up select injection data
         calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+        calendar.setTimeInMillis(data.getInDate());
         dateFormat = new SimpleDateFormat(Constants.VACCINE_INJECTION_DATE_FORMAT);
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -136,26 +146,19 @@ public class VaccinationsEditPlan extends BaseActivity implements View.OnClickLi
      * Bind data to view
      */
     private void bindData() {
-        // Get data
-        this.data = (VaccinationsHistoryModel) getIntent().getSerializableExtra
-                (Constants.INTENT_DATA);
-
-        // Finish screen if data invalid
-        if (data == null) {
-            finish();
-            return;
-        }
-
         // Show  text vaccine information for child
         childInfo.setText(data.getChildInfo());
-        vaccinName.setText(String.format(getString(R.string.vaccinations_name), data.getVaccinName()));
-        vaccinPeriod.setText(String.format(getString(R.string.vaccinations_period), data.getVaccinPeriod()));
-        vaccinDes.setText(data.getVaccinDes());
+        vaccinName.setText(String.format(getString(R.string.vaccinations_name), data.getVaccineName()));
+        vaccinPeriod.setText(String.format(getString(R.string.vaccinations_period), data.getVaccinePeriod()));
+        vaccinDes.setText(data.getVaccineShortDes());
 
         // Set default status is not finish injection yet
         inStatusNA.bindData(Constants.VACCINE_INJECTION_STATUS_NA, calendar.getTimeInMillis());
         inStatusOK.bindData(Constants.VACCINE_INJECTION_STATUS_OK, 0);
         inStatusOK.setSelected(false);
+
+        inPlace.setText(data.getInPlace());
+        inNote.setText(data.getInNote());
     }
 
     /**
@@ -185,7 +188,7 @@ public class VaccinationsEditPlan extends BaseActivity implements View.OnClickLi
             // Show details of vaccine in webview
             WebViewActivity act = new WebViewActivity();
             Intent intent = new Intent(getApplicationContext(), WebViewActivity.class);
-            WebViewModel info = new WebViewModel(data.getVaccinName(), data.getVaccinURL());
+            WebViewModel info = new WebViewModel(data.getVaccineName(), data.getVaccineURL());
             intent.putExtra(Constants.INTENT_DATA, info);
             startActivity(intent);
 
@@ -193,8 +196,8 @@ public class VaccinationsEditPlan extends BaseActivity implements View.OnClickLi
             // Show select date of birth dialog
             datePicker.show();
         } else if (v.equals(btnAdd)) {
-            // Add data to DB
-            addVaccinePlan();
+            // Update data to DB
+            updateVaccinePlan();
         } else if (v.equals(inStatusNA)) {
             // Case user choose status not finish
             if (!inStatusNA.isSelected()) {
@@ -211,9 +214,9 @@ public class VaccinationsEditPlan extends BaseActivity implements View.OnClickLi
     }
 
     /**
-     * Add vaccine plan for child
+     * Update vaccine plan for child
      */
-    private void addVaccinePlan() {
+    private void updateVaccinePlan() {
         // Add vaccine plan for child
         String place = getTextString(inPlace);
         String note = getTextString(inNote);
@@ -221,15 +224,13 @@ public class VaccinationsEditPlan extends BaseActivity implements View.OnClickLi
         if (inStatusNA.isSelected()) {
             inStatus = Constants.VACCINE_INJECTION_STATUS_NA;
         }
-        boolean result = dbVacinations.addVaccinePlan(data.getPlanID(), data.getChildID(), data.getVaccinID(), calendar
-                .getTimeInMillis(), inStatus, place, note);
+        boolean result = dbVacinations.updateVaccinePlan(data.getId(), calendar.getTimeInMillis(), inStatus, place, note);
         if (result) {
             // Show success message
             Toast.makeText(this, getString(R.string.vaccinations_add_successful), Toast.LENGTH_SHORT).show();
 
             // Go back to list vaccine plan
             Intent returnIntent = new Intent();
-            returnIntent.putExtra(Constants.INTENT_DATA, data.getPlanID());
             setResult(Activity.RESULT_OK, returnIntent);
             finish();
         } else {
