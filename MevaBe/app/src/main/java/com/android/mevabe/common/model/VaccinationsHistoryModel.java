@@ -10,6 +10,7 @@ public class VaccinationsHistoryModel extends BaseModel implements Serializable 
 
     private long historyID;
     private long inDate;
+    private int inStatus;
     private String inPlace;
     private String inNote;
     private int status;
@@ -134,6 +135,14 @@ public class VaccinationsHistoryModel extends BaseModel implements Serializable 
 
     public void setVaccineURL(String vaccineURL) {
         this.vaccineURL = vaccineURL;
+    }
+
+    public int getInStatus() {
+        return inStatus;
+    }
+
+    public void setInStatus(int inStatus) {
+        this.inStatus = inStatus;
     }
 }
 

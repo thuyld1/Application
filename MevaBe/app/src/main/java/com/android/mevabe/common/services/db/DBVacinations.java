@@ -98,7 +98,7 @@ public class DBVacinations {
         List<VaccinationsHistoryModel> result = new ArrayList<>();
         SQLiteDatabase db = DBService.getReadableDatabase();
 
-        String sql = "SELECT h._id, h.c_id, h.in_date, h.in_place, h.in_note, h.status, v._id, v.v_code, v.v_name, v" +
+        String sql = "SELECT h._id, h.c_id, h.in_date, h.in_status, h.in_place, h.in_note, h.status, v._id, v.v_code, v.v_name, v" +
                 ".v_period, v.v_short_des, v.v_url FROM vaccinations_history h INNER JOIN vaccines v on h.v_id = v" +
                 "._id WHERE h.status = 0 %s AND v.status = 0;";
 
@@ -120,6 +120,7 @@ public class DBVacinations {
                 item.setHistoryID(cursor.getLong(i));
                 ++i;
                 item.setInDate(cursor.getLong(++i));
+                item.setInStatus(cursor.getInt(++i));
                 item.setInPlace(cursor.getString(++i));
                 item.setInNote(cursor.getString(++i));
                 item.setStatus(cursor.getInt(++i));
@@ -149,6 +150,7 @@ public class DBVacinations {
                 item.setHistoryID(cursor.getLong(i));
                 item.setChild(myProfile.getChild(cursor.getLong(++i)));
                 item.setInDate(cursor.getLong(++i));
+                item.setInStatus(cursor.getInt(++i));
                 item.setInPlace(cursor.getString(++i));
                 item.setInNote(cursor.getString(++i));
                 item.setStatus(cursor.getInt(++i));
@@ -173,12 +175,13 @@ public class DBVacinations {
      * @param childID       long
      * @param vaccineID     long
      * @param injectionDate long
+     * @param status        int
      * @param place         String
      * @param note          String
      * @return boolean
      */
-    public boolean addVaccinePlan(long planID, long childID, long vaccineID, long injectionDate, String place, String
-            note) {
+    public boolean addVaccinePlan(long planID, long childID, long vaccineID, long injectionDate,
+                                  int status, String place, String note) {
         boolean result = false;
         SQLiteDatabase db = DBService.getWritableDatabase();
 
@@ -189,6 +192,7 @@ public class DBVacinations {
             values.put(DBConstants.VACHIS_CHILD_ID, childID);
             values.put(DBConstants.VACHIS_VACCINE_ID, vaccineID);
             values.put(DBConstants.VACHIS_INJECTION_DATE, injectionDate);
+            values.put(DBConstants.VACHIS_INJECTION_STATUS, status);
             values.put(DBConstants.VACHIS_INJECTION_PLACE, place);
             values.put(DBConstants.VACHIS_INJECTION_NOTE, note);
             long id = db.insert(DBConstants.TB_VACCINATION_HISTORY, null, values);

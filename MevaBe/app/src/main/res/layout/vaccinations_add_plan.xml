@@ -114,14 +114,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/in_date_thumb"
+                <com.android.mevabe.common.view.InjectionStatusBox
+                    android:id="@+id/in_status_ok"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:layout_alignParentRight="true"
-                    android:background="@drawable/bg_rounded_corners"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/vaccinations_plan_add"/>
+                    android:layout_alignParentRight="true"/>
+
+                <com.android.mevabe.common.view.InjectionStatusBox
+                    android:id="@+id/in_status_na"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginRight="@dimen/content_space"
+                    android:layout_toLeftOf="@id/in_status_ok"/>
+
 
                 <TextView
                     android:id="@+id/in_date_title"
@@ -161,12 +166,16 @@
             <EditText
                 android:id="@+id/in_place"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="40dp"
                 android:background="@color/colorSeperate"
                 android:hint="@string/vaccinations_add_in_place_hint"
+                android:imeOptions="actionNext"
                 android:maxLength="100"
                 android:maxLines="1"
-                android:padding="3dp"/>
+                android:nextFocusForward="@+id/in_note"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:textSize="14dp"/>
 
             <!-- Setting Note -->
             <TextView
@@ -183,12 +192,15 @@
             <EditText
                 android:id="@+id/in_note"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="80dp"
                 android:background="@color/colorSeperate"
                 android:hint="@string/vaccinations_add_in_note_hint"
-                android:maxLength="100"
+                android:imeOptions="actionDone"
+                android:maxLength="200"
                 android:maxLines="3"
-                android:padding="3dp"/>
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:textSize="14dp"/>
         </LinearLayout>
 
         <!-- Finish button -->

@@ -21,8 +21,16 @@ import java.util.List;
  * VaccinationsHistoryAdapter controls view of list "Chọn lịch tiêm" tab
  */
 public class VaccinationsHistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    /**
+     * IVaccinationsPlanHandler interface for callback
+     */
+    public interface IVaccinationsHistoryHandler {
+        void editVaccinePlan(VaccinationsHistoryModel item);
+    }
+
     protected List<VaccinationsHistoryModel> listItems;
     protected Activity context;
+    private IVaccinationsHistoryHandler handler;
 
     private SimpleDateFormat df = new SimpleDateFormat(Constants.VACCINE_INJECTION_DATE_FORMAT);
     private String vaccinInjectionDateFormat;
@@ -112,7 +120,7 @@ public class VaccinationsHistoryAdapter extends RecyclerView.Adapter<RecyclerVie
 
         public void bindData(final VaccinationsHistoryModel data) {
             // Setting vaccinations status
-            vaccinationsStatus.bindData(data.getStatus(), data.getInDate());
+            vaccinationsStatus.bindData(data.getInStatus(), data.getInDate());
 
             //Setting text view title
             vaccinName.setText(data.getVaccineName());
@@ -125,28 +133,14 @@ public class VaccinationsHistoryAdapter extends RecyclerView.Adapter<RecyclerVie
                 injectionDate.setText(String.format(vaccinInjectionDateFormat, df.format(cal.getTime())));
             }
 
-//            switch (data.getStatus()) {
-//                case Constants.VACCIN_INJECTION_DATE_INPROGRESS:
-//                    String formatNA = context.getString(R.string.vaccinations_injection_na, data.getVaccineName());
-//                    vaccinName.setText(formatNA);
-//                    vaccinationsStatus.setImageResource(R.drawable.vaccinations_history_na);
-//                    break;
-//                case Constants.VACCIN_INJECTION_DATE_OK:
-//                    String formatOK = context.getString(R.string.vaccinations_injection_ok, data.getVaccineName());
-//                    vaccinName.setText(formatOK);
-//                    vaccinationsStatus.setImageResource(R.drawable.vaccinations_history_ok);
-//                    break;
-//                case Constants.VACCIN_INJECTION_DATE_OVER:
-//                    String formatOver = context.getString(R.string.vaccinations_injection_over, data.getVaccineName());
-//                    vaccinName.setText(formatOver);
-//                    vaccinationsStatus.setImageResource(R.drawable.vaccinations_history_over);
-//                    break;
-//                default:
-//                    String format = context.getString(R.string.vaccinations_injection_na, data.getVaccineName());
-//                    vaccinName.setText(format);
-//                    vaccinationsStatus.setImageResource(R.drawable.vaccinations_history_na);
-//                    break;
-//            }
+            // Set "Add add vaccine plan for child" listener
+            View.OnClickListener addVaccineListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handler.editVaccinePlan(data);
+                }
+            };
+            vaccinationsStatus.setOnClickListener(addVaccineListener);
         }
     }
 }

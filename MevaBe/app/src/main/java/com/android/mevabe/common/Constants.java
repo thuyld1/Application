@@ -25,8 +25,7 @@ public class Constants {
     public static final int GENDER_FEMALE = 0;
     public static final int GENDER_MALE = 1;
 
-    public static final int VACCINE_INJECTION_DATE_NA = 0;
-    public static final int VACCINE_INJECTION_DATE_INPROGRESS = 1;
-    public static final int VACCINE_INJECTION_DATE_OK = 2;
-    public static final int VACCINE_INJECTION_DATE_OVER = 3;
+    public static final int VACCINE_INJECTION_STATUS_NA = 0;
+    public static final int VACCINE_INJECTION_STATUS_OK = 2;
 }
+

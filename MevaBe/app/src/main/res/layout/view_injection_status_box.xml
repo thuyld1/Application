@@ -9,6 +9,7 @@
         android:id="@+id/status_thumb"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="18dp"
         android:scaleType="centerCrop"
         android:src="@drawable/vaccinations_history_ok"
         android:visibility="gone"/>
@@ -20,7 +21,7 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         android:maxLines="1"
-        android:padding="@dimen/content_space"
+        android:paddingBottom="18dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textColor="#fff"
         android:textSize="56sp"
@@ -34,9 +35,9 @@
         android:gravity="center"
         android:maxLines="1"
         android:padding="4dp"
-        android:text="Ngày nữa"
+        android:text="@string/vaccinations_injection_na"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textColor="#fff"
-        android:textSize="14sp"/>
+        android:textSize="14dp"/>
 
 </RelativeLayout>

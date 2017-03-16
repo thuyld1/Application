@@ -17,6 +17,7 @@ import java.util.Calendar;
  * Created by leducthuy on 3/16/17.
  */
 public class InjectionStatusBox extends FrameLayout {
+    private View layout;
     private ImageView statusThumb;
     private TextView inDayCountDown;
     private TextView inTitleCountDown;
@@ -55,7 +56,7 @@ public class InjectionStatusBox extends FrameLayout {
     private void buildGUI() {
         // Load layer for view
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        View layout = inflater.inflate(R.layout.view_injection_status_box, this, false);
+        layout = inflater.inflate(R.layout.view_injection_status_box, this, false);
         addView(layout);
 
         // Bind view
@@ -63,6 +64,8 @@ public class InjectionStatusBox extends FrameLayout {
         inDayCountDown = (TextView) layout.findViewById(R.id.in_day_countdown);
         inTitleCountDown = (TextView) layout.findViewById(R.id.in_title_countdown);
 
+        // Default status is selected
+        super.setSelected(true);
     }
 
     /**
@@ -73,11 +76,11 @@ public class InjectionStatusBox extends FrameLayout {
      */
     public void bindData(int status, long date) {
         // Case status is OK
-        if (status == Constants.VACCINE_INJECTION_DATE_OK) {
+        if (status == Constants.VACCINE_INJECTION_STATUS_OK) {
             statusThumb.setImageResource(R.drawable.vaccinations_history_ok);
             statusThumb.setVisibility(View.VISIBLE);
             inDayCountDown.setVisibility(View.GONE);
-            inTitleCountDown.setVisibility(View.GONE);
+            inTitleCountDown.setText(R.string.vaccinations_injection_ok);
         } else if (date > 0) {
             // Base on injection date to show status
             Calendar current = Calendar.getInstance();
@@ -89,11 +92,11 @@ public class InjectionStatusBox extends FrameLayout {
                 statusThumb.setImageResource(R.drawable.vaccinations_history_over);
                 statusThumb.setVisibility(View.VISIBLE);
                 inDayCountDown.setVisibility(View.GONE);
-                inTitleCountDown.setVisibility(View.GONE);
+                inTitleCountDown.setText(R.string.vaccinations_injection_over);
             } else {
                 statusThumb.setVisibility(View.GONE);
                 inDayCountDown.setVisibility(View.VISIBLE);
-                inTitleCountDown.setVisibility(View.VISIBLE);
+                inTitleCountDown.setText(R.string.vaccinations_injection_na);
 
                 // Calculate day count down
                 long countDown = inDate.getTimeInMillis() - current.getTimeInMillis();
@@ -104,7 +107,19 @@ public class InjectionStatusBox extends FrameLayout {
             statusThumb.setImageResource(R.drawable.vaccinations_history_na);
             statusThumb.setVisibility(View.VISIBLE);
             inDayCountDown.setVisibility(View.GONE);
-            inTitleCountDown.setVisibility(View.GONE);
+            inTitleCountDown.setText(R.string.vaccinations_injection_na);
+        }
+    }
+
+    @Override
+    public void setSelected(boolean selected) {
+        super.setSelected(selected);
+
+        // Change background color by selected flag
+        if (selected) {
+            layout.setBackgroundResource(R.drawable.bg_rounded_corners);
+        } else {
+            layout.setBackgroundResource(R.drawable.bg_rounded_corners_gray);
         }
     }
 }

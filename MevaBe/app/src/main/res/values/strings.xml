@@ -37,12 +37,13 @@
     <string name="vaccinations_name">Vaccine: %s</string>
     <string name="vaccinations_period">Độ tuổi: %s</string>
 
-    <string name="vaccinations_injection_na">Vaccine: %1$s (Chưa tiêm)</string>
-    <string name="vaccinations_injection_ok">Vaccine: %1$s (Đã tiêm)</string>
-    <string name="vaccinations_injection_over">Vaccine: %1$s (Bỏ lỡ)</string>
+    <string name="vaccinations_injection_na">Ngày nữa</string>
+    <string name="vaccinations_injection_ok">Đã tiêm</string>
+    <string name="vaccinations_injection_over">Bỏ lỡ</string>
     <string name="vaccinations_injection_date">Ngày tiêm: %1$s</string>
 
     <string name="vaccinations_add_screen_title">Tạo lịch tiêm cho bé</string>
+    <string name="vaccinations_edit_screen_title">Cập nhật lịch tiêm cho bé</string>
     <string name="vaccinations_add_in_date_title">Ngày tiêm</string>
     <string name="vaccinations_add_in_date_button">Chọn luôn</string>
     <string name="vaccinations_add_in_place">Nơi tiêm</string>

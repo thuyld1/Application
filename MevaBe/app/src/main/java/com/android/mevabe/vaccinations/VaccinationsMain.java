@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.android.mevabe.R;
-import com.android.mevabe.common.view.WebViewActivity;
 import com.android.mevabe.common.AppData;
 import com.android.mevabe.common.Constants;
 import com.android.mevabe.common.model.MyProfile;
@@ -18,6 +17,7 @@ import com.android.mevabe.common.model.WebViewModel;
 import com.android.mevabe.common.services.db.DBVacinations;
 import com.android.mevabe.common.view.FragmentLoginRequired;
 import com.android.mevabe.common.view.RecyclerViewSupportEmpty;
+import com.android.mevabe.common.view.WebViewActivity;
 import com.facebook.Profile;
 
 import java.util.List;
@@ -25,8 +25,9 @@ import java.util.List;
 /**
  * Created by thuyld on 12/14/16.
  */
-public class VaccinationsMain extends FragmentLoginRequired implements View.OnClickListener, VaccinationsPlanAdapter.IVaccinationsPlanHandler {
+public class VaccinationsMain extends FragmentLoginRequired implements View.OnClickListener, VaccinationsPlanAdapter.IVaccinationsPlanHandler, VaccinationsHistoryAdapter.IVaccinationsHistoryHandler {
     public static final int VACCINE_ADD_PLAN_CODE = 2017;
+    public static final int VACCINE_EDIT_PLAN_CODE = 2018;
 
     // For view control
     private TextView btnHeaderSelected;
@@ -141,13 +142,21 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
         startActivity(intent);
     }
 
+
     @Override
     public void addVaccinePlan(VaccinationsPlanModel item) {
         // Open add vaccine for child view
-        VaccinationsAddPlan act = new VaccinationsAddPlan();
         Intent intent = new Intent(getContext(), VaccinationsAddPlan.class);
         intent.putExtra(Constants.INTENT_DATA, item);
         startActivityForResult(intent, VACCINE_ADD_PLAN_CODE);
     }
 
+    // ******** VaccinationsPlanAdapter.IVaccinationsHistoryHandler ******** //
+    @Override
+    public void editVaccinePlan(VaccinationsHistoryModel item) {
+        // Open edit vaccine for child view
+        Intent intent = new Intent(getContext(), VaccinationsEditPlan.class);
+        intent.putExtra(Constants.INTENT_DATA, item);
+        startActivityForResult(intent, VACCINE_EDIT_PLAN_CODE);
+    }
 }

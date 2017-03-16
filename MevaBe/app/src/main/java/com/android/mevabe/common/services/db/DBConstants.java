@@ -36,6 +36,7 @@ public class DBConstants {
     public static final String VACHIS_CHILD_ID = "c_id";
     public static final String VACHIS_VACCINE_ID = "v_id";
     public static final String VACHIS_INJECTION_DATE = "in_date";
+    public static final String VACHIS_INJECTION_STATUS = "in_status";
     public static final String VACHIS_INJECTION_PLACE = "in_place";
     public static final String VACHIS_INJECTION_NOTE = "in_note";
 }

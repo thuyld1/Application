@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.android.mevabe.R;
 import com.android.mevabe.common.Constants;
+import com.android.mevabe.common.model.VaccinationsHistoryModel;
 import com.android.mevabe.common.model.VaccinationsPlanModel;
 import com.android.mevabe.common.model.WebViewModel;
 import com.android.mevabe.common.services.db.DBVacinations;
@@ -30,7 +31,7 @@ import java.util.Calendar;
 /**
  * Created by thuyld on 3/14/17.
  */
-public class VaccinationsAddPlan extends BaseActivity implements View.OnClickListener {
+public class VaccinationsEditPlan extends BaseActivity implements View.OnClickListener {
     // Block vaccine information for child
     private TextView childInfo;
     private TextView vaccinName;
@@ -54,7 +55,7 @@ public class VaccinationsAddPlan extends BaseActivity implements View.OnClickLis
     private Button btnAdd;
 
     // Data
-    private VaccinationsPlanModel data;
+    private VaccinationsHistoryModel data;
     private DBVacinations dbVacinations;
 
 
@@ -136,7 +137,7 @@ public class VaccinationsAddPlan extends BaseActivity implements View.OnClickLis
      */
     private void bindData() {
         // Get data
-        this.data = (VaccinationsPlanModel) getIntent().getSerializableExtra
+        this.data = (VaccinationsHistoryModel) getIntent().getSerializableExtra
                 (Constants.INTENT_DATA);
 
         // Finish screen if data invalid
