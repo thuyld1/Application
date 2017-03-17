@@ -14,12 +14,12 @@ import android.widget.Toast;
 import com.android.mevabe.bacsi.BacSiMain;
 import com.android.mevabe.common.AppData;
 import com.android.mevabe.common.utils.LogUtil;
+import com.android.mevabe.common.view.FragmentBase;
+import com.android.mevabe.common.view.FragmentLoginRequired;
 import com.android.mevabe.dashboard.DashBoard;
 import com.android.mevabe.lichsuthuoc.LichSuThuocMain;
 import com.android.mevabe.profile.ProfileMain;
 import com.android.mevabe.vaccinations.VaccinationsMain;
-import com.android.mevabe.common.view.FragmentBase;
-import com.android.mevabe.common.view.FragmentLoginRequired;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.Profile;
@@ -110,6 +110,11 @@ public class MainActivity extends AppCompatActivity {
             if (fragment instanceof FragmentLoginRequired) {
                 ((FragmentLoginRequired) fragment).onAccountChange(profile);
             }
+        }
+
+        // For case login success => go to profile of user
+        if (profile != null) {
+            viewPager.setCurrentItem(4, true);
         }
     }
 

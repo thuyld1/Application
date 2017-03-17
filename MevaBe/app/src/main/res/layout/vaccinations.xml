@@ -1,47 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorBG"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.android.mevabe.MainActivity">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorBG"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:context="com.android.mevabe.MainActivity">
 
     <LinearLayout
         android:id="@+id/content_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
 
         <!-- Header buttons -->
         <LinearLayout
             android:id="@+id/vaccinations_header_tab"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:background="@drawable/bg_bottom_border"
-            android:orientation="horizontal"
-            android:paddingBottom="20dp"
-            android:paddingTop="20dp">
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/btn_plan"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="Chọn lịch tiêm"
                 android:textAlignment="center"
-                android:textAllCaps="true" />
+                android:textAllCaps="true"/>
 
             <TextView
                 android:id="@+id/btn_history"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="Lịch tiêm phòng"
                 android:textAlignment="center"
-                android:textAllCaps="true" />
+                android:textAllCaps="true"/>
 
         </LinearLayout>
 
@@ -51,7 +50,7 @@
             android:id="@+id/vaccinations_data_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"/>
 
         <TextView
             android:id="@+id/empty_data"
@@ -65,7 +64,7 @@
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="#9b9a9a"
-            android:textSize="32dp" />
+            android:textSize="32dp"/>
     </LinearLayout>
 
 
@@ -73,9 +72,10 @@
     <RelativeLayout
         android:id="@+id/login_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
-        <include layout="@layout/common_login_required_view" />
+        <include layout="@layout/common_login_required_view"/>
     </RelativeLayout>
 
     <!-- For empty child layout -->
@@ -85,6 +85,6 @@
         android:layout_height="match_parent"
         android:visibility="gone">
 
-        <include layout="@layout/common_empty_child_view" />
+        <include layout="@layout/common_empty_child_view"/>
     </RelativeLayout>
 </RelativeLayout>

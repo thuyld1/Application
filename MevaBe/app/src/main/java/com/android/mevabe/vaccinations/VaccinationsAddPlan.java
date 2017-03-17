@@ -234,7 +234,7 @@ public class VaccinationsAddPlan extends BaseActivity implements View.OnClickLis
         if (inStatusNA.isSelected()) {
             inStatus = Constants.VACCINE_INJECTION_STATUS_NA;
         }
-        boolean result = dbVacinations.addVaccinePlan(data.getPlanID(), data.getChildID(), data.getVaccinID(), calendar
+        boolean result = dbVacinations.addVaccinePlan(data.getPlanID(), data.getChild().getId(), data.getVaccinID(), calendar
                 .getTimeInMillis(), inStatus, place, note);
         if (result) {
             // Show success message

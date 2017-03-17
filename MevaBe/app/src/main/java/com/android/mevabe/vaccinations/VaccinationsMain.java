@@ -138,15 +138,19 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
 
                 // Bind vaccinations history
                 MyProfile myProfile = AppData.getMyProfile();
-                List<VaccinationsHistoryModel> history = dbVacinations.getVaccinationsHistory(myProfile, null);
-                historyAdapter.refreshItems(history);
+                if (myProfile != null) {
+                    List<VaccinationsHistoryModel> history = dbVacinations.getVaccinationsHistory(myProfile, null);
+                    historyAdapter.refreshItems(history);
+                }
             } else {
                 vaccinationsView.setAdapter(planAdapder);
 
                 // Bind vaccinations plan
                 MyProfile myProfile = AppData.getMyProfile();
-                List<VaccinationsPlanModel> list = dbVacinations.getVaccinationsPlan(myProfile, null);
-                planAdapder.refreshItems(list);
+                if (myProfile != null) {
+                    List<VaccinationsPlanModel> list = dbVacinations.getVaccinationsPlan(myProfile, null);
+                    planAdapder.refreshItems(list);
+                }
             }
         }
 

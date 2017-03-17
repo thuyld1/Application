@@ -18,7 +18,6 @@ public class VaccinationsPlanModel extends BaseModel implements Serializable {
     private String vaccinURL;
 
     private ProfileChildModel child;
-    private long childID;
 
     /**
      * Constructor
@@ -35,7 +34,6 @@ public class VaccinationsPlanModel extends BaseModel implements Serializable {
     public VaccinationsPlanModel(ProfileChildModel child, long planID, long vaccinID, long vaccinCode, String
             vaccinName, String vaccinPeriod, String vaccinDes, String vaccinURL) {
         this.child = child;
-        this.childID = child.getId();
         this.planID = planID;
         this.vaccinID = vaccinID;
         this.vaccinCode = vaccinCode;
@@ -122,14 +120,6 @@ public class VaccinationsPlanModel extends BaseModel implements Serializable {
 
     public void setVaccinCode(long vaccinCode) {
         this.vaccinCode = vaccinCode;
-    }
-
-    public long getChildID() {
-        return childID;
-    }
-
-    public void setChildID(long childID) {
-        this.childID = childID;
     }
 
     public long getPlanID() {
