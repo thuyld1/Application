@@ -77,11 +77,14 @@ public class InjectionStatusBox extends FrameLayout {
     public void bindData(int status, long date) {
         // Case status is OK
         if (status == Constants.VACCINE_INJECTION_STATUS_OK) {
+            layout.setBackgroundResource(R.drawable.bg_rounded_corners_green);
             statusThumb.setImageResource(R.drawable.vaccinations_history_ok);
             statusThumb.setVisibility(View.VISIBLE);
             inDayCountDown.setVisibility(View.GONE);
             inTitleCountDown.setText(R.string.vaccinations_injection_ok);
         } else if (date > 0) {
+            layout.setBackgroundResource(R.drawable.bg_rounded_corners);
+            
             // Base on injection date to show status
             Calendar current = Calendar.getInstance();
             Calendar inDate = Calendar.getInstance();
@@ -104,6 +107,7 @@ public class InjectionStatusBox extends FrameLayout {
             }
 
         } else {
+            layout.setBackgroundResource(R.drawable.bg_rounded_corners);
             statusThumb.setImageResource(R.drawable.vaccinations_history_na);
             statusThumb.setVisibility(View.VISIBLE);
             inDayCountDown.setVisibility(View.GONE);

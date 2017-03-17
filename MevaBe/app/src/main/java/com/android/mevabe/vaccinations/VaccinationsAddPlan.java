@@ -21,6 +21,7 @@ import com.android.mevabe.common.model.WebViewModel;
 import com.android.mevabe.common.services.db.DBVacinations;
 import com.android.mevabe.common.view.BaseActivity;
 import com.android.mevabe.common.view.InjectionStatusBox;
+import com.android.mevabe.common.view.OnSwipeTouchListener;
 import com.android.mevabe.common.view.WebViewActivity;
 
 import java.text.DateFormat;
@@ -73,6 +74,17 @@ public class VaccinationsAddPlan extends BaseActivity implements View.OnClickLis
             return;
         }
 
+        // Build GUI for view
+        buildGUI();
+
+        // Bind data to view
+        bindData();
+    }
+
+    /**
+     * Build GUI for view
+     */
+    private void buildGUI() {
         // Set up toolbar
         setTitle(getString(R.string.vaccinations_add_screen_title));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -82,6 +94,10 @@ public class VaccinationsAddPlan extends BaseActivity implements View.OnClickLis
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
+
+        // Build swipe to close
+        View conentView = findViewById(R.id.content_view);
+        conentView.setOnTouchListener(new OnSwipeTouchListener(this));
 
         // Map view: vaccine information for child
         this.childInfo = (TextView) findViewById(R.id.child_info);
@@ -136,9 +152,6 @@ public class VaccinationsAddPlan extends BaseActivity implements View.OnClickLis
                 };
         datePicker = new DatePickerDialog(this, myDateListener, year, month, day);
         dbVacinations = new DBVacinations();
-
-        // Bind data to view
-        bindData();
     }
 
     /**
@@ -146,7 +159,7 @@ public class VaccinationsAddPlan extends BaseActivity implements View.OnClickLis
      */
     private void bindData() {
         // Show  text vaccine information for child
-        childInfo.setText(data.getChildInfo());
+        childInfo.setText(data.getChildInfo(calendar.getTimeInMillis()));
         vaccinName.setText(String.format(getString(R.string.vaccinations_name), data.getVaccinName()));
         vaccinPeriod.setText(String.format(getString(R.string.vaccinations_period), data.getVaccinPeriod()));
         vaccinDes.setText(data.getVaccinDes());
@@ -163,6 +176,7 @@ public class VaccinationsAddPlan extends BaseActivity implements View.OnClickLis
     private void onDateChange() {
         inDateBtn.setText(dateFormat.format(calendar.getTime()));
         inStatusNA.bindData(Constants.VACCINE_INJECTION_STATUS_NA, calendar.getTimeInMillis());
+        childInfo.setText(data.getChildInfo(calendar.getTimeInMillis()));
     }
 
     @Override

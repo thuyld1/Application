@@ -101,7 +101,7 @@ public class DBVacinations {
 
         String sql = "SELECT h._id, h.c_id, h.in_date, h.in_status, h.in_place, h.in_note, h.status, v._id, v.v_code, v.v_name, v" +
                 ".v_period, v.v_short_des, v.v_url FROM vaccinations_history h INNER JOIN vaccines v on h.v_id = v" +
-                "._id WHERE h.status = 0 %s AND v.status = 0;";
+                "._id WHERE h.status = 0 %s AND v.status = 0 ORDER BY h.in_status, h.in_date;";
 
         String selection = null;
         if (child != null) {

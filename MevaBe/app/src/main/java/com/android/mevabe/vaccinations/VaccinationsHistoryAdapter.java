@@ -18,8 +18,6 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import static android.R.attr.data;
-
 /**
  * VaccinationsHistoryAdapter controls view of list "Chọn lịch tiêm" tab
  */
@@ -110,10 +108,7 @@ public class VaccinationsHistoryAdapter extends RecyclerView.Adapter<RecyclerVie
      */
     public synchronized void updateItem(VaccinationsHistoryModel data) {
         if (data != null) {
-            Iterator<VaccinationsHistoryModel> iterator = listItems.iterator();
-            VaccinationsHistoryModel item = null;
-            while (iterator.hasNext()) {
-                item = iterator.next();
+            for (VaccinationsHistoryModel item : listItems) {
                 if (item.getId() == data.getId()) {
                     item.updateSettingInfo(data);
                     break;
@@ -179,19 +174,22 @@ public class VaccinationsHistoryAdapter extends RecyclerView.Adapter<RecyclerVie
 
     // ************* View Holder *********** //
     class MyViewHolder extends RecyclerView.ViewHolder {
+        private View layout;
         private InjectionStatusBox vaccinationsStatus;
         private TextView childInfo;
         private TextView vaccinName;
         private TextView injectionDate;
-        private TextView vaccinDes;
+        private TextView injectionPlace;
 
         public MyViewHolder(View view) {
             super(view);
+
+            layout = view;
             this.vaccinationsStatus = (InjectionStatusBox) view.findViewById(R.id.vaccinationsStatus);
             this.childInfo = (TextView) view.findViewById(R.id.child_info);
             this.vaccinName = (TextView) view.findViewById(R.id.vaccinName);
             this.injectionDate = (TextView) view.findViewById(R.id.injectionDate);
-            this.vaccinDes = (TextView) view.findViewById(R.id.vaccinDes);
+            this.injectionPlace = (TextView) view.findViewById(R.id.injectionPlace);
         }
 
         public void bindData(final VaccinationsHistoryModel data) {
@@ -201,7 +199,7 @@ public class VaccinationsHistoryAdapter extends RecyclerView.Adapter<RecyclerVie
             //Setting text view title
             vaccinName.setText(data.getVaccineName());
             childInfo.setText(data.getChildInfo());
-            vaccinDes.setText(data.getVaccineShortDes());
+            injectionPlace.setText(data.getInPlace());
 
             if (data.getInDate() > 0) {
                 Calendar cal = Calendar.getInstance();
@@ -216,7 +214,7 @@ public class VaccinationsHistoryAdapter extends RecyclerView.Adapter<RecyclerVie
                     handler.editVaccinePlan(data);
                 }
             };
-            vaccinationsStatus.setOnClickListener(addVaccineListener);
+            layout.setOnClickListener(addVaccineListener);
         }
     }
 }

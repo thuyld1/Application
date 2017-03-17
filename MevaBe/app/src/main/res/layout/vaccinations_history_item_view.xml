@@ -48,23 +48,23 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/vaccinDes"
+            android:id="@+id/injectionDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:paddingTop="@dimen/vaccinations_content_space"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="#444"
+            android:textSize="14dp"/>
+
+        <TextView
+            android:id="@+id/injectionPlace"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
             android:paddingTop="@dimen/vaccinations_content_space"
             android:text="Description sample"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="#444"
-            android:textSize="14dp"/>
-
-        <TextView
-            android:id="@+id/injectionDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:paddingTop="@dimen/vaccinations_content_space"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="#444"
             android:textSize="14dp"/>

@@ -23,6 +23,7 @@ import com.android.mevabe.common.services.db.DBVacinations;
 import com.android.mevabe.common.utils.DialogUtil;
 import com.android.mevabe.common.view.BaseActivity;
 import com.android.mevabe.common.view.InjectionStatusBox;
+import com.android.mevabe.common.view.OnSwipeTouchListener;
 import com.android.mevabe.common.view.WebViewActivity;
 
 import java.text.DateFormat;
@@ -76,6 +77,17 @@ public class VaccinationsEditPlan extends BaseActivity implements View.OnClickLi
             return;
         }
 
+        // Build GUI for view
+        buildGUI();
+
+        // Bind data to view
+        bindData();
+    }
+
+    /**
+     * Build GUI for view
+     */
+    private void buildGUI() {
         // Set up toolbar
         setTitle(getString(R.string.vaccinations_add_screen_title));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -85,6 +97,10 @@ public class VaccinationsEditPlan extends BaseActivity implements View.OnClickLi
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
+
+        // Build swipe to close
+        View conentView = findViewById(R.id.content_view);
+        conentView.setOnTouchListener(new OnSwipeTouchListener(this));
 
         // Map view: vaccine information for child
         this.childInfo = (TextView) findViewById(R.id.child_info);
@@ -140,9 +156,6 @@ public class VaccinationsEditPlan extends BaseActivity implements View.OnClickLi
                 };
         datePicker = new DatePickerDialog(this, myDateListener, year, month, day);
         dbVacinations = new DBVacinations();
-
-        // Bind data to view
-        bindData();
     }
 
     /**
@@ -171,6 +184,7 @@ public class VaccinationsEditPlan extends BaseActivity implements View.OnClickLi
     private void onDateChange() {
         inDateBtn.setText(dateFormat.format(calendar.getTime()));
         inStatusNA.bindData(Constants.VACCINE_INJECTION_STATUS_NA, calendar.getTimeInMillis());
+        childInfo.setText(data.getChildInfo(calendar.getTimeInMillis()));
     }
 
     @Override

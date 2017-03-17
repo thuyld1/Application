@@ -1,5 +1,8 @@
 package com.android.mevabe.common.model;
 
+import com.android.mevabe.common.AppData;
+import com.android.mevabe.common.utils.YearsOldUtil;
+
 import java.io.Serializable;
 
 /**
@@ -46,6 +49,20 @@ public class VaccinationsPlanModel extends BaseModel implements Serializable {
         String childInfo = "";
         if (child != null) {
             childInfo = String.format("%s (%s)", child.getName(), child.getYearsOld());
+        }
+
+        return childInfo;
+    }
+
+    public String getChildInfo(long toDate) {
+        String childInfo = "";
+        if (child != null) {
+            String yearOlds = YearsOldUtil.getYearsOldTo(AppData.context, child.getDateOfBirth(), toDate);
+            if (yearOlds == null) {
+                childInfo = String.format("%s", child.getName());
+            } else {
+                childInfo = String.format("%s (%s)", child.getName(), yearOlds);
+            }
         }
 
         return childInfo;

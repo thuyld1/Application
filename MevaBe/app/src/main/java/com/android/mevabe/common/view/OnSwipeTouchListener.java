@@ -1,5 +1,6 @@
 package com.android.mevabe.common.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -8,9 +9,24 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 
 public class OnSwipeTouchListener implements OnTouchListener {
-
+    private Activity activity;
     private final GestureDetector gestureDetector;
 
+    /**
+     * Constructor
+     *
+     * @param activity Activity
+     */
+    public OnSwipeTouchListener(Activity activity) {
+        this.activity = activity;
+        gestureDetector = new GestureDetector(activity, new GestureListener());
+    }
+
+    /**
+     * Constructor
+     *
+     * @param ctx Context
+     */
     public OnSwipeTouchListener(Context ctx) {
         gestureDetector = new GestureDetector(ctx, new GestureListener());
     }
@@ -63,9 +79,14 @@ public class OnSwipeTouchListener implements OnTouchListener {
     }
 
     public void onSwipeRight() {
+        // Close activity if swipe left to right
+        if (activity != null) {
+            activity.finish();
+        }
     }
 
     public void onSwipeLeft() {
+
     }
 
 //    public void onSwipeTop() {

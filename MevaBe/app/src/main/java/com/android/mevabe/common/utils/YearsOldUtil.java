@@ -17,9 +17,12 @@ public class YearsOldUtil {
      * @param dateOfBirth long
      * @return int[] {years, months, days} and return null in case invalid
      */
-    public static int[] getYearsOld(long dateOfBirth) {
+    public static int[] getYearsOld(long dateOfBirth, long toDate) {
         // Get current time
         Calendar current = Calendar.getInstance();
+        if (toDate > 0) {
+            current.setTimeInMillis(toDate);
+        }
 
         // Case invalid
         if (dateOfBirth <= 0 || current.getTimeInMillis() < dateOfBirth) {
@@ -68,7 +71,7 @@ public class YearsOldUtil {
      */
     public static String getFullYearsOld(Context context, long dateOfBirth) {
         // Get year old of child
-        int[] yearOlds = getYearsOld(dateOfBirth);
+        int[] yearOlds = getYearsOld(dateOfBirth, 0);
         if (yearOlds != null) {
             String yearStr = context.getResources().getString(R.string.child_years);
             StringBuilder sb = new StringBuilder();
@@ -100,7 +103,7 @@ public class YearsOldUtil {
      */
     public static String getYearsOld(Context context, long dateOfBirth) {
         // Get year old of child
-        int[] yearOlds = getYearsOld(dateOfBirth);
+        int[] yearOlds = getYearsOld(dateOfBirth, 0);
         if (yearOlds != null) {
             String yearStr = context.getResources().getString(R.string.child_years);
             String monthStr = context.getResources().getString(R.string.child_months);
@@ -130,6 +133,48 @@ public class YearsOldUtil {
             return sb.toString();
         }
         return "";
+    }
+
+    /**
+     * Get string of years old
+     *
+     * @param dateOfBirth long
+     * @param toDate      long
+     * @param context     Context
+     * @return String
+     */
+    public static String getYearsOldTo(Context context, long dateOfBirth, long toDate) {
+        // Get year old of child
+        int[] yearOlds = getYearsOld(dateOfBirth, toDate);
+        if (yearOlds != null) {
+            String yearStr = context.getResources().getString(R.string.child_years);
+            String monthStr = context.getResources().getString(R.string.child_months);
+            String dayStr = context.getResources().getString(R.string.child_days);
+            StringBuilder sb = new StringBuilder();
+
+            // Case has year => show year and month only
+            if (yearOlds[0] > 0) {
+                sb.append(yearOlds[0]).append(yearStr);
+
+                if (yearOlds[1] > 0) {
+                    sb.append(" ").append(yearOlds[1]).append(monthStr);
+                }
+            } else {
+                // Case does not has year => show month or day only
+                if (yearOlds[1] > 0) {
+                    sb.append(yearOlds[1]).append(monthStr);
+                    if (yearOlds[2] > 0) {
+                        sb.append(" ").append(yearOlds[2]).append(dayStr);
+                    }
+                } else {
+                    sb.append(yearOlds[2]).append(dayStr);
+                }
+
+                sb.append(yearStr);
+            }
+            return sb.toString();
+        }
+        return null;
     }
 
 
