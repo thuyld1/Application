@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.mevabe.MainActivity;
 import com.android.mevabe.R;
 import com.android.mevabe.common.AppData;
 import com.android.mevabe.common.Constants;
@@ -28,6 +29,9 @@ import java.util.List;
 public class VaccinationsMain extends FragmentLoginRequired implements View.OnClickListener, VaccinationsPlanAdapter.IVaccinationsPlanHandler, VaccinationsHistoryAdapter.IVaccinationsHistoryHandler {
     public static final int VACCINE_ADD_PLAN_CODE = 2017;
     public static final int VACCINE_EDIT_PLAN_CODE = 2018;
+
+    // For empty child view
+    private View emptyView;
 
     // For view control
     private TextView btnHeaderSelected;
@@ -52,6 +56,7 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
         dbVacinations = new DBVacinations();
 
         // Bind view
+        emptyView = layoutView.findViewById(R.id.empty_child_view);
         btnHeaderPlan = (TextView) layoutView.findViewById(R.id.btn_plan);
         btnHeaderHistory = (TextView) layoutView.findViewById(R.id.btn_history);
         vaccinationsView = (RecyclerViewSupportEmpty) layoutView.findViewById(R.id.vaccinations_data_view);
@@ -107,6 +112,16 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
     public void onAccountChangeFinish(Profile profile) {
         // Refresh data only for case logged in
         if (profile != null) {
+            // Case child of profile is empty
+            if (AppData.getMyProfile().getChildren().isEmpty()) {
+                emptyView.setVisibility(View.VISIBLE);
+                contentView.setVisibility(View.GONE);
+                return;
+            } else {
+                emptyView.setVisibility(View.GONE);
+                contentView.setVisibility(View.VISIBLE);
+            }
+
             // Refresh list vaccinations plan
             List<VaccinationsPlanModel> list = dbVacinations.getVaccinationsPlan(AppData.getMyProfile(), null);
             planAdapder.refreshItems(list);
@@ -115,6 +130,18 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
             List<VaccinationsHistoryModel> history = dbVacinations.getVaccinationsHistory(AppData.getMyProfile(), null);
             historyAdapter.refreshItems(history);
         }
+    }
+
+    /**
+     * Handle user click to start button to go profile to update child information
+     *
+     * @param view View
+     */
+    public void onBtnStartClick(View view) {
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).selectTab(MainActivity.TAB_PROFILE);
+        }
+
     }
 
     @Override

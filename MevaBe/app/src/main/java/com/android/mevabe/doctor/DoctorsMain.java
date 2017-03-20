@@ -1,4 +1,4 @@
-package com.android.mevabe.bacsi;
+package com.android.mevabe.doctor;
 
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -21,14 +21,14 @@ import java.util.List;
 /**
  * Created by thuyld on 12/14/16.
  */
-public class BacSiMain extends FragmentBase implements DBRecyclerViewAdapter.IDashBoardListHandler {
+public class DoctorsMain extends FragmentBase implements DBRecyclerViewAdapter.IDashBoardListHandler {
     private RefreshLoadMoreLayout swipeRefreshLayout;
     private LoadMoreRecyclerView mRecyclerView;
     private DBRecyclerViewAdapter adapter;
 
     @Override
     public int getLayoutContentViewXML() {
-        return R.layout.bacsi;
+        return R.layout.doctors;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class BacSiMain extends FragmentBase implements DBRecyclerViewAdapter.IDa
 
         // Prepare data
         adapter = new DBRecyclerViewAdapter(getActivity());
-        adapter.setHandler(BacSiMain.this);
+        adapter.setHandler(DoctorsMain.this);
         mRecyclerView.setAdapter(adapter);
         refreshItems();
     }

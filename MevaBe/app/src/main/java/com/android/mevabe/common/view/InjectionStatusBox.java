@@ -56,7 +56,7 @@ public class InjectionStatusBox extends FrameLayout {
     private void buildGUI() {
         // Load layer for view
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        layout = inflater.inflate(R.layout.view_injection_status_box, this, false);
+        layout = inflater.inflate(R.layout.common_injection_status_box, this, false);
         addView(layout);
 
         // Bind view

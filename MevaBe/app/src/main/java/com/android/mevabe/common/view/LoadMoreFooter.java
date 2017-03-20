@@ -46,7 +46,7 @@ public class LoadMoreFooter extends FrameLayout {
     }
 
     protected void init() {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.view_load_more_footer, this, true);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.common_load_more_footer, this, true);
         tvMore = (TextView) view.findViewById(R.id.text_more);
         progressBar = (ProgressBar) view.findViewById(R.id.load_progress_bar);
     }

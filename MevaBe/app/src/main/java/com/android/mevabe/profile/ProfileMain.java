@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.mevabe.MainActivity;
 import com.android.mevabe.R;
 import com.android.mevabe.common.AppData;
 import com.android.mevabe.common.utils.AppUtil;
@@ -126,8 +127,7 @@ public class ProfileMain extends FragmentLoginRequired implements View.OnClickLi
     @Override
     public void onItemDelete(final ProfileChildModel child) {
         // Show confirm dialog
-        String message = String.format("Are you sure you want to delete child \"%s\"?/n(All vaccination history and " +
-                "medical history will be removed)", child.getName());
+        String message = String.format(getString(R.string.child_delete_confirm), child.getName());
         DialogUtil.showYesCancel(getContext(), message, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 // Delete from list children
@@ -136,6 +136,11 @@ public class ProfileMain extends FragmentLoginRequired implements View.OnClickLi
 
                 // Delete child from DB
                 dbService.deleteChild(child.getId());
+
+                // Notify to other views which related to child information
+                if (getActivity() instanceof MainActivity) {
+                    ((MainActivity) getActivity()).notifyDeleteChild();
+                }
             }
         });
 

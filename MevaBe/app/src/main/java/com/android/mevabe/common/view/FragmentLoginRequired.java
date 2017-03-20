@@ -20,7 +20,7 @@ import java.util.Arrays;
 public abstract class FragmentLoginRequired extends FragmentBase {
     protected boolean hasCreatedView = false;
     private CallbackManager callbackManager;
-    private View contentView;
+    protected View contentView;
     private View loginView;
 
     @Override
