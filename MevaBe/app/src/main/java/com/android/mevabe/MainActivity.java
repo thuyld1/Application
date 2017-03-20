@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(TAB_DASHBOARD).setIcon(R.drawable.ic_menu_dashboard);
-        tabLayout.getTabAt(TAB_DOCTORS).setIcon(R.drawable.ic_menu_bac_si);
-        tabLayout.getTabAt(TAB_VACCINATIONS).setIcon(R.drawable.ic_menu_lich_tiem);
+        tabLayout.getTabAt(TAB_DOCTORS).setIcon(R.drawable.ic_menu_doctors);
+        tabLayout.getTabAt(TAB_VACCINATIONS).setIcon(R.drawable.ic_menu_vaccinations);
         tabLayout.getTabAt(TAB_PROFILE).setIcon(R.drawable.ic_menu_profile);
         tabLayout.setOnTabSelectedListener(
                 new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {

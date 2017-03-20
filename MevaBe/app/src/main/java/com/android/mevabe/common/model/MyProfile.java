@@ -12,6 +12,7 @@ import java.util.List;
 public class MyProfile implements Serializable {
     private List<ProfileChildModel> children;
     private Profile myPro;
+    private int filter;
 
     /**
      * Constructor
@@ -37,12 +38,36 @@ public class MyProfile implements Serializable {
         return null;
     }
 
-    public List<ProfileChildModel> getChildren() {
-        return children;
+    /**
+     * Get filter child
+     *
+     * @return ProfileChildModel
+     */
+    public ProfileChildModel getFilterChild() {
+        if (filter >= 0 && filter < children.size()) {
+            return children.get(filter);
+        }
+
+        return null;
+    }
+
+    /**
+     * Reset list children of profile
+     */
+    public void resetChild() {
+        if (children != null) {
+            children.clear();
+        }
+        filter = -1;
     }
 
     public void setChildren(List<ProfileChildModel> children) {
         this.children = children;
+        filter = -1;
+    }
+
+    public List<ProfileChildModel> getChildren() {
+        return children;
     }
 
     public com.facebook.Profile getMyPro() {
@@ -51,5 +76,13 @@ public class MyProfile implements Serializable {
 
     public void setMyPro(com.facebook.Profile myPro) {
         this.myPro = myPro;
+    }
+
+    public int getFilter() {
+        return filter;
+    }
+
+    public void setFilter(int filter) {
+        this.filter = filter;
     }
 }

@@ -10,6 +10,7 @@
     <string name="delete">Xoá</string>
     <string name="start">Bắt đầu</string>
     <string name="settings">Thiết lập</string>
+    <string name="all">Tất cả</string>
 
     <string name="back_to_exit">Nhấn nút BACK 2 lần để thoát ứng dụng</string>
     <string name="login_message">Hãy đăng nhập để sử dụng tính năng này</string>

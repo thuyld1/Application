@@ -4,17 +4,23 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.android.mevabe.R;
 import com.android.mevabe.common.AppData;
 import com.android.mevabe.common.Constants;
 import com.android.mevabe.common.model.MyProfile;
+import com.android.mevabe.common.model.ProfileChildModel;
 import com.android.mevabe.common.model.VaccinationsHistoryModel;
 import com.android.mevabe.common.model.VaccinationsPlanModel;
 import com.android.mevabe.common.model.WebViewModel;
 import com.android.mevabe.common.services.db.DBVacinations;
+import com.android.mevabe.common.utils.LogUtil;
 import com.android.mevabe.common.view.FragmentLoginRequired;
 import com.android.mevabe.common.view.RecyclerViewSupportEmpty;
 import com.android.mevabe.common.view.WebViewActivity;
@@ -36,6 +42,7 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
     private TextView btnHeaderSelected;
     private TextView btnHeaderPlan;
     private TextView btnHeaderHistory;
+    private ImageView btnFilter;
 
     private RecyclerViewSupportEmpty vaccinationsView;
     private VaccinationsPlanAdapter planAdapder;
@@ -58,6 +65,7 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
         emptyView = layoutView.findViewById(R.id.empty_child_view);
         btnHeaderPlan = (TextView) layoutView.findViewById(R.id.btn_plan);
         btnHeaderHistory = (TextView) layoutView.findViewById(R.id.btn_history);
+        btnFilter = (ImageView) layoutView.findViewById(R.id.btn_filter);
         vaccinationsView = (RecyclerViewSupportEmpty) layoutView.findViewById(R.id.vaccinations_data_view);
         TextView emptyView = (TextView) layoutView.findViewById(R.id.empty_data);
         vaccinationsView.setEmptyView(emptyView);
@@ -72,6 +80,7 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
         btnHeaderHistory.setOnClickListener(this);
         btnHeaderSelected = btnHeaderHistory;
         onClick(btnHeaderPlan);
+        btnFilter.setOnClickListener(this);
     }
 
     @Override
@@ -121,13 +130,15 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
                 contentView.setVisibility(View.VISIBLE);
             }
 
-            // Refresh list vaccinations plan
-            List<VaccinationsPlanModel> list = dbVacinations.getVaccinationsPlan(AppData.getMyProfile(), null);
-            planAdapder.refreshItems(list);
+            // Check to show filter or not
+            if (AppData.getMyProfile().getChildren().size() == 1) {
+                btnFilter.setVisibility(View.GONE);
+            } else {
+                btnFilter.setVisibility(View.VISIBLE);
+            }
 
-            // Refresh list vaccinations history
-            List<VaccinationsHistoryModel> history = dbVacinations.getVaccinationsHistory(AppData.getMyProfile(), null);
-            historyAdapter.refreshItems(history);
+            // Refresh vaccinations list data
+            refreshVaccinations();
         }
     }
 
@@ -138,10 +149,77 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
         }
     }
 
+    /**
+     * Show popup menu of children to filter
+     */
+    private void showFilter() {
+        PopupMenu popup = new PopupMenu(getContext(), btnFilter);
+        Menu menu = popup.getMenu();
+        int groupID = 1;
+
+        // Add all item option
+        menu.add(groupID, -1, 0, R.string.all);
+
+        // Add children item option
+        List<ProfileChildModel> children = AppData.getMyProfile().getChildren();
+        for (int i = 0; i < children.size(); i++) {
+            menu.add(groupID, i, i + 1, children.get(i).getName());
+        }
+
+        // Set default selection
+        menu.setGroupCheckable(groupID, true, true);
+        int filter = AppData.getMyProfile().getFilter();
+        if (filter <= children.size()) {
+            popup.getMenu().getItem(++filter).setChecked(true);
+        }
+
+        // Set popup listener
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                LogUtil.debug("Vaccination Filter Popup.onMenuItemClick: " + item.getItemId());
+                if (item.getItemId() != AppData.getMyProfile().getFilter()) {
+                    AppData.getMyProfile().setFilter(item.getItemId());
+
+                    // Refresh vaccinations list data
+                    refreshVaccinations();
+                    return true;
+                }
+                return false;
+            }
+        });
+        popup.show();
+    }
+
+    /**
+     * Refresh vaccinations list view
+     */
+    private void refreshVaccinations() {
+        MyProfile myProfile = AppData.getMyProfile();
+
+        // Refresh list vaccinations plan
+        if (btnHeaderSelected.equals(btnHeaderPlan)) {
+            List<VaccinationsPlanModel> list = dbVacinations.getVaccinationsPlan(myProfile, myProfile.getFilterChild());
+            planAdapder.refreshItems(list);
+        } else {
+            // Refresh list vaccinations history
+            List<VaccinationsHistoryModel> history = dbVacinations.getVaccinationsHistory(myProfile, myProfile.getFilterChild());
+            historyAdapter.refreshItems(history);
+        }
+
+        // Scroll to top list data
+        onToolBarClicked(null);
+    }
+
+
     // ********* HEADER CONTROL *********** //
     @Override
     public void onClick(View v) {
-        if (!v.equals(btnHeaderSelected)) {
+        // Case select filter
+        if (v.equals(btnFilter)) {
+            showFilter();
+        } else if (!v.equals(btnHeaderSelected)) {
+            // Case change tab of plan or history
             btnHeaderSelected.setTextColor(Color.BLACK);
             btnHeaderSelected = (TextView) v;
             btnHeaderSelected.setTextColor(getResources().getColor(R.color.colorPrimary));
@@ -149,23 +227,12 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
             // Case user select history injection
             if (btnHeaderSelected.equals(btnHeaderHistory)) {
                 vaccinationsView.setAdapter(historyAdapter);
-
-                // Bind vaccinations history
-                MyProfile myProfile = AppData.getMyProfile();
-                if (myProfile != null) {
-                    List<VaccinationsHistoryModel> history = dbVacinations.getVaccinationsHistory(myProfile, null);
-                    historyAdapter.refreshItems(history);
-                }
             } else {
                 vaccinationsView.setAdapter(planAdapder);
-
-                // Bind vaccinations plan
-                MyProfile myProfile = AppData.getMyProfile();
-                if (myProfile != null) {
-                    List<VaccinationsPlanModel> list = dbVacinations.getVaccinationsPlan(myProfile, null);
-                    planAdapder.refreshItems(list);
-                }
             }
+
+            // Refresh vaccinations list view
+            refreshVaccinations();
         }
 
     }

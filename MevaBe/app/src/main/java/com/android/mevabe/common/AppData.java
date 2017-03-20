@@ -62,7 +62,7 @@ public class AppData {
             profile.setChildren(dbProfile.getMyChildren(loginProfile.getId()));
         } else {
             // Clear old data if empty profile information
-            profile.getChildren().clear();
+            profile.resetChild();
         }
     }
 }

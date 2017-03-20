@@ -27,7 +27,7 @@ public class DBVacinations {
      * @return List<VaccinationsPlanModel>
      */
     public List<VaccinationsPlanModel> getVaccinationsPlan(MyProfile myProfile, ProfileChildModel child) {
-        LogUtil.debug("DBVacinations: getVaccinationsPlan");
+
         List<VaccinationsPlanModel> result = new ArrayList<>();
         SQLiteDatabase db = DBService.getReadableDatabase();
 
@@ -37,6 +37,7 @@ public class DBVacinations {
         String selection = null;
         if (child != null) {
             sql = String.format(sql, "AND p.c_id = " + child.getId());
+            LogUtil.debug("DBVacinations: getVaccinationsPlan for child " + child.getName());
 
             Cursor cursor = db.rawQuery(sql, null);
             VaccinationsPlanModel item = null;
@@ -59,6 +60,7 @@ public class DBVacinations {
             cursor.close();
         } else {
             sql = String.format(sql, "");
+            LogUtil.debug("DBVacinations: getVaccinationsPlan for ALL ");
 
             Cursor cursor = db.rawQuery(sql, null);
             VaccinationsPlanModel item = null;
@@ -105,7 +107,7 @@ public class DBVacinations {
 
         String selection = null;
         if (child != null) {
-            sql = String.format(sql, "AND p.c_id = " + child.getId());
+            sql = String.format(sql, "AND h.c_id = " + child.getId());
 
             Cursor cursor = db.rawQuery(sql, null);
             VaccinationsHistoryModel item = null;
@@ -120,6 +122,7 @@ public class DBVacinations {
                 i = 0;
                 item.setId(cursor.getLong(i));
                 ++i;
+                item.setChild(child);
                 item.setInDate(cursor.getLong(++i));
                 item.setInStatus(cursor.getInt(++i));
                 item.setInPlace(cursor.getString(++i));

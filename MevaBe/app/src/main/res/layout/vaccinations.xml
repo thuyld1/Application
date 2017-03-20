@@ -15,35 +15,52 @@
         android:orientation="vertical">
 
         <!-- Header buttons -->
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/vaccinations_header_tab"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@drawable/bg_bottom_border"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/btn_plan"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Chọn lịch tiêm"
-                android:textAlignment="center"
-                android:textAllCaps="true"/>
+                android:layout_toLeftOf="@+id/btn_filter"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/btn_history"
-                android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/btn_plan"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Chọn lịch tiêm"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"/>
+
+                <TextView
+                    android:id="@+id/btn_history"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Lịch tiêm phòng"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"/>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/btn_filter"
+                android:layout_width="35dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Lịch tiêm phòng"
-                android:textAlignment="center"
-                android:textAllCaps="true"/>
+                android:layout_alignParentRight="true"
+                android:adjustViewBounds="true"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/vaccinations_filter_icon"/>
 
-        </LinearLayout>
 
+        </RelativeLayout>
 
         <!--For "Lịch tiêm view "-->
         <com.android.mevabe.common.view.RecyclerViewSupportEmpty
