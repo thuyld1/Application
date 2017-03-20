@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.mevabe.MainActivity;
 import com.android.mevabe.R;
 import com.android.mevabe.common.AppData;
 import com.android.mevabe.common.Constants;
@@ -130,18 +129,6 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
             List<VaccinationsHistoryModel> history = dbVacinations.getVaccinationsHistory(AppData.getMyProfile(), null);
             historyAdapter.refreshItems(history);
         }
-    }
-
-    /**
-     * Handle user click to start button to go profile to update child information
-     *
-     * @param view View
-     */
-    public void onBtnStartClick(View view) {
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).selectTab(MainActivity.TAB_PROFILE);
-        }
-
     }
 
     @Override

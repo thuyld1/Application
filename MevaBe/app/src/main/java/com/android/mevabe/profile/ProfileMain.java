@@ -111,6 +111,11 @@ public class ProfileMain extends FragmentLoginRequired implements View.OnClickLi
 
         // Save new child to DB
         dbService.addChild(AppData.getMyProfile().getMyPro(), child);
+
+        // Notify to other views which related to child information
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).notifyChildChange();
+        }
     }
 
     // ****** IEditChildDialogCallback ******* //
@@ -139,7 +144,7 @@ public class ProfileMain extends FragmentLoginRequired implements View.OnClickLi
 
                 // Notify to other views which related to child information
                 if (getActivity() instanceof MainActivity) {
-                    ((MainActivity) getActivity()).notifyDeleteChild();
+                    ((MainActivity) getActivity()).notifyChildChange();
                 }
             }
         });

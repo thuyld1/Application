@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.mevabe.doctor.DoctorsMain;
@@ -181,9 +182,18 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Refresh view when user delete a child
      */
-    public void notifyDeleteChild() {
+    public void notifyChildChange() {
         // Refresh vaccinations view
         fragmentVaccinations.onAccountChangeFinish(AppData.getMyProfile().getMyPro());
+    }
+
+    /**
+     * Handle user click to start button to go profile to update child information
+     *
+     * @param view View
+     */
+    public void onBtnStartClick(View view) {
+        selectTab(MainActivity.TAB_PROFILE);
     }
 
     // ***************** For view pager UI ****************** //
