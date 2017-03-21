@@ -3,18 +3,20 @@ package com.android.mevabe.doctor;
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.android.mevabe.R;
-import com.android.mevabe.common.view.WebViewActivity;
 import com.android.mevabe.common.Constants;
-import com.android.mevabe.common.utils.LogUtil;
-import com.android.mevabe.dashboard.DBRecyclerViewAdapter;
 import com.android.mevabe.common.model.DBFeedModel;
 import com.android.mevabe.common.model.WebViewModel;
 import com.android.mevabe.common.services.APIService;
+import com.android.mevabe.common.utils.LogUtil;
 import com.android.mevabe.common.view.FragmentBase;
 import com.android.mevabe.common.view.LoadMoreRecyclerView;
 import com.android.mevabe.common.view.RefreshLoadMoreLayout;
+import com.android.mevabe.common.view.WebViewActivity;
+import com.android.mevabe.dashboard.DBRecyclerViewAdapter;
 
 import java.util.List;
 
@@ -22,6 +24,11 @@ import java.util.List;
  * Created by thuyld on 12/14/16.
  */
 public class DoctorsMain extends FragmentBase implements DBRecyclerViewAdapter.IDashBoardListHandler {
+    // For view binder
+    private EditText searchKey;
+    private ImageView btnFilter;
+
+    // For search result
     private RefreshLoadMoreLayout swipeRefreshLayout;
     private LoadMoreRecyclerView mRecyclerView;
     private DBRecyclerViewAdapter adapter;
@@ -33,6 +40,10 @@ public class DoctorsMain extends FragmentBase implements DBRecyclerViewAdapter.I
 
     @Override
     public void initView(View layoutView) {
+        // Bind view
+        searchKey = (EditText) layoutView.findViewById(R.id.search_key);
+        btnFilter = (ImageView) layoutView.findViewById(R.id.btn_filter);
+
         // Set up listener for swipe to refresh
         mRecyclerView = (LoadMoreRecyclerView) layoutView.findViewById(R.id.itemsRecyclerView);
 

@@ -73,17 +73,13 @@
 
         <TextView
             android:id="@+id/empty_data"
+            style="@style/TextNoData"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
             android:paddingBottom="50dp"
-            android:text="@string/empty_data"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="#9b9a9a"
-            android:textSize="32dp"/>
+            android:text="@string/empty_data"/>
     </LinearLayout>
 
 

@@ -138,18 +138,15 @@
 
             <EditText
                 android:id="@+id/in_place"
-                style="@style/TextBase"
+                style="@style/TextEditField"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@color/colorSeperate"
                 android:hint="@string/vaccinations_add_in_place_hint"
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:maxLength="100"
                 android:maxLines="1"
-                android:nextFocusForward="@+id/in_note"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"/>
+                android:nextFocusForward="@+id/in_note"/>
 
             <!-- Setting Note -->
             <TextView
@@ -163,17 +160,15 @@
 
             <EditText
                 android:id="@+id/in_note"
-                style="@style/TextBase"
+                style="@style/TextEditField"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:background="@color/colorSeperate"
                 android:hint="@string/vaccinations_add_in_note_hint"
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:maxLength="200"
                 android:maxLines="3"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"/>
+                />
         </LinearLayout>
 
         <!-- Finish button -->

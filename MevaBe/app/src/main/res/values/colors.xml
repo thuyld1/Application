@@ -7,4 +7,8 @@
     <color name="colorBG">#ffffff</color>
     <color name="colorSeperate">#c8c8c8</color>
     <color name="colorGreen">#67935d</color>
+
+    <color name="editTextBG">#e7e6e6</color>
+    <color name="editTextBorder">#b7b7b7</color>
+
 </resources>
