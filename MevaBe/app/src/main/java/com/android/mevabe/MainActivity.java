@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void notifyChildChange() {
         // Refresh vaccinations view
-        fragmentVaccinations.onAccountChangeFinish(AppData.getMyProfile().getMyPro());
+        fragmentVaccinations.onAccountChange(AppData.getMyProfile().getMyPro());
     }
 
     /**

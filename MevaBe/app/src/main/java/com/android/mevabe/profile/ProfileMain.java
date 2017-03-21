@@ -126,6 +126,11 @@ public class ProfileMain extends FragmentLoginRequired implements View.OnClickLi
 
         // Update child to DB
         dbService.updateChild(child);
+
+        // Notify to other views which related to child information
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).notifyChildChange();
+        }
     }
 
     // ****** IProfileChildrenViewHandler ******* //

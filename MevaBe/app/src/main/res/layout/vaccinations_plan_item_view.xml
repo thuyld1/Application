@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/content_id"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/bg_bottom_border"
-    android:orientation="horizontal"
-    android:paddingBottom="@dimen/vaccinations_padding_top_bottom"
-    android:paddingTop="@dimen/vaccinations_padding_top_bottom">
+              android:id="@+id/content_id"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/bg_bottom_border"
+              android:orientation="horizontal"
+              android:paddingBottom="@dimen/vaccinations_padding_top_bottom"
+              android:paddingTop="@dimen/vaccinations_padding_top_bottom">
 
     <ImageView
         android:id="@+id/add_vaccine_plan"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginLeft="@dimen/content_space"
+        android:layout_marginTop="5dp"
         android:background="@drawable/bg_rounded_corners"
         android:scaleType="centerCrop"
-        android:src="@drawable/vaccinations_plan_add" />
+        android:src="@drawable/vaccinations_plan_add"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,19 +35,17 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/vaccinations_announcement" />
+                android:src="@drawable/vaccinations_announcement"/>
 
             <TextView
                 android:id="@+id/child_info"
+                style="@style/TextNormalBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/vaccinations_content_space"
                 android:ellipsize="middle"
                 android:maxLines="1"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="#444"
-                android:textSize="14dp"
-                android:textStyle="bold" />
+                android:text="Sample"/>
         </LinearLayout>
 
         <LinearLayout
@@ -56,56 +55,38 @@
 
             <TextView
                 android:id="@+id/vaccinName"
+                style="@style/TextNormalBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="middle"
                 android:maxLines="1"
-                android:paddingTop="@dimen/vaccinations_content_space"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="#444"
-                android:textSize="14dp"
-                android:textStyle="bold" />
+                android:text="Sample"/>
 
             <TextView
                 android:id="@+id/moreInfo"
+                style="@style/TextMoreInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
-                android:background="@color/colorPrimary"
-                android:maxLines="1"
-                android:paddingLeft="4dp"
-                android:paddingRight="4dp"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                android:text="MORE"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="#fff"
-                android:textSize="11dp"
-                android:textStyle="bold" />
+                android:text="@string/more_info"/>
         </LinearLayout>
 
         <TextView
             android:id="@+id/vaccinDes"
+            style="@style/TextBase"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
-            android:paddingTop="@dimen/vaccinations_content_space"
-            android:text="Description sample"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="#444"
-            android:textSize="14dp" />
+            android:text="Sample"/>
 
         <TextView
             android:id="@+id/vaccinPeriod"
+            style="@style/TextBase"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:paddingTop="@dimen/vaccinations_content_space"
-            android:text="Description sample"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="#444"
-            android:textSize="14dp" />
+            android:text="Sample"/>
 
     </LinearLayout>
 </LinearLayout>

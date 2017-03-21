@@ -39,66 +39,49 @@
 
             <TextView
                 android:id="@+id/child_info"
+                style="@style/TextNormalBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/vaccinations_content_space"
                 android:ellipsize="middle"
-                android:maxLines="1"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="#444"
-                android:textSize="16dp"
-                android:textStyle="bold"/>
+                android:maxLines="1"/>
 
             <TextView
                 android:id="@+id/vaccinName"
+                style="@style/TextNormalBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="middle"
                 android:maxLines="1"
-                android:paddingTop="@dimen/vaccinations_content_space"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="#444"
-                android:textSize="16dp"
-                android:textStyle="bold"/>
+                android:paddingTop="@dimen/vaccinations_content_space"/>
 
             <TextView
                 android:id="@+id/vaccinDes"
+                style="@style/TextBase"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/vaccinations_content_space"
-                android:text="Description sample"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="#444"
-                android:textSize="14dp"/>
+                android:text="Description sample"/>
 
             <TextView
                 android:id="@+id/vaccinPeriod"
+                style="@style/TextBase"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:paddingTop="@dimen/vaccinations_content_space"
-                android:text="Description sample"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="#444"
-                android:textSize="14dp"/>
+                android:text="Description sample"/>
 
             <TextView
                 android:id="@+id/moreInfo"
+                style="@style/TextMoreInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_marginLeft="4dp"
-                android:background="@color/colorPrimary"
-                android:maxLines="1"
                 android:paddingBottom="4dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
-                android:paddingTop="4dp"
-                android:text="MORE INFO"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="#fff"
-                android:textSize="11dp"
-                android:textStyle="bold"/>
+                android:paddingTop="4dp"/>
         </LinearLayout>
 
         <!-- Setting information -->
@@ -129,41 +112,36 @@
 
                 <TextView
                     android:id="@+id/in_date_title"
+                    style="@style/TextBase"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="@string/vaccinations_add_in_date_title"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                    android:textColor="#444"
-                    android:textSize="14dp"/>
+                    android:text="@string/vaccinations_add_in_date_title"/>
 
                 <Button
                     android:id="@+id/in_date_btn"
+                    style="@style/TextBase"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@id/in_date_title"
-                    android:text="@string/vaccinations_add_in_date_button"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                    android:textColor="#444"
-                    android:textSize="14dp"/>
+                    android:text="@string/vaccinations_add_in_date_button"/>
 
             </RelativeLayout>
 
             <!-- Setting Place -->
             <TextView
                 android:id="@+id/in_place_title"
+                style="@style/TextBase"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginTop="@dimen/content_space"
-                android:text="@string/vaccinations_add_in_place"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="#444"
-                android:textSize="14dp"/>
+                android:text="@string/vaccinations_add_in_place"/>
 
             <EditText
                 android:id="@+id/in_place"
+                style="@style/TextBase"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@color/colorSeperate"
@@ -174,23 +152,21 @@
                 android:maxLines="1"
                 android:nextFocusForward="@+id/in_note"
                 android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:textSize="14dp"/>
+                android:paddingRight="5dp"/>
 
             <!-- Setting Note -->
             <TextView
                 android:id="@+id/in_note_title"
+                style="@style/TextBase"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginTop="@dimen/content_space"
-                android:text="@string/vaccinations_add_in_note"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="#444"
-                android:textSize="14dp"/>
+                android:text="@string/vaccinations_add_in_note"/>
 
             <EditText
                 android:id="@+id/in_note"
+                style="@style/TextBase"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:background="@color/colorSeperate"
@@ -200,8 +176,7 @@
                 android:maxLength="200"
                 android:maxLines="3"
                 android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:textSize="14dp"/>
+                android:paddingRight="5dp"/>
         </LinearLayout>
 
         <!-- Finish button -->
@@ -214,33 +189,27 @@
 
             <Button
                 android:id="@+id/btn_cancel"
+                style="@style/TextBase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:text="@string/cancel"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="#444"
-                android:textSize="14dp"/>
+                android:text="@string/cancel"/>
 
             <Button
                 android:id="@+id/btn_delete"
+                style="@style/TextBase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:text="@string/delete"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="#444"
-                android:textSize="14dp"/>
+                android:text="@string/delete"/>
 
             <Button
                 android:id="@+id/btn_add"
+                style="@style/TextNormalWhite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
-                android:text="@string/ok"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="#fff"
-                android:textSize="14dp"/>
+                android:text="@string/ok"/>
         </LinearLayout>
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

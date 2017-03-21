@@ -35,6 +35,7 @@
 
             <TextView
                 android:id="@+id/profile_name"
+                style="@style/TextBigBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="108dp"/>
@@ -56,13 +57,11 @@
             android:orientation="horizontal">
 
             <TextView
+                style="@style/TextNormalBold"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Thông tin của bé "
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="#444"
-                android:textSize="20dp"
-                android:textStyle="bold"/>
+                android:text="@string/child_info"
+                android:textSize="20sp"/>
 
             <ImageView
                 android:id="@+id/children_add_button"
@@ -84,12 +83,10 @@
 
         <TextView
             android:id="@+id/child_empty_view"
+            style="@style/TextBig"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/empty_child"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="#444"
-            android:textSize="16dp"/>
+            android:text="@string/empty_child"/>
     </LinearLayout>
 
     <!-- For login layout -->

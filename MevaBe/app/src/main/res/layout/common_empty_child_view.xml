@@ -10,15 +10,14 @@
                 tools:context="com.android.mevabe.MainActivity">
 
     <TextView
+        style="@style/TextBig"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/emtpy_child_btn_start"
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:padding="@dimen/content_space"
-        android:text="@string/empty_child"
-        android:textColor="#444"
-        android:textSize="16dp"/>
+        android:text="@string/empty_child"/>
 
     <Button
         android:id="@+id/emtpy_child_btn_start"
@@ -27,9 +26,9 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="10dp"
         android:background="@drawable/bg_rounded_corners"
+        android:onClick="onBtnStartClick"
         android:text="@string/start"
         android:textAllCaps="true"
-        android:onClick="onBtnStartClick"
         android:textColor="#fff"/>
 
 </RelativeLayout>

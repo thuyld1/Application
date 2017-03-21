@@ -4,15 +4,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_bottom_border"
-                android:paddingBottom="14dp"
-                android:paddingTop="14dp">
+                android:paddingBottom="12dp"
+                android:paddingTop="10dp">
 
     <ImageView
         android:id="@+id/child_gender"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="@dimen/content_space"
+        android:layout_marginTop="3dp"
         android:background="@drawable/bg_rounded_corners"
         android:scaleType="centerCrop"
         android:src="@drawable/profile_gender_male"/>
@@ -28,33 +29,27 @@
 
         <TextView
             android:id="@+id/child_name"
+            style="@style/TextNormalBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="middle"
             android:maxLines="2"
-            android:text="Title Sample"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="#444"
-            android:textSize="16dp"
-            android:textStyle="bold"/>
+            android:text="Title Sample"/>
 
         <TextView
             android:id="@+id/child_date_of_birth"
+            style="@style/TextBase"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:text="Description sample"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="#444"
-            android:textSize="14dp"/>
+            android:text="Description sample"/>
+
         <TextView
             android:id="@+id/child_years_old"
+            style="@style/TextBase"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Description sample"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="#444"
-            android:textSize="14dp"/>
+            android:text="Description sample"/>
 
     </LinearLayout>
 

@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBG"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.android.mevabe.MainActivity"
-    tools:showIn="@layout/app_main_content">
+    tools:context="com.android.mevabe.MainActivity">
 
     <com.android.mevabe.common.view.RefreshLoadMoreLayout
         android:id="@+id/swipeRefreshLayout"

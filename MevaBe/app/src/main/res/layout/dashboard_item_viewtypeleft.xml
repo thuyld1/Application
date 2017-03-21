@@ -26,25 +26,20 @@
 
         <TextView
             android:id="@+id/title"
+            style="@style/TextBigBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="2"
-            android:text="Title Sample"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="#444"
-            android:textSize="16dp"
-            android:textStyle="bold"/>
+            android:text="Title Sample"/>
 
         <TextView
             android:id="@+id/description"
+            style="@style/TextBase"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="3"
             android:paddingTop="@dimen/content_space"
-            android:text="Description sample"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="#444"
-            android:textSize="14dp"/>
+            android:text="Description sample"/>
 
     </LinearLayout>
 </LinearLayout>

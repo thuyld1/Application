@@ -10,8 +10,9 @@
 
     <com.android.mevabe.common.view.InjectionStatusBox
         android:id="@+id/vaccinationsStatus"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_marginTop="5dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginLeft="@dimen/content_space"/>
 
     <LinearLayout
@@ -23,50 +24,37 @@
 
         <TextView
             android:id="@+id/child_info"
+            style="@style/TextNormalBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/vaccinations_content_space"
             android:ellipsize="middle"
             android:maxLines="1"
-            android:text="Title Sample"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="#444"
-            android:textSize="14dp"
-            android:textStyle="bold"/>
+            android:text="Sample"/>
 
         <TextView
             android:id="@+id/vaccinName"
+            style="@style/TextNormalBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:paddingTop="@dimen/vaccinations_content_space"
-            android:text="Description sample"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="#444"
-            android:textSize="14dp"
-            android:textStyle="bold"/>
+            android:text="Sample"/>
 
         <TextView
             android:id="@+id/injectionDate"
+            style="@style/TextBase"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:paddingTop="@dimen/vaccinations_content_space"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="#444"
-            android:textSize="14dp"/>
+            android:text="Sample"/>
 
         <TextView
             android:id="@+id/injectionPlace"
+            style="@style/TextBase"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
-            android:paddingTop="@dimen/vaccinations_content_space"
-            android:text="Description sample"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="#444"
-            android:textSize="14dp"/>
+            android:text="Sample"/>
     </LinearLayout>
 </LinearLayout>

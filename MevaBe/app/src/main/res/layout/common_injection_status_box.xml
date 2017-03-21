@@ -29,15 +29,13 @@
 
     <com.android.mevabe.common.view.AutoResizeTextView
         android:id="@+id/in_title_countdown"
+        style="@style/TextNormalWhite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:maxLines="1"
         android:padding="4dp"
-        android:text="@string/vaccinations_injection_na"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:textColor="#fff"
-        android:textSize="14dp"/>
+        android:text="@string/vaccinations_injection_na"/>
 
 </RelativeLayout>
