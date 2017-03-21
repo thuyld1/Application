@@ -60,4 +60,8 @@
     <string name="vaccinations_edit_screen_title">Cập nhật lịch tiêm cho bé</string>
     <string name="vaccinations_edit_successful">Cập nhật lịch tiêm cho bé thành công</string>
     <string name="vaccinations_edit_fail">Cập nhật lịch tiêm cho bé thất bại</string>
+
+
+    <!-- Doctors Screen -->
+    <string name="doctors_filter_title">Thiết lập điều kiện tìm kiếm</string>
 </resources>

@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.android.mevabe.common.AppData;
 import com.android.mevabe.common.utils.LogUtil;
+import com.android.mevabe.common.utils.PrefUtil;
 import com.facebook.FacebookSdk;
 
 public class MyApplication extends Application {
@@ -17,6 +18,9 @@ public class MyApplication extends Application {
         // AppEventsLogger.activateApp(this);
         AppData.initAppData(getApplicationContext());
 
+        // Init SharedPreferences
+        PrefUtil.init(getApplicationContext());
+
     }
 
     @Override
@@ -26,6 +30,9 @@ public class MyApplication extends Application {
 
         // Release app data
         AppData.onTerminate();
+
+        // Release SharedPreferences
+        PrefUtil.onTerminate();
     }
 
 

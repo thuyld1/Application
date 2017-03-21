@@ -2,10 +2,10 @@ package com.android.mevabe.common;
 
 import android.content.Context;
 
-import com.android.mevabe.common.utils.LogUtil;
 import com.android.mevabe.common.model.MyProfile;
 import com.android.mevabe.common.services.db.DBProfile;
 import com.android.mevabe.common.services.db.DBService;
+import com.android.mevabe.common.utils.LogUtil;
 import com.facebook.Profile;
 
 /**
@@ -45,7 +45,6 @@ public class AppData {
         dbService.closeDB();
         dbService = null;
         dbProfile = null;
-
     }
 
     // ****** Login profile control ***** //

@@ -24,6 +24,8 @@ import java.util.List;
  * Created by thuyld on 12/14/16.
  */
 public class DoctorsMain extends FragmentBase implements DBRecyclerViewAdapter.IDashBoardListHandler {
+    public static final int DOCTORS_FILTER_CODE = 3017;
+
     // For view binder
     private EditText searchKey;
     private ImageView btnFilter;
@@ -43,6 +45,13 @@ public class DoctorsMain extends FragmentBase implements DBRecyclerViewAdapter.I
         // Bind view
         searchKey = (EditText) layoutView.findViewById(R.id.search_key);
         btnFilter = (ImageView) layoutView.findViewById(R.id.btn_filter);
+
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                settingFilter();
+            }
+        });
 
         // Set up listener for swipe to refresh
         mRecyclerView = (LoadMoreRecyclerView) layoutView.findViewById(R.id.itemsRecyclerView);
@@ -71,7 +80,7 @@ public class DoctorsMain extends FragmentBase implements DBRecyclerViewAdapter.I
         refreshItems();
     }
 
-
+    // ******** Action control ******** //
     @Override
     public void onToolBarClicked(View v) {
         LogUtil.debug("onToolBarClicked");
@@ -80,6 +89,16 @@ public class DoctorsMain extends FragmentBase implements DBRecyclerViewAdapter.I
         }
     }
 
+    /**
+     * Show setting filter screen
+     */
+    private void settingFilter() {
+        // Open setting filter view
+        Intent intent = new Intent(getContext(), DoctorsFilterSetting.class);
+        startActivityForResult(intent, DOCTORS_FILTER_CODE);
+    }
+
+    // ******** List results control ******** //
     /**
      * Refresh item
      */
