@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * Created by leducthuy on 1/18/17.
  */
-public class ProfileChildModel implements Serializable {
+public class ProfileChildModel implements Serializable, Comparable<ProfileChildModel> {
     private long id;
     private String name;
     private long dateOfBirth;
@@ -25,6 +25,11 @@ public class ProfileChildModel implements Serializable {
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.yearsOld = YearsOldUtil.getYearsOld(AppData.context, dateOfBirth);
+    }
+
+    @Override
+    public int compareTo(ProfileChildModel another) {
+        return (int) (dateOfBirth - another.dateOfBirth);
     }
 
     public long getId() {
