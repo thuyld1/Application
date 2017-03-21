@@ -78,10 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_marginLeft="4dp"
-                android:paddingBottom="4dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:paddingTop="4dp"/>
+                android:text="@string/more_info"/>
         </LinearLayout>
 
         <!-- Setting information -->
