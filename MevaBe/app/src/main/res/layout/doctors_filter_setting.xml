@@ -26,7 +26,59 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
-        android:orientation="vertical">
+        android:orientation="vertical">location
+
+        <!-- Select location -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_bottom_border"
+            android:padding="@dimen/content_space"
+            android:onClick="settingLocation">
+
+            <TextView
+                android:id="@+id/filter_location"
+                style="@style/TextBase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="@dimen/selectable_icon_width"
+                android:text="@string/doctors_filter_location"/>
+
+            <ImageView
+                android:layout_width="@dimen/selectable_icon_width"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/common_next_icon"/>
+        </RelativeLayout>
+
+        <!-- Select specialization -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_bottom_border"
+            android:padding="@dimen/content_space"
+            android:onClick="settingSpecialization">
+
+            <TextView
+                android:id="@+id/filter_specialization"
+                style="@style/TextBase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="@dimen/selectable_icon_width"
+                android:text="@string/doctors_filter_specialization"/>
+
+            <ImageView
+                android:layout_width="@dimen/selectable_icon_width"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/common_next_icon"/>
+        </RelativeLayout>
 
 
     </LinearLayout>

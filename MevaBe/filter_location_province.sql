@@ -1,0 +1,71 @@
+DROP TABLE "filter_location_province";
+CREATE TABLE "filter_location_province" (
+	`code`	INTEGER NOT NULL UNIQUE,
+	`order`	INTEGER NOT NULL DEFAULT 0,
+	`title`	TEXT NOT NULL,
+	`simple`	TEXT NOT NULL
+);
+
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	1	,	1	,'Hà Nội', 'Ha Noi');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	2	,	2	,'Hồ Chí Minh', 'Ho Chi Minh');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	3	,	3	,'An Giang', 'An Giang');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	4	,	4	,'Bà Rịa - Vũng Tàu', 'Ba Ria - Vung Tau');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	5	,	5	,'Bắc Giang', 'Bac Giang');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	6	,	6	,'Bắc Kạn', 'Bac Can');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	7	,	7	,'Bạc Liêu', 'Bac Lieu');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	8	,	8	,'Bắc Ninh', 'Bac Ninh');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	9	,	9	,'Bến Tre', 'Ben Tre');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	10	,	10	,'Bình Định', 'Binh Dinh');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	11	,	11	,'Bình Dương', 'Binh Duong');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	12	,	12	,'Bình Phước', 'Binh Phuoc');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	13	,	13	,'Bình Thuận', 'Binh Thuan');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	14	,	14	,'Cà Mau', 'Ca Mau');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	15	,	15	,'Cao Bằng', 'Cao Bang');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	16	,	16	,'Cần Thơ', 'Can Tho');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	17	,	17	,'Đà Nẵng', 'Da Nang');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	18	,	18	,'Đắk Lắk', 'Dak Lak');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	19	,	19	,'Đắk Nông', 'Dak Nong');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	20	,	20	,'Điện Biên', 'Dien Bien');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	21	,	21	,'Đồng Nai', 'Dong Nai');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	22	,	22	,'Đồng Tháp', 'Dong Thap');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	23	,	23	,'Gia Lai', 'Gia Lai');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	24	,	24	,'Hà Giang', 'Ha Giang');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	25	,	25	,'Hà Nam', 'Ha Nam');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	26	,	26	,'Hà Tĩnh', 'Ha Tinh');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	27	,	27	,'Hải Dương', 'Hai Duong');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	28	,	28	,'Hải Phòng', 'Hai Phong');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	29	,	29	,'Hậu Giang', 'Hau Giang');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	30	,	30	,'Hòa Bình', 'Hoa Binh');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	31	,	31	,'Hưng Yên', 'Hung Yen');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	32	,	32	,'Khánh Hòa', 'Khanh Hoa');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	33	,	33	,'Kiên Giang', 'Kien Giang');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	34	,	34	,'Kon Tum', 'Kon Tum');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	35	,	35	,'Lai Châu', 'Lai Chau');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	36	,	36	,'Lâm Đồng', 'Lam Dong');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	37	,	37	,'Lạng Sơn', 'Lang Son');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	38	,	38	,'Lào Cai', 'Lao Cai');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	39	,	39	,'Long An', 'Long An');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	40	,	40	,'Nam Định', 'Nam Dinh');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	41	,	41	,'Nghệ An', 'Nghe An');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	42	,	42	,'Ninh Bình', 'Ninh Binh');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	43	,	43	,'Ninh Thuận', 'Ninh Thuan');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	44	,	44	,'Phú Thọ', 'Phu Tho');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	45	,	45	,'Phú Yên', 'Phu Yen');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	46	,	46	,'Quảng Bình', 'Quang Binh');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	47	,	47	,'Quảng Nam', 'Quang Nam');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	48	,	48	,'Quảng Ngãi', 'Quang Ngai');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	49	,	49	,'Quảng Ninh', 'Quang Ninh');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	50	,	50	,'Quảng Trị', 'Quang Tri');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	51	,	51	,'Sóc Trăng', 'Soc Trang');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	52	,	52	,'Sơn La', 'Son La');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	53	,	53	,'Tây Ninh', 'Tay Ninh');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	54	,	54	,'Thái Bình', 'Thai Binh');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	55	,	55	,'Thái Nguyên', 'Thai Nguyen');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	56	,	56	,'Thanh Hóa', 'Thanh Hoa');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	57	,	57	,'Thừa Thiên Huế', 'Thua Thien Hue');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	58	,	58	,'Tiền Giang', 'Tien Giang');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	59	,	59	,'Trà Vinh', 'Tra Vinh');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	60	,	60	,'Tuyên Quang', 'Tuyen Quang');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	61	,	61	,'Vĩnh Long', 'Vinh Long');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	62	,	62	,'Vĩnh Phúc', 'Vinh Phuc');
+INSERT INTO filter_location_province(`code`, `order`, `title`, `simple`) VALUES(	63	,	63	,'Yên Bái', 'Yen Bai');	

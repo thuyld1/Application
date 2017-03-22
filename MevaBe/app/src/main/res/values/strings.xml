@@ -12,6 +12,7 @@
     <string name="settings">Thiết lập</string>
     <string name="all">Tất cả</string>
     <string name="more_info">MORE</string>
+    <string name="no_setting">Chưa thiết lập</string>
 
     <string name="back_to_exit">Nhấn nút BACK 2 lần để thoát ứng dụng</string>
     <string name="login_message">Hãy đăng nhập để sử dụng tính năng này</string>
@@ -64,4 +65,6 @@
 
     <!-- Doctors Screen -->
     <string name="doctors_filter_title">Thiết lập điều kiện tìm kiếm</string>
+    <string name="doctors_filter_location">Khu vực:%1$s\n\n%2$s</string>
+    <string name="doctors_filter_specialization">Chuyên khoa:\n\n%1$s</string>
 </resources>

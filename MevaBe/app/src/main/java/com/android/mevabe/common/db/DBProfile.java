@@ -1,4 +1,4 @@
-package com.android.mevabe.common.services.db;
+package com.android.mevabe.common.db;
 
 import android.content.ContentValues;
 import android.database.Cursor;

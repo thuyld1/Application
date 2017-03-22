@@ -19,7 +19,7 @@ import com.android.mevabe.R;
 import com.android.mevabe.common.Constants;
 import com.android.mevabe.common.model.VaccinationsHistoryModel;
 import com.android.mevabe.common.model.WebViewModel;
-import com.android.mevabe.common.services.db.DBVacinations;
+import com.android.mevabe.common.db.DBVacinations;
 import com.android.mevabe.common.utils.DialogUtil;
 import com.android.mevabe.common.view.BaseActivity;
 import com.android.mevabe.common.view.InjectionStatusBox;

@@ -23,7 +23,7 @@
             android:id="@+id/search_key"
             style="@style/TextEditField"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/edit_text_single_line"
             android:layout_toLeftOf="@+id/btn_filter"
             android:imeOptions="actionSearch"
             android:inputType="text"

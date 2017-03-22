@@ -15,7 +15,7 @@ import com.android.mevabe.common.utils.DialogUtil;
 import com.android.mevabe.common.utils.LogUtil;
 import com.android.mevabe.common.model.MyProfile;
 import com.android.mevabe.common.model.ProfileChildModel;
-import com.android.mevabe.common.services.db.DBProfile;
+import com.android.mevabe.common.db.DBProfile;
 import com.android.mevabe.common.view.FragmentLoginRequired;
 import com.android.mevabe.common.view.RecyclerViewSupportEmpty;
 import com.facebook.Profile;
@@ -81,8 +81,8 @@ public class ProfileMain extends FragmentLoginRequired implements View.OnClickLi
             LogUtil.debug("Profile avatar path:  " + avatarPath);
             if (avatarPath != null) {
                 Picasso.with(getContext()).load(avatarPath)
-                        .error(R.drawable.placeholder)
-                        .placeholder(R.drawable.placeholder)
+                        .error(R.drawable.common_placeholder)
+                        .placeholder(R.drawable.common_placeholder)
                         .into(avatar);
             }
             profileName.setText(profile.getName());

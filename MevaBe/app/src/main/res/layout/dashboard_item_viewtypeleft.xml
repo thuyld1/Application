@@ -14,7 +14,7 @@
         android:layout_height="100dp"
         android:layout_marginLeft="@dimen/content_space"
         android:scaleType="centerCrop"
-        android:src="@drawable/placeholder"/>
+        android:src="@drawable/common_placeholder"/>
 
     <LinearLayout
         android:layout_width="match_parent"

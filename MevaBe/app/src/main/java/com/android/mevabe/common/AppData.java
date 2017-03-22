@@ -3,8 +3,8 @@ package com.android.mevabe.common;
 import android.content.Context;
 
 import com.android.mevabe.common.model.MyProfile;
-import com.android.mevabe.common.services.db.DBProfile;
-import com.android.mevabe.common.services.db.DBService;
+import com.android.mevabe.common.db.DBProfile;
+import com.android.mevabe.common.db.DBService;
 import com.android.mevabe.common.utils.LogUtil;
 import com.facebook.Profile;
 

@@ -19,7 +19,7 @@ import com.android.mevabe.common.model.ProfileChildModel;
 import com.android.mevabe.common.model.VaccinationsHistoryModel;
 import com.android.mevabe.common.model.VaccinationsPlanModel;
 import com.android.mevabe.common.model.WebViewModel;
-import com.android.mevabe.common.services.db.DBVacinations;
+import com.android.mevabe.common.db.DBVacinations;
 import com.android.mevabe.common.utils.LogUtil;
 import com.android.mevabe.common.view.FragmentLoginRequired;
 import com.android.mevabe.common.view.RecyclerViewSupportEmpty;

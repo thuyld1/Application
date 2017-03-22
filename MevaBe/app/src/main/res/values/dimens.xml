@@ -5,6 +5,9 @@
 
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="content_space">8dp</dimen>
+    <dimen name="selectable_icon_width">24dp</dimen>
+    <dimen name="edit_text_single_line">40dp</dimen>
+
     <dimen name="vaccinations_content_space">2dp</dimen>
     <dimen name="vaccinations_padding_top_bottom">12dp</dimen>
     <dimen name="activity_horizontal_margin">10dp</dimen>

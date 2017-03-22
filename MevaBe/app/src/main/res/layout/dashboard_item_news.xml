@@ -19,7 +19,7 @@
             android:layout_height="180dp"
             android:layout_alignParentTop="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/placeholder"/>
+            android:src="@drawable/common_placeholder"/>
 
         <TextView
             android:id="@+id/title"

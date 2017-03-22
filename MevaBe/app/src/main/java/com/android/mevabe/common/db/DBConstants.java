@@ -1,4 +1,4 @@
-package com.android.mevabe.common.services.db;
+package com.android.mevabe.common.db;
 
 public class DBConstants {
     public static final String ID = "_id";
