@@ -39,4 +39,19 @@ public class DBConstants {
     public static final String VACHIS_INJECTION_STATUS = "in_status";
     public static final String VACHIS_INJECTION_PLACE = "in_place";
     public static final String VACHIS_INJECTION_NOTE = "in_note";
+
+    // Table filter location province
+    public static final String TB_LOCATION_PROVINCE = "filter_location_province";
+    public static final String LOC_PRO_CODE = "code";
+    public static final String LOC_PRO_ORDER = "order";
+    public static final String LOC_PRO_TITLE = "title";
+    public static final String LOC_PRO_SIMPLE = "simple";
+
+
+    // Table filter location district
+    public static final String TB_LOCATION_DISTRICT = "filter_location_district";
+    public static final String LOC_DIS_CODE = "code";
+    public static final String LOC_DIS_PCODE = "p_code";
+    public static final String LOC_DIS_TITLE = "title";
+
 }

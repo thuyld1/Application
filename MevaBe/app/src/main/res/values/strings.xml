@@ -67,4 +67,7 @@
     <string name="doctors_filter_title">Thiết lập điều kiện tìm kiếm</string>
     <string name="doctors_filter_location">Khu vực:%1$s\n\n%2$s</string>
     <string name="doctors_filter_specialization">Chuyên khoa:\n\n%1$s</string>
+
+    <string name="doctors_filter_location_province">Tỉnh/Thành phố</string>
+    <string name="doctors_filter_location_district">Quận huyện</string>
 </resources>

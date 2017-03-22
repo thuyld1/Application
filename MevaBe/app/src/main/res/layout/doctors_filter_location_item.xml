@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/content_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_bottom_border"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/vaccinations_padding_top_bottom"
+                android:paddingTop="@dimen/vaccinations_padding_top_bottom">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/TextBase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/vaccinations_content_space"
+        android:layout_marginRight="48dp"
+        android:ellipsize="middle"
+        android:maxLines="1"
+        android:text="Sample"/>
+
+    <ImageView
+        android:id="@+id/select"
+        app:srcCompat="@drawable/common_tick"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:scaleType="fitCenter"/>
+
+
+</RelativeLayout>
