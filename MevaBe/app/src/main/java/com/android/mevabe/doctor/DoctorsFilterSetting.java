@@ -80,23 +80,22 @@ public class DoctorsFilterSetting extends BaseActivity {
         String noSetting = getString(R.string.no_setting);
 
         // Get location filter info
-        String location = PrefUtil.readString(FILTER_LOCATION_CITY_TITLE, noSetting);
+        String location = PrefUtil.readString(FILTER_LOCATION_CITY_TITLE, null);
         if (StringUtils.isEmpty(location)) {
-            location = String.format(getString(R.string.doctors_filter_location), noSetting, "");
+            location = getString(R.string.doctors_filter_location, "", noSetting);
         } else {
             String district = PrefUtil.readString(FILTER_LOCATION_DISTRICT_TITLE, noSetting);
-            location = String.format(getString(R.string.doctors_filter_location), location, district);
+            location = getString(R.string.doctors_filter_location, location, district);
         }
         filterLocation.setText(location);
 
 
         // Get specialization filter info
-        String specialization = PrefUtil.readString(FILTER_LOCATION_CITY_TITLE, noSetting);
+        String specialization = PrefUtil.readString(FILTER_SPECIALIZATION_TITLE, noSetting);
         if (StringUtils.isEmpty(location)) {
-            specialization = String.format(getString(R.string.doctors_filter_specialization), noSetting);
+            specialization = getString(R.string.doctors_filter_specialization, noSetting);
         } else {
-            String district = PrefUtil.readString(FILTER_LOCATION_DISTRICT_TITLE, noSetting);
-            specialization = String.format(getString(R.string.doctors_filter_specialization), specialization);
+            specialization = getString(R.string.doctors_filter_specialization, specialization);
         }
         filterSpecilization.setText(specialization);
 

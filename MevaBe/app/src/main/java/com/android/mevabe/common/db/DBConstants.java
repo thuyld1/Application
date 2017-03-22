@@ -43,7 +43,7 @@ public class DBConstants {
     // Table filter location province
     public static final String TB_LOCATION_PROVINCE = "filter_location_province";
     public static final String LOC_PRO_CODE = "code";
-    public static final String LOC_PRO_ORDER = "order";
+    public static final String LOC_PRO_ORDER = "ord";
     public static final String LOC_PRO_TITLE = "title";
     public static final String LOC_PRO_SIMPLE = "simple";
 

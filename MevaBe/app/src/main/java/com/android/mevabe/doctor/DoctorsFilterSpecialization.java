@@ -55,7 +55,7 @@ public class DoctorsFilterSpecialization extends BaseActivity {
         View conentView = findViewById(R.id.content_view);
         conentView.setOnTouchListener(new OnSwipeTouchListener(this));
 
-        resultView = (RecyclerViewSupportEmpty) findViewById(R.id.result_view);
+//        resultView = (RecyclerViewSupportEmpty) findViewById(R.id.result_view);
 
 
     }

@@ -3,6 +3,8 @@ package com.android.mevabe.common.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.Set;
+
 /**
  * Created by hoangnm on 9/16/15.
  */
@@ -61,5 +63,13 @@ public class PrefUtil {
 
     public static long readLong(String key, long defValue) {
         return mPreferences.getLong(key, defValue);
+    }
+
+    public static void writeList(String key, Set<String> value) {
+        mPreferences.edit().putStringSet(key, value).commit();
+    }
+
+    public static Set<String> readList(String key, Set<String> defValue) {
+        return mPreferences.getStringSet(key, defValue);
     }
 }

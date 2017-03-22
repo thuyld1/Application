@@ -49,9 +49,11 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:onClick="settingProvince"
                     android:text="@string/doctors_filter_location_province"
                     android:textAlignment="center"
-                    android:textAllCaps="true"/>
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary"/>
 
                 <TextView
                     android:id="@+id/btn_district"
@@ -60,6 +62,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:onClick="settingDistrict"
                     android:text="@string/doctors_filter_location_district"
                     android:textAlignment="center"
                     android:textAllCaps="true"/>
@@ -77,7 +80,8 @@
             android:id="@+id/list_district"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"/>
+            android:scrollbars="vertical"
+            android:visibility="gone"/>
 
 
     </LinearLayout>

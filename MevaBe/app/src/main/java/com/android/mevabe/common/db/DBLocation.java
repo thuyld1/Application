@@ -87,7 +87,7 @@ public class DBLocation {
      * @param provinceCode long
      * @return List<LocationDistrict>
      */
-    public List<LocationDistrict> getProvinces(long provinceCode) {
+    public List<LocationDistrict> getDistricts(long provinceCode) {
         LogUtil.debug("DBLocation: getProvinces() key = " + key);
         List<LocationDistrict> result = new ArrayList<>();
         SQLiteDatabase db = DBService.getReadableDatabase();
