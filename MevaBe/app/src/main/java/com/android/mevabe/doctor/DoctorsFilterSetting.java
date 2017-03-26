@@ -84,8 +84,13 @@ public class DoctorsFilterSetting extends BaseActivity {
         if (StringUtils.isEmpty(location)) {
             location = getString(R.string.doctors_filter_location, "", noSetting);
         } else {
-            String district = PrefUtil.readString(FILTER_LOCATION_DISTRICT_TITLE, noSetting);
-            location = getString(R.string.doctors_filter_location, location, district);
+            String district = PrefUtil.readString(FILTER_LOCATION_DISTRICT_TITLE, null);
+            if (StringUtils.isEmpty(district)) {
+                location = getString(R.string.doctors_filter_location, location, "");
+            } else {
+                location = getString(R.string.doctors_filter_location, location, district);
+            }
+
         }
         filterLocation.setText(location);
 
@@ -101,6 +106,17 @@ public class DoctorsFilterSetting extends BaseActivity {
 
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Case go back from setting location
+        if (requestCode == DOCTORS_FILTER_LOCATION) {
+            // Update data
+            bindData();
+        }
+    }
 
     @Override
     protected void onResume() {

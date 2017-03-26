@@ -11,6 +11,9 @@ public class LocationDistrict extends BaseModel implements Serializable {
     private long pCode;
     private String title;
 
+    // For view control
+    private boolean isSelected;
+
     public LocationDistrict() {
     }
 
@@ -42,5 +45,13 @@ public class LocationDistrict extends BaseModel implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }

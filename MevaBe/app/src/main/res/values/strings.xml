@@ -36,7 +36,9 @@
     <string name="child_months">&#160;tháng</string>
     <string name="child_days">&#160;ngày</string>
     <string name="child_info">Thông tin của bé</string>
-    <string name="child_delete_confirm">Bạn muốn xoá thông tin của bé "%s"\n(Chú ý: thông tin về lịch tiêm phòng của bé cũng sẽ được xoá theo)</string>
+    <string name="child_delete_confirm">Bạn muốn xoá thông tin của bé "%s"\n(Chú ý: thông tin về lịch tiêm phòng của bé
+        cũng sẽ được xoá theo)
+    </string>
 
 
     <!-- Vaccinations Screen -->
@@ -65,8 +67,10 @@
 
     <!-- Doctors Screen -->
     <string name="doctors_filter_title">Thiết lập điều kiện tìm kiếm</string>
-    <string name="doctors_filter_location">Khu vực:%1$s\n%2$s</string>
-    <string name="doctors_filter_specialization">Chuyên khoa:\n%1$s</string>
+    <string name="doctors_filter_location">Khu vực: %1$s\n%2$s
+    </string>
+    <string name="doctors_filter_specialization">Chuyên khoa:\n%1$s
+    </string>
 
     <string name="doctors_filter_location_province">Tỉnh/Thành phố</string>
     <string name="doctors_filter_location_district">Quận huyện</string>

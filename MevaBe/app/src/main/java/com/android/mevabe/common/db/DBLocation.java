@@ -13,6 +13,7 @@ import com.android.mevabe.common.utils.StringUtils;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 import static android.R.attr.key;
 import static com.android.mevabe.common.db.DBConstants.LOC_PRO_SIMPLE;
@@ -84,10 +85,11 @@ public class DBLocation {
     /**
      * Get list districts
      *
-     * @param provinceCode long
+     * @param provinceCode  long
+     * @param selectedItems Set<String>
      * @return List<LocationDistrict>
      */
-    public List<LocationDistrict> getDistricts(long provinceCode) {
+    public List<LocationDistrict> getDistricts(long provinceCode, Set<String> selectedItems) {
         LogUtil.debug("DBLocation: getProvinces() key = " + key);
         List<LocationDistrict> result = new ArrayList<>();
         SQLiteDatabase db = DBService.getReadableDatabase();
@@ -100,11 +102,23 @@ public class DBLocation {
 
         // Parse data from DB
         LocationDistrict row = null;
-        while (cursor.moveToNext()) {
-            long code = cursor.getLong(0);
-            String title = cursor.getString(1);
-            row = new LocationDistrict(code, provinceCode, title);
-            result.add(row);
+
+        // Check to set selected items
+        if (selectedItems != null && selectedItems.size() > 0) {
+            while (cursor.moveToNext()) {
+                long code = cursor.getLong(0);
+                String title = cursor.getString(1);
+                row = new LocationDistrict(code, provinceCode, title);
+                row.setSelected(selectedItems.contains(String.valueOf(code)));
+                result.add(row);
+            }
+        } else {
+            while (cursor.moveToNext()) {
+                long code = cursor.getLong(0);
+                String title = cursor.getString(1);
+                row = new LocationDistrict(code, provinceCode, title);
+                result.add(row);
+            }
         }
         cursor.close();
 

@@ -9,40 +9,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.mevabe.R;
-import com.android.mevabe.common.model.LocationProvince;
+import com.android.mevabe.common.model.LocationDistrict;
+import com.android.mevabe.common.utils.PrefUtil;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * LocationProvinceAdapter controls view of list setting location for filtering
  */
 public class LocationDistrictAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    /**
-     * ILocationDistrictAdapter interface for callback
-     */
-    public interface ILocationDistrictAdapter {
-        void showVaccineInfo(LocationProvince item);
-
-        void addVaccinePlan(LocationProvince item);
-    }
-
-    private ILocationDistrictAdapter handler;
-
-    private List<LocationProvince> listItems;
+    private List<LocationDistrict> listItems;
     private Activity context;
-    private long selected;
 
     /**
      * Constructor
      *
      * @param context Context
      */
-    public LocationDistrictAdapter(Activity context, long selected, ILocationDistrictAdapter handler) {
+    public LocationDistrictAdapter(Activity context) {
         this.listItems = new ArrayList<>();
         this.context = context;
-        this.selected = selected;
-        this.handler = handler;
     }
 
     @Override
@@ -56,7 +45,7 @@ public class LocationDistrictAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        LocationProvince item = (LocationProvince) listItems.get(position);
+        LocationDistrict item = (LocationDistrict) listItems.get(position);
         if (item != null) {
             ((MyViewHolder) holder).bindData(item);
         }
@@ -87,6 +76,25 @@ public class LocationDistrictAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
+    /**
+     * Save selected items
+     *
+     * @return Set<String>
+     */
+    public void saveSelectedItems() {
+        Set<String> selected = new HashSet<>();
+        StringBuilder sb = new StringBuilder();
+        for (LocationDistrict item : listItems) {
+            if (item.isSelected()) {
+                selected.add(String.valueOf(item.getCode()));
+                sb.append(item.getTitle()).append("\n");
+            }
+        }
+
+        PrefUtil.writeList(DoctorsFilterSetting.FILTER_LOCATION_DISTRICT_VALUE, selected);
+        PrefUtil.writeString(DoctorsFilterSetting.FILTER_LOCATION_DISTRICT_TITLE, sb.toString());
+    }
+
     // ************* View Holder *********** //
     class MyViewHolder extends RecyclerView.ViewHolder {
         private View layout;
@@ -95,33 +103,35 @@ public class LocationDistrictAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         public MyViewHolder(View view) {
             super(view);
-            this.title = (TextView) view.findViewById(R.id.child_info);
+            this.title = (TextView) view.findViewById(R.id.title);
             this.tick = (ImageView) view.findViewById(R.id.tick);
             this.layout = view;
 
         }
 
-        public void bindData(final LocationProvince data) {
+        public void bindData(final LocationDistrict data) {
             // Show title
             title.setText(data.getTitle());
 
             // ON/OFF tick
-            if (selected == data.getCode()) {
+            if (data.isSelected()) {
                 tick.setVisibility(View.VISIBLE);
+                title.setTextColor(context.getResources().getColor(R.color.colorPrimary));
             } else {
                 tick.setVisibility(View.INVISIBLE);
+                title.setTextColor(context.getResources().getColor(R.color.textColor));
             }
 
             // Add listener
-            if (handler != null) {
-                // Set "Show vaccine information" listener
-                layout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        handler.showVaccineInfo(data);
-                    }
-                });
-            }
+            layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Update data and view
+                    data.setSelected(!data.isSelected());
+                    notifyDataSetChanged();
+                }
+            });
+
 
         }
     }

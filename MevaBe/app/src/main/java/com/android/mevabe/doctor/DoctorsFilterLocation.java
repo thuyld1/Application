@@ -5,9 +5,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.mevabe.R;
@@ -17,7 +15,6 @@ import com.android.mevabe.common.utils.PrefUtil;
 import com.android.mevabe.common.view.BaseActivity;
 import com.android.mevabe.common.view.OnSwipeTouchListener;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import static com.android.mevabe.doctor.DoctorsFilterSetting.FILTER_LOCATION_CITY_TITLE;
@@ -35,8 +32,10 @@ public class DoctorsFilterLocation extends BaseActivity implements LocationProvi
     private LocationDistrictAdapter districtAdapter;
 
     private DBLocation dbLocation;
-    private long selectedProvice;
+    private long selectedProvince;
+    private String selectedProvinceTitle;
     private Set<String> selectedDistrict;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,13 +62,13 @@ public class DoctorsFilterLocation extends BaseActivity implements LocationProvi
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
-        View.OnClickListener cancelListener = new View.OnClickListener() {
+        View.OnClickListener closeListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onClose();
             }
         };
-        toolbar.setNavigationOnClickListener(cancelListener);
+        toolbar.setNavigationOnClickListener(closeListener);
 
         // Build swipe to close
         View conentView = findViewById(R.id.content_view);
@@ -94,22 +93,24 @@ public class DoctorsFilterLocation extends BaseActivity implements LocationProvi
         dbLocation = new DBLocation();
 
         // Bind list provinces
-        selectedProvice = PrefUtil.readLong(
-                FILTER_LOCATION_CITY_VALUE, -1);
-        provinceAdapter = new LocationProvinceAdapter(this, selectedProvice, this);
+        selectedProvince = PrefUtil.readLong(FILTER_LOCATION_CITY_VALUE, -1);
+        selectedProvinceTitle = PrefUtil.readString(FILTER_LOCATION_CITY_TITLE, null);
+        provinceAdapter = new LocationProvinceAdapter(this, selectedProvince, this);
         listProvince.setAdapter(provinceAdapter);
         provinceAdapter.refreshItems(dbLocation.getProvinces(null));
 
         // Disable district tab filter if not select province yet
-        if (selectedProvice < 0) {
+        if (selectedProvince < 0) {
             btnDistrict.setEnabled(false);
         }
 
         // Bind list districts
         selectedDistrict = PrefUtil.readList(DoctorsFilterSetting
                 .FILTER_LOCATION_DISTRICT_VALUE, null);
-        if (selectedDistrict == null) {
-            selectedDistrict = new HashSet<String>();
+        districtAdapter = new LocationDistrictAdapter(this);
+        listDistrict.setAdapter(districtAdapter);
+        if (selectedProvince > 0) {
+            districtAdapter.refreshItems(dbLocation.getDistricts(selectedProvince, selectedDistrict));
         }
     }
 
@@ -126,6 +127,12 @@ public class DoctorsFilterLocation extends BaseActivity implements LocationProvi
 
 
     // ************ ACTION CONTROL ***************
+
+    /**
+     * Handle when click province tab
+     *
+     * @param v View
+     */
     public void settingProvince(View v) {
         btnProvince.setTextColor(getColor(R.color.colorPrimary));
         listProvince.setVisibility(View.VISIBLE);
@@ -133,46 +140,51 @@ public class DoctorsFilterLocation extends BaseActivity implements LocationProvi
         listDistrict.setVisibility(View.GONE);
     }
 
+    /**
+     * Handle when click district tab
+     *
+     * @param v View
+     */
     public void settingDistrict(View v) {
-        if (selectedProvice > 0) {
+        if (selectedProvince > 0) {
             btnDistrict.setTextColor(getColor(R.color.colorPrimary));
             listDistrict.setVisibility(View.VISIBLE);
             btnProvince.setTextColor(getColor(R.color.textColor));
             listProvince.setVisibility(View.GONE);
-
-            // Refresh for district
-            districtAdapter.refreshItems(dbLocation.getDistricts(selectedProvice));
         }
-
     }
 
     /**
-     * Get text string from EditText
-     *
-     * @param editText EditText
-     * @return String
+     * Handle when click back button
      */
-    private String getTextString(EditText editText) {
-        String value = null;
-        Editable editable = editText.getText();
-        if (editable != null) {
-            value = editable.toString().trim();
+    public void onClose() {
+        // Update set data
+        if (selectedProvince > 0) {
+            PrefUtil.writeLong(FILTER_LOCATION_CITY_VALUE, selectedProvince);
+            PrefUtil.writeString(FILTER_LOCATION_CITY_TITLE, selectedProvinceTitle);
+            districtAdapter.saveSelectedItems();
         }
-        return value;
+
+        // Close current view
+        finish();
     }
 
     // ******** LocationProvinceAdapter.ILocationProvinceAdapter *********
     @Override
     public void onChangeProvince(LocationProvince item) {
         // Update province info
-        selectedProvice = item.getCode();
-        PrefUtil.writeLong(FILTER_LOCATION_CITY_VALUE, selectedProvice);
-        PrefUtil.writeString(FILTER_LOCATION_CITY_TITLE, item.getTitle());
+        selectedProvince = item.getCode();
+        selectedProvinceTitle = item.getTitle();
 
         // Enable select district button
         btnDistrict.setEnabled(true);
 
-        // Show details of district
+        // Refresh for district
+        selectedDistrict = null;
+        districtAdapter.refreshItems(dbLocation.getDistricts(selectedProvince, selectedDistrict));
+
+        // Show tab of district
+        settingDistrict(null);
 
     }
 }

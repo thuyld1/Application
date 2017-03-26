@@ -114,7 +114,6 @@ public class LocationProvinceAdapter extends RecyclerView.Adapter<RecyclerView.V
 
             // Add listener
             if (handler != null) {
-                // Set "Show vaccine information" listener
                 layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

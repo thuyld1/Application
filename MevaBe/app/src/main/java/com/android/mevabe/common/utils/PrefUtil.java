@@ -21,12 +21,12 @@ public class PrefUtil {
     }
 
     public void remove(String key) {
-        mPreferences.edit().remove(key).commit();
+        mPreferences.edit().remove(key).apply();
     }
 
     // *************** Action control ************* //
     public static void writeBoolean(String key, boolean value) {
-        mPreferences.edit().putBoolean(key, value).commit();
+        mPreferences.edit().putBoolean(key, value).apply();
     }
 
     public static boolean readBoolean(String key, boolean defValue) {
@@ -34,7 +34,7 @@ public class PrefUtil {
     }
 
     public static void writeInt(String key, int value) {
-        mPreferences.edit().putInt(key, value).commit();
+        mPreferences.edit().putInt(key, value).apply();
     }
 
     public static int readInt(String key, int defValue) {
@@ -42,7 +42,7 @@ public class PrefUtil {
     }
 
     public static void writeString(String key, String value) {
-        mPreferences.edit().putString(key, value).commit();
+        mPreferences.edit().putString(key, value).apply();
     }
 
     public static String readString(String key, String defValue) {
@@ -50,7 +50,7 @@ public class PrefUtil {
     }
 
     public static void writeFloat(String key, float value) {
-        mPreferences.edit().putFloat(key, value).commit();
+        mPreferences.edit().putFloat(key, value).apply();
     }
 
     public static float readFloat(String key, float defValue) {
@@ -58,7 +58,7 @@ public class PrefUtil {
     }
 
     public static void writeLong(String key, long value) {
-        mPreferences.edit().putLong(key, value).commit();
+        mPreferences.edit().putLong(key, value).apply();
     }
 
     public static long readLong(String key, long defValue) {
@@ -66,7 +66,7 @@ public class PrefUtil {
     }
 
     public static void writeList(String key, Set<String> value) {
-        mPreferences.edit().putStringSet(key, value).commit();
+        mPreferences.edit().putStringSet(key, value).apply();
     }
 
     public static Set<String> readList(String key, Set<String> defValue) {
