@@ -2,26 +2,32 @@ package com.android.mevabe.doctor;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.view.View;
-import android.widget.EditText;
 
 import com.android.mevabe.R;
+import com.android.mevabe.common.db.DBSpecialization;
+import com.android.mevabe.common.utils.PrefUtil;
 import com.android.mevabe.common.view.BaseActivity;
 import com.android.mevabe.common.view.OnSwipeTouchListener;
-import com.android.mevabe.common.view.RecyclerViewSupportEmpty;
+
+import java.util.Set;
 
 /**
  * Created by thuyld on 3/14/17.
  */
 public class DoctorsFilterSpecialization extends BaseActivity {
-    private RecyclerViewSupportEmpty resultView;
+    private RecyclerView listSpecialization;
+    private SpecializationAdapter adapter;
+
+    private DBSpecialization dbSpecialization;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.doctors_filter_location);
+        setContentView(R.layout.doctors_filter_specialization);
 
         // Build GUI for view
         buildGUI();
@@ -43,28 +49,37 @@ public class DoctorsFilterSpecialization extends BaseActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
-        View.OnClickListener cancelListener = new View.OnClickListener() {
+        View.OnClickListener closeListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onClose();
             }
         };
-        toolbar.setNavigationOnClickListener(cancelListener);
+        toolbar.setNavigationOnClickListener(closeListener);
 
         // Build swipe to close
         View conentView = findViewById(R.id.content_view);
         conentView.setOnTouchListener(new OnSwipeTouchListener(this));
 
-//        resultView = (RecyclerViewSupportEmpty) findViewById(R.id.result_view);
+        // Bind content
+        listSpecialization = (RecyclerView) findViewById(R.id.list_specialization);
 
-
+        // Set layout manager
+        listSpecialization.setLayoutManager(new LinearLayoutManager(this));
     }
 
     /**
      * Bind data to view
      */
     private void bindData() {
+        dbSpecialization = new DBSpecialization();
 
+        // Bind list districts
+        Set<String> selectedItems = PrefUtil.readList(DoctorsFilterSetting
+                .FILTER_SPECIALIZATION_VALUE, null);
+        adapter = new SpecializationAdapter(this);
+        listSpecialization.setAdapter(adapter);
+        adapter.refreshItems(dbSpecialization.getSpecializations(selectedItems));
     }
 
 
@@ -80,26 +95,16 @@ public class DoctorsFilterSpecialization extends BaseActivity {
 
 
     // ************ ACTION CONTROL ***************
-    public void settingLocation(View v) {
-
-    }
-
-    public void settingSpecialization(View v) {
-
-    }
 
     /**
-     * Get text string from EditText
-     *
-     * @param editText EditText
-     * @return String
+     * Handle when click back button
      */
-    private String getTextString(EditText editText) {
-        String value = null;
-        Editable editable = editText.getText();
-        if (editable != null) {
-            value = editable.toString().trim();
-        }
-        return value;
+    public void onClose() {
+        // Update set data
+        adapter.saveSelectedItems();
+
+        // Close current view
+        finish();
     }
+
 }

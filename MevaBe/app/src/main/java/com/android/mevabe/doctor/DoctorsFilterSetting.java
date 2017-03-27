@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.mevabe.R;
@@ -94,10 +92,9 @@ public class DoctorsFilterSetting extends BaseActivity {
         }
         filterLocation.setText(location);
 
-
         // Get specialization filter info
         String specialization = PrefUtil.readString(FILTER_SPECIALIZATION_TITLE, noSetting);
-        if (StringUtils.isEmpty(location)) {
+        if (StringUtils.isEmpty(specialization)) {
             specialization = getString(R.string.doctors_filter_specialization, noSetting);
         } else {
             specialization = getString(R.string.doctors_filter_specialization, specialization);
@@ -112,7 +109,7 @@ public class DoctorsFilterSetting extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         // Case go back from setting location
-        if (requestCode == DOCTORS_FILTER_LOCATION) {
+        if (requestCode == DOCTORS_FILTER_LOCATION || requestCode == DOCTORS_FILTER_SPECIALIZATION) {
             // Update data
             bindData();
         }
@@ -140,20 +137,5 @@ public class DoctorsFilterSetting extends BaseActivity {
         // Open setting filter specialization view
         Intent intent = new Intent(this, DoctorsFilterSpecialization.class);
         startActivityForResult(intent, DOCTORS_FILTER_SPECIALIZATION);
-    }
-
-    /**
-     * Get text string from EditText
-     *
-     * @param editText EditText
-     * @return String
-     */
-    private String getTextString(EditText editText) {
-        String value = null;
-        Editable editable = editText.getText();
-        if (editable != null) {
-            value = editable.toString().trim();
-        }
-        return value;
     }
 }

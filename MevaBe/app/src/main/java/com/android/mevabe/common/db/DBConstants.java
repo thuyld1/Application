@@ -47,11 +47,15 @@ public class DBConstants {
     public static final String LOC_PRO_TITLE = "title";
     public static final String LOC_PRO_SIMPLE = "simple";
 
-
     // Table filter location district
     public static final String TB_LOCATION_DISTRICT = "filter_location_district";
     public static final String LOC_DIS_CODE = "code";
     public static final String LOC_DIS_PCODE = "p_code";
     public static final String LOC_DIS_TITLE = "title";
 
+    // Table filter specialization
+    public static final String TB_SPECIALIZATION = "filter_specialization";
+    public static final String SPEC_CODE = "code";
+    public static final String SPEC_TITLE = "title";
+    public static final String SPEC_ORDER = "ord";
 }

@@ -72,7 +72,11 @@ public class DoctorsFilterLocation extends BaseActivity implements LocationProvi
 
         // Build swipe to close
         View conentView = findViewById(R.id.content_view);
-        conentView.setOnTouchListener(new OnSwipeTouchListener(this));
+        conentView.setOnTouchListener(new OnSwipeTouchListener(this) {
+            public void onSwipeRight() {
+                onClose();
+            }
+        });
 
         // Bind content
         btnProvince = (TextView) findViewById(R.id.btn_province);

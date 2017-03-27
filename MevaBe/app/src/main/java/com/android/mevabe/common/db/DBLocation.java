@@ -19,7 +19,7 @@ import static android.R.attr.key;
 import static com.android.mevabe.common.db.DBConstants.LOC_PRO_SIMPLE;
 
 /**
- * DBProfile is working on children table
+ * DBLocation is working on filter_location_province and filter_location_district tables
  */
 public class DBLocation {
     /**
