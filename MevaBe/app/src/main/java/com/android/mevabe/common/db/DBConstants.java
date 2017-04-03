@@ -58,4 +58,12 @@ public class DBConstants {
     public static final String SPEC_CODE = "code";
     public static final String SPEC_TITLE = "title";
     public static final String SPEC_ORDER = "ord";
+
+    // Table doctors favorite
+    public static final String TB_DOCTORS_FAVORITE = "doctors_favorite";
+    public static final String DOC_FAV_CODE = "d_code";
+    public static final String DOC_FAV_NAME = "d_name";
+    public static final String DOC_FAV_AVATAR = "d_avatar";
+    public static final String DOC_FAV_PHONE = "d_phone";
+    public static final String DOC_FAV_DES = "d_des";
 }

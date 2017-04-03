@@ -20,7 +20,7 @@ import java.util.Set;
  */
 public class DoctorsFilterSpecialization extends BaseActivity {
     private RecyclerView listSpecialization;
-    private SpecializationAdapter adapter;
+    private AdapterSpecialization adapter;
 
     private DBSpecialization dbSpecialization;
 
@@ -77,7 +77,7 @@ public class DoctorsFilterSpecialization extends BaseActivity {
         // Bind list districts
         Set<String> selectedItems = PrefUtil.readList(DoctorsFilterSetting
                 .FILTER_SPECIALIZATION_VALUE, null);
-        adapter = new SpecializationAdapter(this);
+        adapter = new AdapterSpecialization(this);
         listSpecialization.setAdapter(adapter);
         adapter.refreshItems(dbSpecialization.getSpecializations(selectedItems));
     }

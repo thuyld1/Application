@@ -3,7 +3,14 @@ package com.android.mevabe.common.view;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.android.mevabe.R;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class RecyclerViewSupportEmpty extends RecyclerView {
 
@@ -56,6 +63,21 @@ public class RecyclerViewSupportEmpty extends RecyclerView {
     public void setEmptyView(View emptyView) {
         this.emptyView = emptyView;
         checkIfEmpty();
+    }
+
+    public void initEmptyMessage(ViewGroup parent, int resID) {
+        // Inflate the layout for this fragment
+        initEmptyMessage(parent);
+
+        if (emptyView != null && emptyView instanceof TextView) {
+            ((TextView) emptyView).setText(resID);
+        }
+    }
+
+    public void initEmptyMessage(ViewGroup parent) {
+        // Inflate the layout for this fragment
+        LayoutInflater mInflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        emptyView = mInflater.inflate(R.layout.common_empty_data_view, parent, true);
     }
 
     void checkIfEmpty() {

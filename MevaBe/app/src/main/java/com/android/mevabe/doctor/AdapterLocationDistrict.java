@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.mevabe.R;
-import com.android.mevabe.common.model.Specialization;
+import com.android.mevabe.common.model.LocationDistrict;
 import com.android.mevabe.common.utils.PrefUtil;
 
 import java.util.ArrayList;
@@ -18,10 +18,10 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * LocationProvinceAdapter controls view of list setting location for filtering
+ * AdapterLocationProvince controls view of list setting location for filtering
  */
-public class SpecializationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<Specialization> listItems;
+public class AdapterLocationDistrict extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private List<LocationDistrict> listItems;
     private Activity context;
 
     /**
@@ -29,7 +29,7 @@ public class SpecializationAdapter extends RecyclerView.Adapter<RecyclerView.Vie
      *
      * @param context Context
      */
-    public SpecializationAdapter(Activity context) {
+    public AdapterLocationDistrict(Activity context) {
         this.listItems = new ArrayList<>();
         this.context = context;
     }
@@ -45,7 +45,7 @@ public class SpecializationAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Specialization item = (Specialization) listItems.get(position);
+        LocationDistrict item = (LocationDistrict) listItems.get(position);
         if (item != null) {
             ((MyViewHolder) holder).bindData(item);
         }
@@ -84,15 +84,15 @@ public class SpecializationAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void saveSelectedItems() {
         Set<String> selected = new HashSet<>();
         StringBuilder sb = new StringBuilder();
-        for (Specialization item : listItems) {
+        for (LocationDistrict item : listItems) {
             if (item.isSelected()) {
                 selected.add(String.valueOf(item.getCode()));
                 sb.append(item.getTitle()).append("\n");
             }
         }
 
-        PrefUtil.writeList(DoctorsFilterSetting.FILTER_SPECIALIZATION_VALUE, selected);
-        PrefUtil.writeString(DoctorsFilterSetting.FILTER_SPECIALIZATION_TITLE, sb.toString());
+        PrefUtil.writeList(DoctorsFilterSetting.FILTER_LOCATION_DISTRICT_VALUE, selected);
+        PrefUtil.writeString(DoctorsFilterSetting.FILTER_LOCATION_DISTRICT_TITLE, sb.toString());
     }
 
     // ************* View Holder *********** //
@@ -109,7 +109,7 @@ public class SpecializationAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         }
 
-        public void bindData(final Specialization data) {
+        public void bindData(final LocationDistrict data) {
             // Show title
             title.setText(data.getTitle());
 

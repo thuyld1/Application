@@ -23,13 +23,13 @@ import static com.android.mevabe.doctor.DoctorsFilterSetting.FILTER_LOCATION_CIT
 /**
  * Created by thuyld on 3/14/17.
  */
-public class DoctorsFilterLocation extends BaseActivity implements LocationProvinceAdapter.ILocationProvinceAdapter {
+public class DoctorsFilterLocation extends BaseActivity implements AdapterLocationProvince.ILocationProvinceAdapter {
     private TextView btnProvince;
     private TextView btnDistrict;
     private RecyclerView listProvince;
     private RecyclerView listDistrict;
-    private LocationProvinceAdapter provinceAdapter;
-    private LocationDistrictAdapter districtAdapter;
+    private AdapterLocationProvince provinceAdapter;
+    private AdapterLocationDistrict districtAdapter;
 
     private DBLocation dbLocation;
     private long selectedProvince;
@@ -99,7 +99,7 @@ public class DoctorsFilterLocation extends BaseActivity implements LocationProvi
         // Bind list provinces
         selectedProvince = PrefUtil.readLong(FILTER_LOCATION_CITY_VALUE, -1);
         selectedProvinceTitle = PrefUtil.readString(FILTER_LOCATION_CITY_TITLE, null);
-        provinceAdapter = new LocationProvinceAdapter(this, selectedProvince, this);
+        provinceAdapter = new AdapterLocationProvince(this, selectedProvince, this);
         listProvince.setAdapter(provinceAdapter);
         provinceAdapter.refreshItems(dbLocation.getProvinces(null));
 
@@ -111,7 +111,7 @@ public class DoctorsFilterLocation extends BaseActivity implements LocationProvi
         // Bind list districts
         selectedDistrict = PrefUtil.readList(DoctorsFilterSetting
                 .FILTER_LOCATION_DISTRICT_VALUE, null);
-        districtAdapter = new LocationDistrictAdapter(this);
+        districtAdapter = new AdapterLocationDistrict(this);
         listDistrict.setAdapter(districtAdapter);
         if (selectedProvince > 0) {
             districtAdapter.refreshItems(dbLocation.getDistricts(selectedProvince, selectedDistrict));
@@ -173,7 +173,7 @@ public class DoctorsFilterLocation extends BaseActivity implements LocationProvi
         finish();
     }
 
-    // ******** LocationProvinceAdapter.ILocationProvinceAdapter *********
+    // ******** AdapterLocationProvince.ILocationProvinceAdapter *********
     @Override
     public void onChangeProvince(LocationProvince item) {
         // Update province info

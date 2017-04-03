@@ -8,60 +8,107 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:context="com.android.mevabe.MainActivity">
 
-    <RelativeLayout
-        android:id="@+id/search_view"
+
+    <!-- Header buttons -->
+    <LinearLayout
+        android:id="@+id/doctors_header_tab"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
+        android:layout_height="@dimen/sub_header_height"
         android:background="@drawable/bg_bottom_border"
-        android:paddingBottom="8dp"
-        android:paddingLeft="6dp"
-        android:paddingRight="6dp"
-        android:paddingTop="6dp">
-
-        <EditText
-            android:id="@+id/search_key"
-            style="@style/TextEditField"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edit_text_single_line"
-            android:layout_toLeftOf="@+id/btn_filter"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:lines="1"
-            android:maxLines="1"/>
-
-        <ImageView
-            android:id="@+id/btn_filter"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:adjustViewBounds="true"
-            android:background="@android:color/transparent"
-            android:scaleType="fitCenter"
-            android:src="@drawable/vaccinations_filter_icon"/>
-
-    </RelativeLayout>
-
-    <com.android.mevabe.common.view.RefreshLoadMoreLayout
-        android:id="@+id/swipeRefreshLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/search_view">
-
-        <com.android.mevabe.common.view.LoadMoreRecyclerView
-            android:id="@+id/itemsRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical"/>
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/empty_data"
-            style="@style/TextNoData"
+            android:id="@+id/btn_tab_search"
+            style="@style/TextBig"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
+            android:layout_weight="1"
             android:gravity="center"
-            android:paddingBottom="50dp"
-            android:text="@string/empty_data"/>
-    </com.android.mevabe.common.view.RefreshLoadMoreLayout>
+            android:text="@string/doctors_sub_header_search"
+            android:textAlignment="center"
+            android:textAllCaps="true"/>
+
+        <TextView
+            android:id="@+id/btn_tab_favorite"
+            style="@style/TextBig"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/doctors_sub_header_favorite"
+            android:textAlignment="center"
+            android:textAllCaps="true"/>
+    </LinearLayout>
+
+
+    <!-- Search doctors view -->
+    <RelativeLayout
+        android:id="@+id/content_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/doctors_header_tab">
+
+        <!-- Search input view -->
+        <RelativeLayout
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/bg_bottom_border"
+            android:paddingBottom="8dp"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:paddingTop="6dp">
+
+            <EditText
+                android:id="@+id/search_key"
+                style="@style/TextEditField"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edit_text_single_line"
+                android:layout_toLeftOf="@+id/btn_filter"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:lines="1"
+                android:maxLines="1"/>
+
+            <ImageView
+                android:id="@+id/btn_filter"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:adjustViewBounds="true"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/vaccinations_filter_icon"/>
+
+        </RelativeLayout>
+
+        <com.android.mevabe.common.view.RefreshLoadMoreLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/search_view">
+
+            <com.android.mevabe.common.view.LoadMoreRecyclerView
+                android:id="@+id/itemsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"/>
+        </com.android.mevabe.common.view.RefreshLoadMoreLayout>
+    </RelativeLayout>
+
+
+    <!-- Favorite doctors view -->
+    <RelativeLayout
+        android:id="@+id/content_favorite"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/doctors_header_tab">
+        <!--For "Lịch tiêm view "-->
+        <com.android.mevabe.common.view.RecyclerViewSupportEmpty
+            android:id="@+id/list_favorite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"/>
+    </RelativeLayout>
 </RelativeLayout>

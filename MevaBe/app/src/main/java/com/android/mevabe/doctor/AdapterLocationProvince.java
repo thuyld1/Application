@@ -9,29 +9,38 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.mevabe.R;
-import com.android.mevabe.common.model.LocationDistrict;
-import com.android.mevabe.common.utils.PrefUtil;
+import com.android.mevabe.common.model.LocationProvince;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
- * LocationProvinceAdapter controls view of list setting location for filtering
+ * AdapterLocationProvince controls view of list setting location for filtering
  */
-public class LocationDistrictAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<LocationDistrict> listItems;
+public class AdapterLocationProvince extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    /**
+     * ILocationProvinceAdapter interface for callback
+     */
+    public interface ILocationProvinceAdapter {
+        void onChangeProvince(LocationProvince item);
+    }
+
+    private ILocationProvinceAdapter handler;
+
+    private List<LocationProvince> listItems;
     private Activity context;
+    private long selected;
 
     /**
      * Constructor
      *
      * @param context Context
      */
-    public LocationDistrictAdapter(Activity context) {
+    public AdapterLocationProvince(Activity context, long selected, ILocationProvinceAdapter handler) {
         this.listItems = new ArrayList<>();
         this.context = context;
+        this.selected = selected;
+        this.handler = handler;
     }
 
     @Override
@@ -45,7 +54,7 @@ public class LocationDistrictAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        LocationDistrict item = (LocationDistrict) listItems.get(position);
+        LocationProvince item = (LocationProvince) listItems.get(position);
         if (item != null) {
             ((MyViewHolder) holder).bindData(item);
         }
@@ -76,25 +85,6 @@ public class LocationDistrictAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
-    /**
-     * Save selected items
-     *
-     * @return Set<String>
-     */
-    public void saveSelectedItems() {
-        Set<String> selected = new HashSet<>();
-        StringBuilder sb = new StringBuilder();
-        for (LocationDistrict item : listItems) {
-            if (item.isSelected()) {
-                selected.add(String.valueOf(item.getCode()));
-                sb.append(item.getTitle()).append("\n");
-            }
-        }
-
-        PrefUtil.writeList(DoctorsFilterSetting.FILTER_LOCATION_DISTRICT_VALUE, selected);
-        PrefUtil.writeString(DoctorsFilterSetting.FILTER_LOCATION_DISTRICT_TITLE, sb.toString());
-    }
-
     // ************* View Holder *********** //
     class MyViewHolder extends RecyclerView.ViewHolder {
         private View layout;
@@ -109,12 +99,12 @@ public class LocationDistrictAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         }
 
-        public void bindData(final LocationDistrict data) {
+        public void bindData(final LocationProvince data) {
             // Show title
             title.setText(data.getTitle());
 
             // ON/OFF tick
-            if (data.isSelected()) {
+            if (selected == data.getCode()) {
                 tick.setVisibility(View.VISIBLE);
                 title.setTextColor(context.getResources().getColor(R.color.colorPrimary));
             } else {
@@ -123,15 +113,21 @@ public class LocationDistrictAdapter extends RecyclerView.Adapter<RecyclerView.V
             }
 
             // Add listener
-            layout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Update data and view
-                    data.setSelected(!data.isSelected());
-                    notifyDataSetChanged();
-                }
-            });
+            if (handler != null) {
+                layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (data.getCode() != selected) {
+                            // Update for current view
+                            selected = data.getCode();
+                            notifyDataSetChanged();
 
+                            // Call back
+                            handler.onChangeProvince(data);
+                        }
+                    }
+                });
+            }
 
         }
     }
