@@ -3,7 +3,7 @@ package com.android.mevabe.common.db;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.android.mevabe.common.model.DoctorFavorite;
+import com.android.mevabe.common.model.DoctorInfo;
 import com.android.mevabe.common.utils.LogUtil;
 
 import java.util.ArrayList;
@@ -18,11 +18,11 @@ public class DBDoctors {
     /**
      * Get list favorite doctors
      *
-     * @return List<DoctorFavorite>
+     * @return List<DoctorInfo>
      */
-    public List<DoctorFavorite> getFavoriteDoctors() {
+    public List<DoctorInfo> getFavoriteDoctors() {
         LogUtil.debug("DBDoctors: getDoctorsFavorite()");
-        List<DoctorFavorite> result = new ArrayList<>();
+        List<DoctorInfo> result = new ArrayList<>();
         SQLiteDatabase db = DBService.getReadableDatabase();
 
         Cursor cursor = db.query(DBConstants.TB_DOCTORS_FAVORITE,
@@ -32,7 +32,7 @@ public class DBDoctors {
                 null, DBConstants.DOC_FAV_NAME);
 
         // Parse data from DB
-        DoctorFavorite row = null;
+        DoctorInfo row = null;
         int i = 0;
         while (cursor.moveToNext()) {
             i = 0;
@@ -41,7 +41,7 @@ public class DBDoctors {
             String avatar = cursor.getString(i++);
             String phone = cursor.getString(i++);
             String des = cursor.getString(i++);
-            row = new DoctorFavorite(code, name, avatar, phone, des);
+            row = new DoctorInfo(code, name, avatar, phone, des);
             result.add(row);
         }
         cursor.close();

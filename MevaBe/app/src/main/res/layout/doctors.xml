@@ -25,6 +25,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/doctors_sub_header_search"
+            android:textColor="@color/colorPrimary"
             android:textAlignment="center"
             android:textAllCaps="true"/>
 
@@ -103,7 +104,8 @@
         android:id="@+id/content_favorite"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/doctors_header_tab">
+        android:layout_below="@+id/doctors_header_tab"
+        android:visibility="gone">
         <!--For "Lịch tiêm view "-->
         <com.android.mevabe.common.view.RecyclerViewSupportEmpty
             android:id="@+id/list_favorite"

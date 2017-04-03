@@ -6,17 +6,17 @@ import java.io.Serializable;
  * Created by thuyld on 3/22/17.
  */
 
-public class DoctorFavorite extends BaseModel implements Serializable {
+public class DoctorInfo extends BaseModel implements Serializable {
     private long code;
     private String name;
     private String avatar;
     private String phone;
     private String des;
 
-    public DoctorFavorite() {
+    public DoctorInfo() {
     }
 
-    public DoctorFavorite(long code, String name, String avatar, String phone, String des) {
+    public DoctorInfo(long code, String name, String avatar, String phone, String des) {
         this.code = code;
         this.name = name;
         this.avatar = avatar;

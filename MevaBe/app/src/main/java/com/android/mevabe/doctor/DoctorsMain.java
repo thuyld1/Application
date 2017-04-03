@@ -41,7 +41,7 @@ public class DoctorsMain extends FragmentBase implements View.OnClickListener, D
     private ImageView btnFilter;
     private RefreshLoadMoreLayout swipeRefreshLayout;
     private LoadMoreRecyclerView mRecyclerView;
-    private DBRecyclerViewAdapter adapter;
+    private AdapterDoctorsSearch adapter;
 
     // For doctors favorite
     private RecyclerViewSupportEmpty listFavorite;
@@ -92,8 +92,7 @@ public class DoctorsMain extends FragmentBase implements View.OnClickListener, D
         });
 
         // Prepare data
-        adapter = new DBRecyclerViewAdapter(getActivity());
-        adapter.setHandler(DoctorsMain.this);
+        adapter = new AdapterDoctorsSearch(getActivity(), null);
         mRecyclerView.setAdapter(adapter);
         refreshItems();
 
@@ -171,9 +170,13 @@ public class DoctorsMain extends FragmentBase implements View.OnClickListener, D
         if (v.equals(btnTabSearch)) {
             contentSearch.setVisibility(View.VISIBLE);
             contentFavorite.setVisibility(View.GONE);
+            btnTabSearch.setTextColor(getResources().getColor(R.color.colorPrimary));
+            btnTabFavorite.setTextColor(getResources().getColor(R.color.textColor));
         } else if (v.equals(btnTabFavorite)) {
             contentSearch.setVisibility(View.GONE);
             contentFavorite.setVisibility(View.VISIBLE);
+            btnTabSearch.setTextColor(getResources().getColor(R.color.textColor));
+            btnTabFavorite.setTextColor(getResources().getColor(R.color.colorPrimary));
         } else if (v.equals(btnFilter)) {
             settingFilter();
         }

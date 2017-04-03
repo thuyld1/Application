@@ -21,9 +21,9 @@ import java.util.List;
 import static com.android.mevabe.R.id.doctor_des;
 
 /**
- * AdapterDoctorsFavorite controls view of list favorite doctors
+ * AdapterDoctorsSearch controls view of list search doctors
  */
-public class AdapterDoctorsFavorite extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class AdapterDoctorsSearch extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     /**
      * IVaccinationsPlanHandler interface for callback
      */
@@ -44,7 +44,7 @@ public class AdapterDoctorsFavorite extends RecyclerView.Adapter<RecyclerView.Vi
      *
      * @param context Context
      */
-    public AdapterDoctorsFavorite(Activity context, IVaccinationsPlanHandler handler) {
+    public AdapterDoctorsSearch(Activity context, IVaccinationsPlanHandler handler) {
         this.listItems = new ArrayList<>();
         this.context = context;
         this.handler = handler;
