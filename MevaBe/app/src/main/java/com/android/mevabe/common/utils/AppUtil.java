@@ -9,6 +9,9 @@ import android.net.Uri;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
+
+import com.android.mevabe.R;
 
 /**
  * App Utility
@@ -30,7 +33,7 @@ public class AppUtil {
      * @param context Context
      * @return true if connected
      */
-    public static boolean hasInternet(Context context) {
+    public static boolean checkInternet(Context context) {
         if (context == null) return false;
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         // Check internet for connection
@@ -38,6 +41,9 @@ public class AppUtil {
                 && cm.getActiveNetworkInfo().isConnected()) {
             return true;
         } else {
+            // Show error
+            Toast.makeText(context, context.getText(R.string.connect_no_internet),
+                    Toast.LENGTH_SHORT).show();
             return false;
         }
     }

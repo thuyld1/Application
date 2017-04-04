@@ -17,6 +17,7 @@ import com.android.mevabe.common.model.DBFeedModel;
 import com.android.mevabe.common.model.DoctorInfo;
 import com.android.mevabe.common.model.WebViewModel;
 import com.android.mevabe.common.services.APIService;
+import com.android.mevabe.common.utils.AppUtil;
 import com.android.mevabe.common.utils.LogUtil;
 import com.android.mevabe.common.view.FragmentBase;
 import com.android.mevabe.common.view.LoadMoreRecyclerView;
@@ -247,11 +248,13 @@ public class DoctorsMain extends FragmentBase implements View.OnClickListener, I
 
     @Override
     public void onclickItem(DoctorInfo item) {
-        WebViewActivity act = new WebViewActivity();
-        Intent intent = new Intent(getContext(), WebViewActivity.class);
-        WebViewModel info = new WebViewModel("", "");
-        intent.putExtra(Constants.INTENT_DATA, info);
-        startActivity(intent);
+        if (AppUtil.checkInternet(getContext())) {
+            WebViewActivity act = new WebViewActivity();
+            Intent intent = new Intent(getContext(), WebViewActivity.class);
+            WebViewModel info = new WebViewModel("", "");
+            intent.putExtra(Constants.INTENT_DATA, info);
+            startActivity(intent);
+        }
     }
 
 }

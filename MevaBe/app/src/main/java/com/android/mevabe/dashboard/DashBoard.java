@@ -9,6 +9,7 @@ import com.android.mevabe.common.Constants;
 import com.android.mevabe.common.model.DBFeedModel;
 import com.android.mevabe.common.model.WebViewModel;
 import com.android.mevabe.common.services.APIService;
+import com.android.mevabe.common.utils.AppUtil;
 import com.android.mevabe.common.utils.LogUtil;
 import com.android.mevabe.common.view.FragmentBase;
 import com.android.mevabe.common.view.LoadMoreRecyclerView;
@@ -131,11 +132,13 @@ public class DashBoard extends FragmentBase implements DBRecyclerViewAdapter.IDa
     // ******** DBRecyclerViewAdapter.IDashBoardListHandler ******** //
     @Override
     public void onItemClick(DBFeedModel item) {
-        WebViewActivity act = new WebViewActivity();
-        Intent intent = new Intent(getContext(), WebViewActivity.class);
-        WebViewModel info = new WebViewModel(item.getTitle(), item.getUrl());
-        intent.putExtra(Constants.INTENT_DATA, info);
-        startActivity(intent);
+        if (AppUtil.checkInternet(getContext())) {
+            WebViewActivity act = new WebViewActivity();
+            Intent intent = new Intent(getContext(), WebViewActivity.class);
+            WebViewModel info = new WebViewModel(item.getTitle(), item.getUrl());
+            intent.putExtra(Constants.INTENT_DATA, info);
+            startActivity(intent);
+        }
     }
 
 }

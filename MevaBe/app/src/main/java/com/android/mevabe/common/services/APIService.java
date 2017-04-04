@@ -52,7 +52,7 @@ public class APIService {
      */
     public void callAPI(String url, final IAPIServiceHandler callback) {
         // Check internet connection
-        if (AppUtil.hasInternet(context)) {
+        if (AppUtil.checkInternet(context)) {
             // Prepare before starting
             if (callback != null) {
                 callback.beforeStarting();
@@ -81,8 +81,6 @@ public class APIService {
             if (callback != null) {
                 callback.onFail();
             }
-            Toast.makeText(context, context.getText(R.string.connect_no_internet),
-                    Toast.LENGTH_SHORT).show();
         }
     }
 

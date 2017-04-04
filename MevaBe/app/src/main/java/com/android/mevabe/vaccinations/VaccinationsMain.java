@@ -20,6 +20,7 @@ import com.android.mevabe.common.model.VaccinationsHistoryModel;
 import com.android.mevabe.common.model.VaccinationsPlanModel;
 import com.android.mevabe.common.model.WebViewModel;
 import com.android.mevabe.common.db.DBVacinations;
+import com.android.mevabe.common.utils.AppUtil;
 import com.android.mevabe.common.utils.LogUtil;
 import com.android.mevabe.common.view.FragmentLoginRequired;
 import com.android.mevabe.common.view.RecyclerViewSupportEmpty;
@@ -240,12 +241,14 @@ public class VaccinationsMain extends FragmentLoginRequired implements View.OnCl
     // ******** VaccinationsPlanAdapter.IVaccinationsPlanHandler ******** //
     @Override
     public void showVaccineInfo(VaccinationsPlanModel item) {
-        // Show details of vaccine in webview
-        WebViewActivity act = new WebViewActivity();
-        Intent intent = new Intent(getContext(), WebViewActivity.class);
-        WebViewModel info = new WebViewModel(item.getVaccinName(), item.getVaccinURL());
-        intent.putExtra(Constants.INTENT_DATA, info);
-        startActivity(intent);
+        if (AppUtil.checkInternet(getContext())) {
+            // Show details of vaccine in webview
+            WebViewActivity act = new WebViewActivity();
+            Intent intent = new Intent(getContext(), WebViewActivity.class);
+            WebViewModel info = new WebViewModel(item.getVaccinName(), item.getVaccinURL());
+            intent.putExtra(Constants.INTENT_DATA, info);
+            startActivity(intent);
+        }
     }
 
 
