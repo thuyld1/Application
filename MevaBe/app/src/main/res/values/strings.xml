@@ -14,6 +14,8 @@
     <string name="more_info">MORE</string>
     <string name="no_setting">Chưa thiết lập</string>
 
+    <string name="connect_no_internet">Không có kết nối internet</string>
+    <string name="connect_server_fail">Kết nối đến máy chủ thất bại</string>
     <string name="back_to_exit">Nhấn nút BACK 2 lần để thoát ứng dụng</string>
     <string name="login_message">Hãy đăng nhập để sử dụng tính năng này</string>
     <string name="empty_child">Cập nhật ngay thông tin của bé để sử dụng nhiều chức năng thú vị bạn nhé ^^</string>

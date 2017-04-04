@@ -18,7 +18,7 @@ import java.util.List;
 public class RefreshLoadMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int VIEW_TYPE_LOADMORE_FOOTER = -1;
     protected List listItems;
-    protected Activity mContext;
+    protected Activity context;
 
     /**
      * Constructor
@@ -27,13 +27,13 @@ public class RefreshLoadMoreAdapter extends RecyclerView.Adapter<RecyclerView.Vi
      */
     public RefreshLoadMoreAdapter(Activity context) {
         this.listItems = new ArrayList<>();
-        this.mContext = context;
+        this.context = context;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         if (viewType == VIEW_TYPE_LOADMORE_FOOTER) {
-            LoadMoreFooter footer = new LoadMoreFooter(mContext);
+            LoadMoreFooter footer = new LoadMoreFooter(context);
             footer.setLayoutParams(
                     new FrameLayout.LayoutParams(
                             FrameLayout.LayoutParams.MATCH_PARENT,
@@ -71,7 +71,7 @@ public class RefreshLoadMoreAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             listItems.clear();
             listItems.addAll(result);
 
-            mContext.runOnUiThread(new Runnable() {
+            context.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     notifyDataSetChanged();
@@ -83,7 +83,7 @@ public class RefreshLoadMoreAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public synchronized void startLoadMore() {
         // Add an empty item to show loading view at bottom
         listItems.add(null);
-        mContext.runOnUiThread(new Runnable() {
+        context.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 notifyDataSetChanged();
@@ -100,7 +100,7 @@ public class RefreshLoadMoreAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         if (result != null) {
             listItems.addAll(result);
         }
-        mContext.runOnUiThread(new Runnable() {
+        context.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 notifyDataSetChanged();

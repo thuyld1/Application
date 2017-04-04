@@ -130,7 +130,7 @@ public class StringUtils {
     }
 
     public static String getErrorMessage(Context mContext, String message) {
-        //return mContext.getString(R.string.err_unknown).replace("%s", message);
+        //return context.getString(R.string.err_unknown).replace("%s", message);
         return "";
     }
 }

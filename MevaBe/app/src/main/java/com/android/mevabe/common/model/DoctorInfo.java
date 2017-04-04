@@ -13,6 +13,9 @@ public class DoctorInfo extends BaseModel implements Serializable {
     private String phone;
     private String des;
 
+    // For display view info
+    private boolean isFavorite;
+
     public DoctorInfo() {
     }
 
@@ -62,5 +65,13 @@ public class DoctorInfo extends BaseModel implements Serializable {
 
     public void setDes(String des) {
         this.des = des;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 }

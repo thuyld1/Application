@@ -31,7 +31,9 @@
                 android:layout_height="100dp"
                 android:layout_alignParentLeft="true"
                 android:adjustViewBounds="true"
-                android:scaleType="centerCrop"/>
+                android:background="@color/colorImgBG"
+                android:scaleType="centerCrop"
+                android:src="@drawable/common_def_img"/>
 
             <TextView
                 android:id="@+id/profile_name"

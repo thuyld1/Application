@@ -10,12 +10,11 @@ import android.widget.TextView;
 
 import com.android.mevabe.R;
 import com.android.mevabe.common.model.DoctorInfo;
-import com.android.mevabe.common.model.VaccinationsPlanModel;
+import com.android.mevabe.common.utils.StringUtils;
 import com.android.mevabe.common.view.RoundedTransformation;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import static com.android.mevabe.R.id.doctor_des;
@@ -24,16 +23,7 @@ import static com.android.mevabe.R.id.doctor_des;
  * AdapterDoctorsFavorite controls view of list favorite doctors
  */
 public class AdapterDoctorsFavorite extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    /**
-     * IVaccinationsPlanHandler interface for callback
-     */
-    public interface IVaccinationsPlanHandler {
-        void showVaccineInfo(VaccinationsPlanModel item);
-
-        void addVaccinePlan(VaccinationsPlanModel item);
-    }
-
-    private IVaccinationsPlanHandler handler;
+    private IDoctorsHandler handler;
 
     protected List<DoctorInfo> listItems;
     protected Activity context;
@@ -44,7 +34,7 @@ public class AdapterDoctorsFavorite extends RecyclerView.Adapter<RecyclerView.Vi
      *
      * @param context Context
      */
-    public AdapterDoctorsFavorite(Activity context, IVaccinationsPlanHandler handler) {
+    public AdapterDoctorsFavorite(Activity context, IDoctorsHandler handler) {
         this.listItems = new ArrayList<>();
         this.context = context;
         this.handler = handler;
@@ -53,7 +43,7 @@ public class AdapterDoctorsFavorite extends RecyclerView.Adapter<RecyclerView.Vi
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View layout = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout
-                .vaccinations_plan_item_view, viewGroup, false);
+                .doctors_favorite_item_view, viewGroup, false);
         RecyclerView.ViewHolder view = new MyViewHolder(layout);
         return view;
 
@@ -92,66 +82,32 @@ public class AdapterDoctorsFavorite extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
-    /**
-     * Update data when load more has finished
-     */
-    public synchronized void appendItem(DoctorInfo result) {
-        if (result != null) {
-            listItems.add(result);
-            context.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    notifyDataSetChanged();
-                }
-            });
-        }
-    }
-
-    /**
-     * Remove one item of list
-     *
-     * @param planID long
-     */
-    public void removeItem(long planID) {
-        if (planID > 0) {
-            Iterator<DoctorInfo> iterator = listItems.iterator();
-            DoctorInfo plan = null;
-            while (iterator.hasNext()) {
-                plan = iterator.next();
-//                if (plan.getPlanID() == planID) {
-//                    iterator.remove();
-//                    break;
-//                }
-            }
-
-            context.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    notifyDataSetChanged();
-                }
-            });
-        }
-    }
-
-
     // ************* View Holder *********** //
     class MyViewHolder extends RecyclerView.ViewHolder {
+        private View layout;
         private ImageView avatar;
         private TextView name;
         private TextView des;
+        private TextView phone;
         private ImageView btnCall;
         private ImageView btnFavorite;
 
+        private DoctorInfo data;
+
         public MyViewHolder(View view) {
             super(view);
+            this.layout = view;
             this.avatar = (ImageView) view.findViewById(R.id.avatar);
             this.name = (TextView) view.findViewById(R.id.doctor_name);
+            this.phone = (TextView) view.findViewById(R.id.doctor_phone);
             this.des = (TextView) view.findViewById(doctor_des);
             this.btnCall = (ImageView) view.findViewById(R.id.btn_call);
             this.btnFavorite = (ImageView) view.findViewById(R.id.btn_favorite);
         }
 
         public void bindData(final DoctorInfo data) {
+            this.data = data;
+
             //Setting text view title
             Picasso.with(context).load(data.getAvatar())
                     .error(R.drawable.common_placeholder)
@@ -162,7 +118,61 @@ public class AdapterDoctorsFavorite extends RecyclerView.Adapter<RecyclerView.Vi
             name.setText(data.getName());
             des.setText(data.getDes());
 
+            // Bind favorite view
+            updateFavorive(data.isFavorite());
 
+            // Bind call phone view
+            if (StringUtils.isEmpty(data.getPhone())) {
+                btnCall.setVisibility(View.GONE);
+                phone.setText(data.getPhone());
+            } else {
+                btnCall.setVisibility(View.VISIBLE);
+                phone.setText(data.getPhone());
+            }
+
+            // Set up action listener
+            if (handler != null) {
+                View.OnClickListener itemClickListener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        handler.onclickItem(data);
+                    }
+                };
+                avatar.setOnClickListener(itemClickListener);
+
+                View.OnClickListener callListener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        handler.onClickCall(data);
+                    }
+                };
+                btnCall.setOnClickListener(callListener);
+                phone.setOnClickListener(callListener);
+
+                btnFavorite.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        updateFavorive(!data.isFavorite());
+                        handler.onClickFavorite(data);
+                    }
+                });
+            }
+
+
+        }
+
+        /**
+         * Update favorite buttons view
+         *
+         * @param isFavorite boolean
+         */
+        private void updateFavorive(boolean isFavorite) {
+            data.setFavorite(isFavorite);
+            if (data.isFavorite()) {
+                btnFavorite.setImageResource(R.drawable.ic_favorite_on);
+            } else {
+                btnFavorite.setImageResource(R.drawable.ic_favorite_off);
+            }
         }
     }
 }

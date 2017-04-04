@@ -116,7 +116,7 @@ public class DBRecyclerViewAdapter extends RefreshLoadMoreAdapter {
         public void bindData(final DBFeedModel data) {
             //Render image using Picasso library
             if (!TextUtils.isEmpty(data.getThumb())) {
-                Picasso.with(mContext).load(data.getThumb())
+                Picasso.with(context).load(data.getThumb())
                         .error(R.drawable.common_placeholder)
                         .placeholder(R.drawable.common_placeholder)
                         .transform(new RoundedTransformation(5, 0))
@@ -153,7 +153,7 @@ public class DBRecyclerViewAdapter extends RefreshLoadMoreAdapter {
         public void bindData(final DBFeedModel data) {
             //Render image using Picasso library
             if (!TextUtils.isEmpty(data.getThumb())) {
-                Picasso.with(mContext).load(data.getThumb())
+                Picasso.with(context).load(data.getThumb())
                         .error(R.drawable.common_placeholder)
                         .placeholder(R.drawable.common_placeholder)
                         .into(imageView);
