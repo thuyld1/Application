@@ -68,7 +68,9 @@ public class DoctorsMain extends FragmentBase implements View.OnClickListener, I
         btnFilter = (ImageView) layoutView.findViewById(R.id.btn_filter);
 
         listFavorite = (RecyclerViewSupportEmpty) layoutView.findViewById(R.id.list_favorite);
+        View emptyFavorite = layoutView.findViewById(R.id.empty_favorite);
         listFavorite.setLayoutManager(new LinearLayoutManager(getContext()));
+        listFavorite.setEmptyView(emptyFavorite);
 //        listFavorite.initEmptyMessage(contentFavorite);
 
 
@@ -158,12 +160,15 @@ public class DoctorsMain extends FragmentBase implements View.OnClickListener, I
      * Load more data
      */
     private void loadMore() {
-        // Show loading more view
-        swipeRefreshLayout.setLoadingMore(true);
-
         String url = "http://stacktips.com/?json=get_category_posts&slug=news&count=2";
-        APIService service = new APIService();
+        APIService service = new APIService(getContext());
         service.callAPI(url, new APIService.IAPIServiceHandler<List<DBFeedModel>>() {
+            @Override
+            public void beforeStarting() {
+                // Show loading more view
+                swipeRefreshLayout.setLoadingMore(true);
+            }
+
             @Override
             public void onSuccess(final List<DBFeedModel> result) {
                 adapter.appendItems(new ArrayList());
@@ -171,8 +176,13 @@ public class DoctorsMain extends FragmentBase implements View.OnClickListener, I
                 // Stop loading
                 swipeRefreshLayout.setLoadingMore(false);
             }
-        });
 
+            @Override
+            public void onFail() {
+                // Stop loading
+                swipeRefreshLayout.setLoadingMore(false);
+            }
+        });
     }
 
     // ******** View.OnClickListener ******** //

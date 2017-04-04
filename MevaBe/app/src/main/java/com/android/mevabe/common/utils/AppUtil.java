@@ -30,7 +30,7 @@ public class AppUtil {
      * @param context Context
      * @return true if connected
      */
-    public static boolean checkInternetConnection(Context context) {
+    public static boolean hasInternet(Context context) {
         if (context == null) return false;
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         // Check internet for connection

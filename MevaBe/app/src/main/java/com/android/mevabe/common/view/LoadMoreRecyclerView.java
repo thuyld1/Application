@@ -5,7 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
-public class LoadMoreRecyclerView extends RecyclerView {
+public class LoadMoreRecyclerView extends RecyclerViewSupportEmpty {
     private RefreshLoadMoreLayout.ILoadMoreListener mOnLoadMoreListener;
 
     private boolean isLoading;

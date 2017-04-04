@@ -1,7 +1,12 @@
 package com.android.mevabe.common.services;
 
+import android.content.Context;
+import android.widget.Toast;
+
+import com.android.mevabe.R;
 import com.android.mevabe.common.Constants;
 import com.android.mevabe.common.model.DBFeedModel;
+import com.android.mevabe.common.utils.AppUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,13 +20,28 @@ import java.util.List;
  */
 
 public class APIService {
+    private Context context;
+
     /**
      * IAPIServiceHandler interface for API service callback
      *
      * @param <T>
      */
     public interface IAPIServiceHandler<T> {
+        void beforeStarting();
+
         void onSuccess(T result);
+
+        void onFail();
+    }
+
+    /**
+     * Contructor
+     *
+     * @param context Context
+     */
+    public APIService(Context context) {
+        this.context = context;
     }
 
     /**
@@ -31,19 +51,39 @@ public class APIService {
      * @param callback
      */
     public void callAPI(String url, final IAPIServiceHandler callback) {
-        // Create task to download
-        DownloadTask task = new DownloadTask() {
-            @Override
-            protected void onPostExecute(ConnectionResult connectionResult) {
-                super.onPostExecute(connectionResult);
-
-                // Parse result and callback
-                if (callback != null) {
-                    callback.onSuccess(parseResult(connectionResult));
-                }
+        // Check internet connection
+        if (AppUtil.hasInternet(context)) {
+            // Prepare before starting
+            if (callback != null) {
+                callback.beforeStarting();
             }
-        };
-        task.execute(url);
+
+            // Create task to download
+            DownloadTask task = new DownloadTask() {
+                @Override
+                protected void onPostExecute(ConnectionResult connectionResult) {
+                    super.onPostExecute(connectionResult);
+
+                    // Parse result and callback
+                    if (callback != null) {
+                        if (connectionResult.isSuccess()) {
+                            callback.onSuccess(parseResult(connectionResult));
+                        } else {
+                            Toast.makeText(context, context.getText(R.string.connect_server_fail),
+                                    Toast.LENGTH_SHORT).show();
+                            callback.onFail();
+                        }
+                    }
+                }
+            };
+            task.execute(url);
+        } else {
+            if (callback != null) {
+                callback.onFail();
+            }
+            Toast.makeText(context, context.getText(R.string.connect_no_internet),
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
 

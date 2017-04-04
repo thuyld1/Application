@@ -5,15 +5,15 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
 import com.android.mevabe.R;
-import com.android.mevabe.common.view.WebViewActivity;
 import com.android.mevabe.common.Constants;
-import com.android.mevabe.common.utils.LogUtil;
 import com.android.mevabe.common.model.DBFeedModel;
 import com.android.mevabe.common.model.WebViewModel;
 import com.android.mevabe.common.services.APIService;
+import com.android.mevabe.common.utils.LogUtil;
 import com.android.mevabe.common.view.FragmentBase;
 import com.android.mevabe.common.view.LoadMoreRecyclerView;
 import com.android.mevabe.common.view.RefreshLoadMoreLayout;
+import com.android.mevabe.common.view.WebViewActivity;
 
 import java.util.List;
 
@@ -34,6 +34,8 @@ public class DashBoard extends FragmentBase implements DBRecyclerViewAdapter.IDa
     public void initView(View layoutView) {
         // Set up listener for swipe to refresh
         mRecyclerView = (LoadMoreRecyclerView) layoutView.findViewById(R.id.itemsRecyclerView);
+        View emptyView = layoutView.findViewById(R.id.empty_data);
+        mRecyclerView.setEmptyView(emptyView);
 
         swipeRefreshLayout = (RefreshLoadMoreLayout) layoutView.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
@@ -72,16 +74,25 @@ public class DashBoard extends FragmentBase implements DBRecyclerViewAdapter.IDa
      * Refresh item
      */
     private void refreshItems() {
-        // Show refreshing UI
-        swipeRefreshLayout.setRefreshing(true);
-
         String url = "http://stacktips.com/?json=get_category_posts&slug=news&count=5";
-        APIService service = new APIService();
+        APIService service = new APIService(getContext());
         service.callAPI(url, new APIService.IAPIServiceHandler<List<DBFeedModel>>() {
+            @Override
+            public void beforeStarting() {
+                // Show refreshing UI
+                swipeRefreshLayout.setRefreshing(true);
+            }
+
             @Override
             public void onSuccess(List<DBFeedModel> result) {
                 adapter.refreshItems(result);
 
+                // Stop refreshing UI
+                swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onFail() {
                 // Stop refreshing UI
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -92,16 +103,25 @@ public class DashBoard extends FragmentBase implements DBRecyclerViewAdapter.IDa
      * Load more data
      */
     private void loadMore() {
-        // Show loading more view
-        swipeRefreshLayout.setLoadingMore(true);
-
         String url = "http://stacktips.com/?json=get_category_posts&slug=news&count=2";
-        APIService service = new APIService();
+        APIService service = new APIService(getContext());
         service.callAPI(url, new APIService.IAPIServiceHandler<List<DBFeedModel>>() {
+            @Override
+            public void beforeStarting() {
+                // Show loading more view
+                swipeRefreshLayout.setLoadingMore(true);
+            }
+
             @Override
             public void onSuccess(final List<DBFeedModel> result) {
                 adapter.appendItems(result);
 
+                // Stop loading
+                swipeRefreshLayout.setLoadingMore(false);
+            }
+
+            @Override
+            public void onFail() {
                 // Stop loading
                 swipeRefreshLayout.setLoadingMore(false);
             }
