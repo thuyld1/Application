@@ -1,4 +1,4 @@
-composer require "laravelcollective/html"
+composer dump-autoload
 
 https://packagist.org/packages/appzcoder/crud-generator
 
