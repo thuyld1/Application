@@ -1,0 +1,4 @@
+composer require "laravelcollective/html"
+
+https://packagist.org/packages/appzcoder/crud-generator
+
