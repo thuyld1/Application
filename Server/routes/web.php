@@ -21,4 +21,5 @@ Route::get('/backend', 'BackendController@index');
 
 Route::resource('/backend/setting-province', 'LocationProvinceController');
 
-Route::resource('admin/posts', 'Admin\\PostsController');
+Route::resource('/admin/posts', 'Admin\\PostsController');
+Route::resource('backend/location-province', 'LocationProvinceController');

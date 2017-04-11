@@ -2,3 +2,43 @@ composer require "laravelcollective/html"
 
 https://packagist.org/packages/appzcoder/crud-generator
 
+php artisan crud:generate LocationProvince --fields_from_file="location_district.json"  --route-group=backend
+
+Form Field Types:
+text
+textarea
+password
+email
+number
+date
+datetime
+time
+radio
+select
+file
+
+
+Migration Field Types:
+string
+char
+varchar
+date
+datetime
+time
+timestamp
+text
+mediumtext
+longtext
+json
+jsonb
+binary
+integer
+bigint
+mediumint
+tinyint
+smallint
+boolean
+decimal
+double
+float
+enum

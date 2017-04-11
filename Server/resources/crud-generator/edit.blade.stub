@@ -1,11 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.functions')
 
 @section('content')
     <div class="container">
-        <div class="row">
-            @include('admin.sidebar')
-
-            <div class="col-md-9">
                 <div class="panel panel-default">
                     <div class="panel-heading">Edit %%modelName%% #{{ $%%crudNameSingular%%->%%primaryKey%% }}</div>
                     <div class="panel-body">
@@ -34,7 +30,5 @@
 
                     </div>
                 </div>
-            </div>
-        </div>
     </div>
 @endsection

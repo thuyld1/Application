@@ -1,11 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.functions')
 
 @section('content')
     <div class="container">
-        <div class="row">
-            @include('admin.sidebar')
-
-            <div class="col-md-9">
                 <div class="panel panel-default">
                     <div class="panel-heading">%%crudNameCap%%</div>
                     <div class="panel-body">
@@ -60,9 +56,6 @@
                             </table>
                             <div class="pagination-wrapper"> {!! $%%crudName%%->appends(['search' => Request::get('search')])->render() !!} </div>
                         </div>
-
-                    </div>
-                </div>
             </div>
         </div>
     </div>

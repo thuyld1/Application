@@ -1,0 +1,20 @@
+{
+  "fields": [
+    {
+      "name": "code",
+      "type": "integer"
+    },
+    {
+      "name": "order",
+      "type": "integer"
+    },
+    {
+      "name": "title",
+      "type": "string"
+    },
+    {
+      "name": "simple",
+      "type": "string"
+    }
+  ]
+}
