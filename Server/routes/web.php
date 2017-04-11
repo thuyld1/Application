@@ -17,4 +17,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/backend', 'BackendController@index');
+
+Route::resource('/backend/setting-province', 'LocationProvinceController');
