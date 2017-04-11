@@ -1,31 +1,31 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class LocationProvince extends Model
 {
-    // Table name
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
     protected $table = 'filter_location_province';
-    // public $timestamps = false;
 
-    // Field can edit information
-    protected $fillable = [
-        'first_name',
-        'surname',
-        'email',
-        'password',
-        'active',
-        'salt',
-        'group'
-    ];
+    /**
+    * The database primary key value.
+    *
+    * @var string
+    */
+    protected $primaryKey = 'id';
 
-    // Field can NOT edit information
-    protected $guarded = [
-        'id'
-    ];
+    /**
+     * Attributes that should be mass-assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['code', 'order', 'title', 'simple'];
 
-    // Field can NOT show information
-    // protected $hidden = ['password', 'remember_token'];
+    
 }
