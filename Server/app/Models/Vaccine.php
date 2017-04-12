@@ -27,5 +27,5 @@ class Vaccine extends Model
      */
     protected $fillable = ['v_code', 'v_name', 'v_period', 'v_period_f', 'v_period_t', 'v_short_des', 'v_url', 'status'];
 
-    
+
 }

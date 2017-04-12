@@ -1,7 +1,11 @@
 <div class="form-group {{ $errors->has('v_code') ? 'has-error' : ''}}">
     {!! Form::label('v_code', 'Code*', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::number('v_code', null, ['class' => 'form-control']) !!}
+        @if(isset($maxCode))
+            {!! Form::number('v_code', $maxCode, ['class' => 'form-control']) !!}
+        @else
+            {!! Form::number('v_code', null, ['class' => 'form-control']) !!}
+        @endif
         {!! $errors->first('v_code', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
