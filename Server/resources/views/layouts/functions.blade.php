@@ -42,21 +42,25 @@
                     <li>
                         {{HTML::linkAction('BackendController@index', 'Dashboard') }}
                     </li>
-                    <li>
-                        {{HTML::linkAction('LocationProvinceController@index', 'Doctors') }}
-                    </li>
+
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            Location<span class="caret"></span>
+                            Doctors<span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
+                            <li>
+                                {{HTML::linkAction('LocationProvinceController@index', 'List Doctors') }}
+                            </li>
                             <li>
                                 {{HTML::linkAction('LocationProvinceController@index', 'Setting Province') }}
                             </li>
 
                             <li>
                                 {{HTML::linkAction('LocationDistrictController@index', 'Setting District') }}
+                            </li>
+                            <li>
+                                {{HTML::linkAction('DoctorSpecializationController@index', 'Setting Doctor Specialization') }}
                             </li>
                         </ul>
                     </li>

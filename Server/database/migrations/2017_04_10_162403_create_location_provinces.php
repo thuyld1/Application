@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class FilterLocationProvince extends Migration
+class CreateLocationProvinces extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class FilterLocationProvince extends Migration
      */
     public function up()
     {
-        Schema::create('location_province', function (Blueprint $table) {
+        Schema::create('location_provinces', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('code', false, true)->unique();
             $table->integer('order', false, true);
@@ -30,6 +30,6 @@ class FilterLocationProvince extends Migration
      */
     public function down()
     {
-        Schema::drop('location_province');
+        Schema::drop('location_provinces');
     }
 }

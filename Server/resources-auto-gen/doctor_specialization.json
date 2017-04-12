@@ -1,0 +1,16 @@
+{
+  "fields": [
+    {
+      "name": "code",
+      "type": "integer"
+    },
+    {
+      "name": "title",
+      "type": "string"
+    },
+    {
+      "name": "ord",
+      "type": "integer"
+    }
+  ]
+}
