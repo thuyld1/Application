@@ -4,6 +4,8 @@ https://packagist.org/packages/appzcoder/crud-generator
 
 php artisan crud:generate LocationDistrict --model-namespace=Models --fields_from_file="auto-gen/location_district.json"  --route-group=backend
 
+php artisan crud:view location-district --fields_from_file="auto-gen/location_district.json" --route-group=backend
+
 Form Field Types:
 text
 textarea

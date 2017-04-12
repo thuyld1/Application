@@ -1,10 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-class FilterLocationProvince extends Migration
+class CreateLocationDistrictsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +12,11 @@ class FilterLocationProvince extends Migration
      */
     public function up()
     {
-        Schema::create('location_province', function (Blueprint $table) {
+        Schema::create('location_districts', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('code', false, true);
-            $table->integer('order', false, true);
+            $table->integer('p_code', false, true);
             $table->string('title');
-            $table->string('simple');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class FilterLocationProvince extends Migration
      */
     public function down()
     {
-        Schema::drop('location_province');
+        Schema::drop('location_districts');
     }
 }

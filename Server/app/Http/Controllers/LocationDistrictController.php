@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Http\Controllers\Controller;
 
-use App\LocationProvince;
+use App\Models\LocationDistrict;
 use Illuminate\Http\Request;
 use Session;
 
-class LocationProvinceController extends Controller
+class LocationDistrictController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,16 +22,16 @@ class LocationProvinceController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $locationprovince = LocationProvince::where('code', 'LIKE', "%$keyword%")
-                ->orWhere('order', 'LIKE', "%$keyword%")
-                ->orWhere('title', 'LIKE', "%$keyword%")
-                ->orWhere('simple', 'LIKE', "%$keyword%")
+            $locationdistrict = LocationDistrict::where('code', 'LIKE', "%$keyword%")
+				->orWhere('p_code', 'LIKE', "%$keyword%")
+				->orWhere('title', 'LIKE', "%$keyword%")
+				
                 ->paginate($perPage);
         } else {
-            $locationprovince = LocationProvince::paginate($perPage);
+            $locationdistrict = LocationDistrict::paginate($perPage);
         }
 
-        return view('location-province.index', compact('locationprovince'));
+        return view('location-district.index', compact('locationdistrict'));
     }
 
     /**
@@ -40,7 +41,7 @@ class LocationProvinceController extends Controller
      */
     public function create()
     {
-        return view('location-province.create');
+        return view('location-district.create');
     }
 
     /**
@@ -52,78 +53,78 @@ class LocationProvinceController extends Controller
      */
     public function store(Request $request)
     {
-
+        
         $requestData = $request->all();
+        
+        LocationDistrict::create($requestData);
 
-        LocationProvince::create($requestData);
+        Session::flash('flash_message', 'LocationDistrict added!');
 
-        Session::flash('flash_message', 'LocationProvince added!');
-
-        return redirect('backend/setting-province');
+        return redirect('backend/setting-district');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      *
      * @return \Illuminate\View\View
      */
     public function show($id)
     {
-        $locationprovince = LocationProvince::findOrFail($id);
+        $locationdistrict = LocationDistrict::findOrFail($id);
 
-        return view('location-province.show', compact('locationprovince'));
+        return view('location-district.show', compact('locationdistrict'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      *
      * @return \Illuminate\View\View
      */
     public function edit($id)
     {
-        $locationprovince = LocationProvince::findOrFail($id);
+        $locationdistrict = LocationDistrict::findOrFail($id);
 
-        return view('location-province.edit', compact('locationprovince'));
+        return view('location-district.edit', compact('locationdistrict'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  int $id
+     * @param  int  $id
      * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update($id, Request $request)
     {
-
+        
         $requestData = $request->all();
+        
+        $locationdistrict = LocationDistrict::findOrFail($id);
+        $locationdistrict->update($requestData);
 
-        $locationprovince = LocationProvince::findOrFail($id);
-        $locationprovince->update($requestData);
+        Session::flash('flash_message', 'LocationDistrict updated!');
 
-        Session::flash('flash_message', 'LocationProvince updated!');
-
-        return redirect('backend/setting-province');
+        return redirect('backend/setting-district');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  int  $id
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy($id)
     {
-        LocationProvince::destroy($id);
+        LocationDistrict::destroy($id);
 
-        Session::flash('flash_message', 'LocationProvince deleted!');
+        Session::flash('flash_message', 'LocationDistrict deleted!');
 
-        return redirect('backend/setting-province');
+        return redirect('backend/setting-district');
     }
 }

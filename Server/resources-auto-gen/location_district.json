@@ -6,7 +6,7 @@
     },
     {
       "name": "p_code",
-      "type": "integer"
+      "type": "select"
     },
     {
       "name": "title",

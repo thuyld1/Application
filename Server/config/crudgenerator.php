@@ -19,5 +19,6 @@ return [
      * Columns number to show in view's table.
      */
     'view_columns_number' => 3,
+    'custom_template' => true,
 
 ];

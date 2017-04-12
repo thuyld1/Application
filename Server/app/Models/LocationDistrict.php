@@ -1,17 +1,17 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class LocationProvince extends Model
+class LocationDistrict extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'location_province';
+    protected $table = 'location_districts';
 
     /**
     * The database primary key value.
@@ -25,7 +25,7 @@ class LocationProvince extends Model
      *
      * @var array
      */
-    protected $fillable = ['code', 'order', 'title', 'simple'];
+    protected $fillable = ['code', 'p_code', 'title'];
 
     
 }

@@ -3,9 +3,9 @@
 @section('content')
     <div class="container">
         <div class="panel panel-default">
-            <div class="panel-heading">Create New Province</div>
+            <div class="panel-heading">Create New District</div>
             <div class="panel-body">
-                <a href="{{ url('/backend/setting-province') }}" title="Back">
+                <a href="{{ url('/backend/setting-district') }}" title="Back">
                     <button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back
                     </button>
                 </a>
@@ -20,9 +20,9 @@
                     </ul>
                 @endif
 
-                {!! Form::open(['url' => '/backend/setting-province', 'class' => 'form-horizontal', 'files' => true]) !!}
+                {!! Form::open(['url' => '/backend/setting-district', 'class' => 'form-horizontal', 'files' => true]) !!}
 
-                @include ('location-province.form')
+                @include ('location-district.form')
 
                 {!! Form::close() !!}
 

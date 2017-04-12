@@ -5,7 +5,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">Edit Province #{{ $locationprovince->id }}</div>
             <div class="panel-body">
-                <a href="{{ url('/backend/location-province') }}" title="Back">
+                <a href="{{ url('/backend/setting-province') }}" title="Back">
                     <button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back
                     </button>
                 </a>
@@ -22,7 +22,7 @@
 
                 {!! Form::model($locationprovince, [
                     'method' => 'PATCH',
-                    'url' => ['/backend/location-province', $locationprovince->id],
+                    'url' => ['/backend/setting-province', $locationprovince->id],
                     'class' => 'form-horizontal',
                     'files' => true
                 ]) !!}

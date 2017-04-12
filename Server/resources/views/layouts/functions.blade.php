@@ -56,7 +56,7 @@
                             </li>
 
                             <li>
-                                {{HTML::linkAction('LocationProvinceController@index', 'Setting District') }}
+                                {{HTML::linkAction('LocationDistrictController@index', 'Setting District') }}
                             </li>
                         </ul>
                     </li>
