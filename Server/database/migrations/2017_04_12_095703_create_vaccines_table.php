@@ -17,11 +17,11 @@ class CreateVaccinesTable extends Migration
             $table->integer('v_code', false, true)->unique();
             $table->string('v_name', 100);
             $table->string('v_period', 100);
-            $table->integer('v_period_f', 10);
-            $table->integer('v_period_t', 10);
+            $table->unsignedSmallInteger('v_period_f');
+            $table->unsignedSmallInteger('v_period_t');
             $table->string('v_short_des', 255);
             $table->string('v_url', 255);
-            $table->integer('status', 1)->default(0);
+            $table->unsignedTinyInteger('status')->default(0);
             $table->timestamps();
         });
     }
