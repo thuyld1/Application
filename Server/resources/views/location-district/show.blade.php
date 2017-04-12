@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="panel panel-default">
-            <div class="panel-heading">LocationDistrict {{ $locationdistrict->id }}</div>
+            <div class="panel-heading">District #{{ $locationdistrict->id }}</div>
             <div class="panel-body">
 
                 <a href="{{ url('/backend/setting-district') }}" title="Back">
@@ -42,12 +42,12 @@
                             <td> {{ $locationdistrict->code }} </td>
                         </tr>
                         <tr>
-                            <th> P Code</th>
-                            <td> {{ $locationdistrict->p_code }} </td>
+                            <th> District</th>
+                            <td> {{ $locationdistrict->title }} </td>
                         </tr>
                         <tr>
-                            <th> Title</th>
-                            <td> {{ $locationdistrict->title }} </td>
+                            <th> Province</th>
+                            <td> {{ $province->title }} </td>
                         </tr>
                         </tbody>
                     </table>

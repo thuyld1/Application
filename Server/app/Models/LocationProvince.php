@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,7 +11,7 @@ class LocationProvince extends Model
      *
      * @var string
      */
-    protected $table = 'location_province';
+    protected $table = 'location_provinces';
 
     /**
     * The database primary key value.

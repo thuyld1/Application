@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\LocationDistrict;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Session;
 
 class LocationDistrictController extends Controller
@@ -22,16 +23,32 @@ class LocationDistrictController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $locationdistrict = LocationDistrict::where('code', 'LIKE', "%$keyword%")
-				->orWhere('p_code', 'LIKE', "%$keyword%")
-				->orWhere('title', 'LIKE', "%$keyword%")
-				
+            $locationdistrict = LocationDistrict::join('location_provinces', 'location_provinces.code', '=', 'location_districts.p_code')
+                ->select('location_provinces.title as province', 'location_districts.*')
+                ->where('location_districts.code', 'LIKE', "%$keyword%")
+                ->orWhere('location_districts.title', 'LIKE', "%$keyword%")
+                ->orWhere('location_provinces.title', 'LIKE', "%$keyword%")
                 ->paginate($perPage);
         } else {
-            $locationdistrict = LocationDistrict::paginate($perPage);
+            $locationdistrict = LocationDistrict::join('location_provinces', 'location_provinces.code', '=', 'location_districts.p_code')
+                ->select('location_provinces.title as province', 'location_districts.*')
+                ->paginate($perPage);
         }
 
         return view('location-district.index', compact('locationdistrict'));
+    }
+
+    /**
+     * Get all province data for selection box
+     */
+    private function getProvince()
+    {
+        $provinces = array();
+        $listProvinces = DB::table('location_provinces')->select('code', 'title')->get();
+        foreach ($listProvinces as $province) {
+            $provinces[$province->code] = $province->title;
+        }
+        return $provinces;
     }
 
     /**
@@ -41,7 +58,8 @@ class LocationDistrictController extends Controller
      */
     public function create()
     {
-        return view('location-district.create');
+        $provinces = $this->getProvince();
+        return view('location-district.create', compact('provinces'));
     }
 
     /**
@@ -53,9 +71,9 @@ class LocationDistrictController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $requestData = $request->all();
-        
+
         LocationDistrict::create($requestData);
 
         Session::flash('flash_message', 'LocationDistrict added!');
@@ -66,44 +84,46 @@ class LocationDistrictController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      *
      * @return \Illuminate\View\View
      */
     public function show($id)
     {
         $locationdistrict = LocationDistrict::findOrFail($id);
+        $province = LocationDistrict::find($id)->province;
 
-        return view('location-district.show', compact('locationdistrict'));
+        return view('location-district.show', compact('locationdistrict', 'province'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      *
      * @return \Illuminate\View\View
      */
     public function edit($id)
     {
         $locationdistrict = LocationDistrict::findOrFail($id);
+        $provinces = $this->getProvince();
 
-        return view('location-district.edit', compact('locationdistrict'));
+        return view('location-district.edit', compact('locationdistrict', 'provinces'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update($id, Request $request)
     {
-        
+
         $requestData = $request->all();
-        
+
         $locationdistrict = LocationDistrict::findOrFail($id);
         $locationdistrict->update($requestData);
 
@@ -115,7 +135,7 @@ class LocationDistrictController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */

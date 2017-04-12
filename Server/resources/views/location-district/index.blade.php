@@ -29,8 +29,8 @@
                         <tr>
                             <th>ID</th>
                             <th>Code</th>
-                            <th>Province Code</th>
-                            <th>Title</th>
+                            <th>District</th>
+                            <th>Province</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -39,8 +39,8 @@
                             <tr>
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->code }}</td>
-                                <td>{{ $item->p_code }}</td>
                                 <td>{{ $item->title }}</td>
+                                <td>{{ $item->province }}</td>
                                 <td>
                                     <a href="{{ url('/backend/setting-district/' . $item->id) }}"
                                        title="View LocationDistrict">
