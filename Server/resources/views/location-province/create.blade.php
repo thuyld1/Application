@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="panel panel-default">
-            <div class="panel-heading">Create New LocationProvince</div>
+            <div class="panel-heading">Create New Province</div>
             <div class="panel-body">
                 <a href="{{ url('/backend/location-province') }}" title="Back">
                     <button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back

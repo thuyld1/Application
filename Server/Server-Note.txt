@@ -2,7 +2,7 @@ composer dump-autoload
 
 https://packagist.org/packages/appzcoder/crud-generator
 
-php artisan crud:generate LocationProvince --fields_from_file="location_district.json"  --route-group=backend
+php artisan crud:generate LocationDistrict --model-namespace=Models --fields_from_file="auto-gen/location_district.json"  --route-group=backend
 
 Form Field Types:
 text
