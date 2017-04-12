@@ -1,0 +1,36 @@
+{
+  "fields": [
+    {
+      "name": "v_code",
+      "type": "integer"
+    },
+    {
+      "name": "v_name",
+      "type": "string"
+    },
+    {
+      "name": "v_period",
+      "type": "string"
+    },
+    {
+      "name": "v_period_f",
+      "type": "integer"
+    },
+    {
+      "name": "v_period_t",
+      "type": "integer"
+    },
+    {
+      "name": "v_short_des",
+      "type": "string"
+    },
+    {
+      "name": "v_url",
+      "type": "string"
+    },
+    {
+      "name": "status",
+      "type": "integer"
+    }
+  ]
+}

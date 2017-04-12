@@ -22,3 +22,4 @@ Route::get('backend', 'BackendController@index');
 Route::resource('backend/setting-province', 'LocationProvinceController');
 Route::resource('backend/setting-district', 'LocationDistrictController');
 Route::resource('backend/doctor-specialization', 'DoctorSpecializationController');
+Route::resource('backend/vaccines', 'VaccinesController');

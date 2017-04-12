@@ -1,0 +1,32 @@
+{
+  "fields": [
+    {
+      "name": "code",
+      "type": "integer"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "avatar",
+      "type": "string"
+    },
+    {
+      "name": "phone",
+      "type": "string"
+    },
+    {
+      "name": "des",
+      "type": "string"
+    },
+    {
+      "name": "vote",
+      "type": "float"
+    },
+    {
+      "name": "status",
+      "type": "string"
+    }
+  ]
+}

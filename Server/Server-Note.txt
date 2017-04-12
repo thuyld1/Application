@@ -1,7 +1,7 @@
 composer dump-autoload
 
 https://packagist.org/packages/appzcoder/crud-generator
-php artisan crud:generate DoctorSpecialization --model-namespace=Models --fields_from_file="resources-auto-gen/doctor_specialization.json"  --route-group=backend
+php artisan crud:generate Vaccines --model-namespace=Models --fields_from_file="resources-auto-gen/vaccines.json"  --route-group=backend
 
 php artisan crud:view location-district --fields_from_file="auto-gen/location_district.json" --route-group=backend
 
