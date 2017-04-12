@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="panel panel-default">
-            <div class="panel-heading">Doctor Specialization {{ $doctorspecialization->id }}</div>
+            <div class="panel-heading">Doctor Specialization #{{ $doctorspecialization->id }}</div>
             <div class="panel-body">
 
                 <a href="{{ url('/backend/doctor-specialization') }}" title="Back">

@@ -50,7 +50,7 @@
 
                         <ul class="dropdown-menu" role="menu">
                             <li>
-                                {{HTML::linkAction('LocationProvinceController@index', 'List Doctors') }}
+                                {{HTML::linkAction('DoctorController@index', 'List Doctors') }}
                             </li>
                             <li>
                                 {{HTML::linkAction('LocationProvinceController@index', 'Setting Province') }}
