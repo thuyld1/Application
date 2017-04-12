@@ -1,10 +1,16 @@
 composer dump-autoload
 
 https://packagist.org/packages/appzcoder/crud-generator
-
-php artisan crud:generate LocationDistrict --model-namespace=Models --fields_from_file="auto-gen/location_district.json"  --route-group=backend
+php artisan crud:generate DoctorSpecialization --model-namespace=Models --fields_from_file="auto-gen/doctor_specialization.json"  --route-group=backend
 
 php artisan crud:view location-district --fields_from_file="auto-gen/location_district.json" --route-group=backend
+
+
+
+ALTER TABLE `location_provinces` CHANGE `order` `ord` INT(10) UNSIGNED NOT NULL;
+ALTER TABLE `location_provinces` ADD UNIQUE(`code`);
+ALTER TABLE `location_districts` ADD UNIQUE(`code`);
+
 
 Form Field Types:
 text

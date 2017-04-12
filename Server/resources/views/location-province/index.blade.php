@@ -39,7 +39,7 @@
                             <tr>
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->code }}</td>
-                                <td>{{ $item->order }}</td>
+                                <td>{{ $item->ord }}</td>
                                 <td>{{ $item->title }}</td>
                                 <td>
                                     <a href="{{ url('/backend/setting-province/' . $item->id) }}"

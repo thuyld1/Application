@@ -43,7 +43,7 @@
                         </tr>
                         <tr>
                             <th> Order</th>
-                            <td> {{ $locationprovince->order }} </td>
+                            <td> {{ $locationprovince->ord }} </td>
                         </tr>
                         <tr>
                             <th> Title</th>

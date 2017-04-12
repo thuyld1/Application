@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 
-use App\LocationProvince;
+use App\Models\LocationProvince;
 use Illuminate\Http\Request;
 use Session;
 
@@ -22,7 +22,6 @@ class LocationProvinceController extends Controller
 
         if (!empty($keyword)) {
             $locationprovince = LocationProvince::where('code', 'LIKE', "%$keyword%")
-                ->orWhere('order', 'LIKE', "%$keyword%")
                 ->orWhere('title', 'LIKE', "%$keyword%")
                 ->orWhere('simple', 'LIKE', "%$keyword%")
                 ->paginate($perPage);

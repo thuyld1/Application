@@ -4,11 +4,11 @@
         {!! Form::number('code', null, ['class' => 'form-control']) !!}
         {!! $errors->first('code', '<p class="help-block">:message</p>') !!}
     </div>
-</div><div class="form-group {{ $errors->has('order') ? 'has-error' : ''}}">
-    {!! Form::label('order', 'Order', ['class' => 'col-md-4 control-label']) !!}
+</div><div class="form-group {{ $errors->has('ord') ? 'has-error' : ''}}">
+    {!! Form::label('ord', 'Order', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::number('order', null, ['class' => 'form-control']) !!}
-        {!! $errors->first('order', '<p class="help-block">:message</p>') !!}
+        {!! Form::number('ord', null, ['class' => 'form-control']) !!}
+        {!! $errors->first('ord', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('title') ? 'has-error' : ''}}">
     {!! Form::label('title', 'Title', ['class' => 'col-md-4 control-label']) !!}

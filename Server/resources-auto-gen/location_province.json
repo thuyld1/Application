@@ -5,7 +5,7 @@
       "type": "integer"
     },
     {
-      "name": "order",
+      "name": "ord",
       "type": "integer"
     },
     {

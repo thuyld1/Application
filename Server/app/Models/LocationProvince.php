@@ -25,7 +25,7 @@ class LocationProvince extends Model
      *
      * @var array
      */
-    protected $fillable = ['code', 'order', 'title', 'simple'];
+    protected $fillable = ['code', 'ord', 'title', 'simple'];
 
     
 }

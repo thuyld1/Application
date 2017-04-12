@@ -14,7 +14,7 @@ class CreateLocationDistrictsTable extends Migration
     {
         Schema::create('location_districts', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('code', false, true);
+            $table->integer('code', false, true)->unique();
             $table->integer('p_code', false, true);
             $table->string('title');
             $table->timestamps();
