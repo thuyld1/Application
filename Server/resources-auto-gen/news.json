@@ -1,0 +1,20 @@
+{
+  "fields": [
+    {
+      "name": "thumb",
+      "type": "string"
+    },
+    {
+      "name": "title",
+      "type": "string"
+    },
+    {
+      "name": "des",
+      "type": "string"
+    },
+    {
+      "name": "url",
+      "type": "string"
+    }
+  ]
+}

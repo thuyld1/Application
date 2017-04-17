@@ -15,10 +15,11 @@
 
     <!-- Scripts -->
     <script>
-        window.Laravel = {!! json_encode([
-            'csrfToken' => csrf_token(),
-        ]) !!};
+        window.Laravel = {!! json_encode(['csrfToken' => csrf_token(),]) !!};
     </script>
+
+    @yield('extra-css-js')
+
 </head>
 <body>
 <div id="app">
@@ -41,6 +42,10 @@
                 <ul class="nav navbar-nav navbar-left">
                     <li>
                         {{HTML::linkAction('BackendController@index', 'Dashboard') }}
+                    </li>
+
+                    <li>
+                        {{HTML::linkAction('MedicalNewsController@index', 'Medical News') }}
                     </li>
 
                     <li class="dropdown">

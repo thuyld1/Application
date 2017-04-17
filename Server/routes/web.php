@@ -21,6 +21,9 @@ Auth::routes();
 // For Backend Dashboard
 Route::get('backend', 'BackendController@index');
 
+// For medical news function
+Route::resource('backend/medical-news', 'MedicalNewsController');
+
 // For doctors function
 Route::resource('backend/setting-province', 'LocationProvinceController');
 Route::resource('backend/setting-district', 'LocationDistrictController');
