@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 use App\Models\DoctorSpecialization;
 use Illuminate\Http\Request;
@@ -23,9 +22,8 @@ class DoctorSpecializationController extends Controller
 
         if (!empty($keyword)) {
             $doctorspecialization = DoctorSpecialization::where('code', 'LIKE', "%$keyword%")
-				->orWhere('title', 'LIKE', "%$keyword%")
-				->orWhere('ord', 'LIKE', "%$keyword%")
-				
+                ->orWhere('title', 'LIKE', "%$keyword%")
+                ->orWhere('ord', 'LIKE', "%$keyword%")
                 ->paginate($perPage);
         } else {
             $doctorspecialization = DoctorSpecialization::paginate($perPage);
@@ -53,9 +51,9 @@ class DoctorSpecializationController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $requestData = $request->all();
-        
+
         DoctorSpecialization::create($requestData);
 
         Session::flash('flash_message', 'DoctorSpecialization added!');
@@ -66,7 +64,7 @@ class DoctorSpecializationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      *
      * @return \Illuminate\View\View
      */
@@ -80,7 +78,7 @@ class DoctorSpecializationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      *
      * @return \Illuminate\View\View
      */
@@ -94,16 +92,16 @@ class DoctorSpecializationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update($id, Request $request)
     {
-        
+
         $requestData = $request->all();
-        
+
         $doctorspecialization = DoctorSpecialization::findOrFail($id);
         $doctorspecialization->update($requestData);
 
@@ -115,7 +113,7 @@ class DoctorSpecializationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */

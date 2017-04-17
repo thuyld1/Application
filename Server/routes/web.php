@@ -11,14 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+Route::get('/', 'BackendController@index');
 
 Auth::routes();
 
+// For Backend Dashboard
 Route::get('backend', 'BackendController@index');
 
+// For doctors function
 Route::resource('backend/setting-province', 'LocationProvinceController');
 Route::resource('backend/setting-district', 'LocationDistrictController');
 Route::resource('backend/doctor-specialization', 'DoctorSpecializationController');
