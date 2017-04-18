@@ -1,5 +1,5 @@
 <?php
 return [
-    'BACKEND_RECORD_PER_PAGE' => 1,
-    'API_RECORD_PER_PAGE' => 1
+    'BACKEND_RECORD_PER_PAGE' => 5,
+    'API_RECORD_PER_PAGE' => 3
 ];
