@@ -18,8 +18,8 @@
                 <br/>
 
                 <div class="form-group form-horizontal">
-                    {!! Form::label('link', 'Detect Link', ['class' => 'col-md-4 control-label']) !!}
-                    <div class="col-md-6 input-group">
+                    {!! Form::label('link', 'Detect Link', ['class' => 'col-md-2 control-label']) !!}
+                    <div class="col-md-8 input-group">
                         {!! Form::text('link', null, ['class' => 'form-control', 'id' => 'detect_link']) !!}
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="submit" id="detect_btn">
@@ -38,11 +38,16 @@
                     </ul>
                 @endif
 
-                {!! Form::open(['url' => '/backend/medical-news', 'class' => 'form-horizontal', 'files' => true]) !!}
+                <div class="col-md-4">
+                    {{ HTML::image('/img/common_placeholder.png', null, array('id' => 'thumb-img', 'style' => 'max-width:100%; max-height:100%;')) }}
+                </div>
+                <div class="col-md-8">
+                    {!! Form::open(['url' => '/backend/medical-news', 'class' => 'form-horizontal', 'files' => true]) !!}
 
-                @include ('medical-news.form')
+                    @include ('medical-news.form')
 
-                {!! Form::close() !!}
+                    {!! Form::close() !!}
+                </div>
 
             </div>
         </div>
