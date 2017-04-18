@@ -6,6 +6,7 @@ use App\Http\Requests;
 
 use App\Models\LocationDistrict;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Session;
 
@@ -19,7 +20,7 @@ class LocationDistrictController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->get('search');
-        $perPage = 25;
+        $perPage = Config::get('constant.BACKEND_RECORD_PER_PAGE');
 
         if (!empty($keyword)) {
             $locationdistrict = LocationDistrict::join('location_provinces', 'location_provinces.code', '=', 'location_districts.p_code')

@@ -6,6 +6,7 @@ use App\Http\Requests;
 
 use App\Models\LocationProvince;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Session;
 
 class LocationProvinceController extends Controller
@@ -18,7 +19,7 @@ class LocationProvinceController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->get('search');
-        $perPage = 25;
+        $perPage = Config::get('constant.BACKEND_RECORD_PER_PAGE');
 
         if (!empty($keyword)) {
             $locationprovince = LocationProvince::where('code', 'LIKE', "%$keyword%")

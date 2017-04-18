@@ -47,7 +47,7 @@
                                 <td>
                                     <a href="{{ $item->v_url }}" target='_blank' title="Open Vaccine Link" >
                                         <button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i>
-                                            Link
+                                            Open Link
                                         </button>
                                     </a>
                                     <a href="{{ url('/backend/vaccines/' . $item->id) }}" title="View Vaccine">

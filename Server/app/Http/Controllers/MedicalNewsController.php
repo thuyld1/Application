@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 use App\Models\MedicalNews;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Session;
 
 class MedicalNewsController extends Controller
@@ -19,7 +19,7 @@ class MedicalNewsController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->get('search');
-        $perPage = 25;
+        $perPage = Config::get('constant.BACKEND_RECORD_PER_PAGE');
 
         if (!empty($keyword)) {
             $medicalnews = MedicalNews::where('thumb', 'LIKE', "%$keyword%")
