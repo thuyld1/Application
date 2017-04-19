@@ -19,11 +19,27 @@ class APIDoctorsController extends APIController
      */
     public function findDoctor(Request $request)
     {
+        // Build query to find in DB
         $perPage = Config::get('constant.API_RECORD_PER_PAGE');
-        $result = Doctor::select('name', 'avatar', 'phone', 'des', 'vote', 'province', 'district', 'specialization')
-            ->where('status', '=', 0)
-            ->paginate($perPage);
-        return $result;
+        $builder = Doctor::select('name', 'avatar', 'phone', 'des', 'vote', 'province', 'district', 'specialization')
+            ->where('status', '=', 0);
+
+        // Check filter condition to query
+        $provinces = $request->get('provinces');
+        $districts = $request->get('districts');
+        $specializations = $request->get('specializations');
+        if (!empty($provinces)) {
+            $builder->whereIn('province', explode(",", $provinces));
+        }
+        if (!empty($districts)) {
+            $builder->whereIn('district', explode(",", $districts));
+        }
+        if (!empty($specializations)) {
+            $builder->whereIn('specialization', explode(",", $specializations));
+        }
+
+        // Return result
+        return $builder->paginate($perPage);
     }
 
 
