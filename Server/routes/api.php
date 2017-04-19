@@ -21,4 +21,5 @@ use Illuminate\Http\Request;
 //Route::post('startapp', 'LocationProvinceController');
 Route::get('medical-news', 'API\APIMedicalNewsController@listNews');
 
+Route::get('findDoctors', 'API\APIDoctorsController@findDoctor');
 Route::get('getDistricts', 'API\APIDoctorsController@getDistricts');

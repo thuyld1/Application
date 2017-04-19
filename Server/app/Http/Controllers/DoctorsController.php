@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 
 use App\Models\Doctor;
+use App\Models\DoctorSpecialization;
+use App\Models\LocationDistrict;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
@@ -103,7 +105,7 @@ class DoctorsController extends Controller
         $districts = $this->getDistrict($doctor->province);
         $specializations = $this->getSpecialization();
 
-        return view('doctors.edit', compact('doctor'));
+        return view('doctors.edit', compact('doctor', 'provinces', 'districts', 'specializations'));
     }
 
     /**
@@ -150,14 +152,11 @@ class DoctorsController extends Controller
      */
     private function getProvince()
     {
-        $provinces = array();
-        $listProvinces = DB::table('location_provinces')
+        $provinces = DB::table('location_provinces')
             ->select('code', 'title')
             ->orderBy('ord')
-            ->get();
-        foreach ($listProvinces as $province) {
-            $provinces[$province->code] = $province->title;
-        }
+            ->pluck('title', 'code')
+            ->toArray();
         return $provinces;
     }
 
@@ -168,15 +167,13 @@ class DoctorsController extends Controller
      */
     private function getDistrict($province = null)
     {
-        $districts = array();
-        if (!empty($province)) {
-            $listDistricts = DB::table('location_districts')
-                ->select('code', 'title')
+        if (empty($province)) {
+            $districts = array();
+        } else {
+            $districts = LocationDistrict::select('code', 'title')
                 ->where('p_code', '=', $province)
-                ->get();
-            foreach ($listDistricts as $item) {
-                $districts[$item->code] = $item->title;
-            }
+                ->pluck('title', 'code')
+                ->toArray();
         }
         return $districts;
     }
@@ -186,14 +183,10 @@ class DoctorsController extends Controller
      */
     private function getSpecialization()
     {
-        $list = array();
-        $listProvinces = DB::table('doctor_specializations')
-            ->select('code', 'title')
+        $listProvinces = DoctorSpecialization::select('code', 'title')
             ->orderBy('ord')
-            ->get();
-        foreach ($listProvinces as $province) {
-            $list[$province->code] = $province->title;
-        }
-        return $list;
+            ->pluck('title', 'code')
+            ->toArray();
+        return $listProvinces;
     }
 }
