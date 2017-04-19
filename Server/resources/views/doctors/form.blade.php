@@ -1,6 +1,7 @@
 @section('extra-css-js')
     <script type="text/javascript" src="{{ URL::asset('js/jquery-3.2.1.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('js/common.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/doctors.js') }}"></script>
 @endsection
 
 <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
@@ -18,7 +19,11 @@
             {!! $errors->first('avatar', '<p class="help-block">:message</p>') !!}
         </div>
         <div>
-            {{ HTML::image($doctor->avatar, null, array('id' => 'thumb-img', 'style' => 'max-width:100%; width: 200px;')) }}
+            @if(empty($doctor))
+                {{ HTML::image(Config::get('constant.DEFAULT_IMAGE'), null, array('id' => 'thumb-img', 'style' => 'max-width:100%; width: 200px;')) }}
+            @else
+                {{ HTML::image($doctor->avatar, null, array('id' => 'thumb-img', 'style' => 'max-width:100%; width: 200px;')) }}
+            @endif
         </div>
     </div>
 </div>
@@ -46,21 +51,21 @@
 <div class="form-group {{ $errors->has('province') ? 'has-error' : ''}}">
     {!! Form::label('province', 'Province', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::number('province', null, ['class' => 'form-control']) !!}
+        {!! Form::select('province', $provinces, null, ['class' => 'form-control', 'id' => 'province']) !!}
         {!! $errors->first('province', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
 <div class="form-group {{ $errors->has('district') ? 'has-error' : ''}}">
     {!! Form::label('district', 'District', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::number('district', null, ['class' => 'form-control']) !!}
+        {!! Form::select('district', $districts, null, ['class' => 'form-control', 'id' => 'district']) !!}
         {!! $errors->first('district', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
 <div class="form-group {{ $errors->has('specialization') ? 'has-error' : ''}}">
     {!! Form::label('specialization', 'Specialization', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::text('specialization', null, ['class' => 'form-control']) !!}
+        {!! Form::select('specialization', $specializations, null, ['class' => 'form-control']) !!}
         {!! $errors->first('specialization', '<p class="help-block">:message</p>') !!}
     </div>
 </div>

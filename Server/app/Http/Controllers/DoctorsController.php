@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Models\Doctor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 use Session;
 
 class DoctorsController extends Controller
@@ -23,15 +24,14 @@ class DoctorsController extends Controller
 
         if (!empty($keyword)) {
             $doctors = Doctor::where('name', 'LIKE', "%$keyword%")
-				->orWhere('avatar', 'LIKE', "%$keyword%")
-				->orWhere('phone', 'LIKE', "%$keyword%")
-				->orWhere('des', 'LIKE', "%$keyword%")
-				->orWhere('vote', 'LIKE', "%$keyword%")
-				->orWhere('province', 'LIKE', "%$keyword%")
-				->orWhere('district', 'LIKE', "%$keyword%")
-				->orWhere('specialization', 'LIKE', "%$keyword%")
-				->orWhere('status', 'LIKE', "%$keyword%")
-				
+                ->orWhere('avatar', 'LIKE', "%$keyword%")
+                ->orWhere('phone', 'LIKE', "%$keyword%")
+                ->orWhere('des', 'LIKE', "%$keyword%")
+                ->orWhere('vote', 'LIKE', "%$keyword%")
+                ->orWhere('province', 'LIKE', "%$keyword%")
+                ->orWhere('district', 'LIKE', "%$keyword%")
+                ->orWhere('specialization', 'LIKE', "%$keyword%")
+                ->orWhere('status', 'LIKE', "%$keyword%")
                 ->paginate($perPage);
         } else {
             $doctors = Doctor::paginate($perPage);
@@ -47,7 +47,12 @@ class DoctorsController extends Controller
      */
     public function create()
     {
-        return view('doctors.create');
+        $provinces = $this->getProvince();
+        reset($provinces);
+        $first_key = key($provinces);
+        $districts = $this->getDistrict($first_key);
+        $specializations = $this->getSpecialization();
+        return view('doctors.create', compact('provinces', 'districts', 'specializations'));
     }
 
     /**
@@ -59,9 +64,9 @@ class DoctorsController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $requestData = $request->all();
-        
+
         Doctor::create($requestData);
 
         Session::flash('flash_message', 'Doctor added!');
@@ -72,7 +77,7 @@ class DoctorsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      *
      * @return \Illuminate\View\View
      */
@@ -86,7 +91,7 @@ class DoctorsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      *
      * @return \Illuminate\View\View
      */
@@ -94,22 +99,26 @@ class DoctorsController extends Controller
     {
         $doctor = Doctor::findOrFail($id);
 
+        $provinces = $this->getProvince();
+        $districts = $this->getDistrict($doctor->province);
+        $specializations = $this->getSpecialization();
+
         return view('doctors.edit', compact('doctor'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update($id, Request $request)
     {
-        
+
         $requestData = $request->all();
-        
+
         $doctor = Doctor::findOrFail($id);
         $doctor->update($requestData);
 
@@ -121,7 +130,7 @@ class DoctorsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
@@ -132,5 +141,59 @@ class DoctorsController extends Controller
         Session::flash('flash_message', 'Doctor deleted!');
 
         return redirect('backend/doctors');
+    }
+
+
+    /**
+     * Get all province data for selection box
+     * @return array
+     */
+    private function getProvince()
+    {
+        $provinces = array();
+        $listProvinces = DB::table('location_provinces')
+            ->select('code', 'title')
+            ->orderBy('ord')
+            ->get();
+        foreach ($listProvinces as $province) {
+            $provinces[$province->code] = $province->title;
+        }
+        return $provinces;
+    }
+
+    /**
+     * Get all province data for selection box
+     * @param int $province
+     * @return array
+     */
+    private function getDistrict($province = null)
+    {
+        $districts = array();
+        if (!empty($province)) {
+            $listDistricts = DB::table('location_districts')
+                ->select('code', 'title')
+                ->where('p_code', '=', $province)
+                ->get();
+            foreach ($listDistricts as $item) {
+                $districts[$item->code] = $item->title;
+            }
+        }
+        return $districts;
+    }
+
+    /**
+     * Get all specialization data for selection box
+     */
+    private function getSpecialization()
+    {
+        $list = array();
+        $listProvinces = DB::table('doctor_specializations')
+            ->select('code', 'title')
+            ->orderBy('ord')
+            ->get();
+        foreach ($listProvinces as $province) {
+            $list[$province->code] = $province->title;
+        }
+        return $list;
     }
 }

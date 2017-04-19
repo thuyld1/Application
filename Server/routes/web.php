@@ -29,4 +29,6 @@ Route::resource('backend/doctors', 'DoctorsController');
 Route::resource('backend/setting-province', 'LocationProvinceController');
 Route::resource('backend/setting-district', 'LocationDistrictController');
 Route::resource('backend/doctor-specialization', 'DoctorSpecializationController');
+
+// For vaccines function
 Route::resource('backend/vaccines', 'VaccinesController');
