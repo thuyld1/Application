@@ -1,15 +1,15 @@
 <?php
 
-namespace DummyNamespace;
+namespace App\Http\Controllers;
 
-use DummyRootNamespaceHttp\Requests;
+use App\Http\Requests;
 
-use DummyRootNamespace{{modelNamespace}}{{modelName}};
+use App\Models\Doctor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Session;
 
-class DummyClass extends Controller
+class DoctorsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,13 +22,22 @@ class DummyClass extends Controller
         $perPage = Config::get('constant.BACKEND_RECORD_PER_PAGE');
 
         if (!empty($keyword)) {
-            ${{crudName}} = {{modelName}}::{{whereSnippet}}
+            $doctors = Doctor::where('name', 'LIKE', "%$keyword%")
+				->orWhere('avatar', 'LIKE', "%$keyword%")
+				->orWhere('phone', 'LIKE', "%$keyword%")
+				->orWhere('des', 'LIKE', "%$keyword%")
+				->orWhere('vote', 'LIKE', "%$keyword%")
+				->orWhere('province', 'LIKE', "%$keyword%")
+				->orWhere('district', 'LIKE', "%$keyword%")
+				->orWhere('specialization', 'LIKE', "%$keyword%")
+				->orWhere('status', 'LIKE', "%$keyword%")
+				
                 ->paginate($perPage);
         } else {
-            ${{crudName}} = {{modelName}}::paginate($perPage);
+            $doctors = Doctor::paginate($perPage);
         }
 
-        return view('{{viewPath}}{{viewName}}.index', compact('{{crudName}}'));
+        return view('doctors.index', compact('doctors'));
     }
 
     /**
@@ -38,7 +47,7 @@ class DummyClass extends Controller
      */
     public function create()
     {
-        return view('{{viewPath}}{{viewName}}.create');
+        return view('doctors.create');
     }
 
     /**
@@ -50,14 +59,14 @@ class DummyClass extends Controller
      */
     public function store(Request $request)
     {
-        {{validationRules}}
+        
         $requestData = $request->all();
-        {{fileSnippet}}
-        {{modelName}}::create($requestData);
+        
+        Doctor::create($requestData);
 
-        Session::flash('flash_message', '{{modelName}} added!');
+        Session::flash('flash_message', 'Doctor added!');
 
-        return redirect('{{routeGroup}}{{viewName}}');
+        return redirect('backend/doctors');
     }
 
     /**
@@ -69,9 +78,9 @@ class DummyClass extends Controller
      */
     public function show($id)
     {
-        ${{crudNameSingular}} = {{modelName}}::findOrFail($id);
+        $doctor = Doctor::findOrFail($id);
 
-        return view('{{viewPath}}{{viewName}}.show', compact('{{crudNameSingular}}'));
+        return view('doctors.show', compact('doctor'));
     }
 
     /**
@@ -83,9 +92,9 @@ class DummyClass extends Controller
      */
     public function edit($id)
     {
-        ${{crudNameSingular}} = {{modelName}}::findOrFail($id);
+        $doctor = Doctor::findOrFail($id);
 
-        return view('{{viewPath}}{{viewName}}.edit', compact('{{crudNameSingular}}'));
+        return view('doctors.edit', compact('doctor'));
     }
 
     /**
@@ -98,15 +107,15 @@ class DummyClass extends Controller
      */
     public function update($id, Request $request)
     {
-        {{validationRules}}
+        
         $requestData = $request->all();
-        {{fileSnippet}}
-        ${{crudNameSingular}} = {{modelName}}::findOrFail($id);
-        ${{crudNameSingular}}->update($requestData);
+        
+        $doctor = Doctor::findOrFail($id);
+        $doctor->update($requestData);
 
-        Session::flash('flash_message', '{{modelName}} updated!');
+        Session::flash('flash_message', 'Doctor updated!');
 
-        return redirect('{{routeGroup}}{{viewName}}');
+        return redirect('backend/doctors');
     }
 
     /**
@@ -118,10 +127,10 @@ class DummyClass extends Controller
      */
     public function destroy($id)
     {
-        {{modelName}}::destroy($id);
+        Doctor::destroy($id);
 
-        Session::flash('flash_message', '{{modelName}} deleted!');
+        Session::flash('flash_message', 'Doctor deleted!');
 
-        return redirect('{{routeGroup}}{{viewName}}');
+        return redirect('backend/doctors');
     }
 }

@@ -1,7 +1,7 @@
 composer dump-autoload
 
 https://packagist.org/packages/appzcoder/crud-generator
-php artisan crud:generate MedicalNews --model-namespace=Models --fields_from_file="resources-auto-gen/news.json"  --route-group=backend
+php artisan crud:generate Doctors --model-namespace=Models --fields_from_file="resources-auto-gen/doctors.json"  --route-group=backend
 
 php artisan crud:view medical-news --fields_from_file="resources-auto-gen/news.json" --route-group=backend
 

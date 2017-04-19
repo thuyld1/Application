@@ -39,7 +39,7 @@
                 @endif
 
                 <div class="col-md-4">
-                    {{ HTML::image('/img/common_placeholder.png', null, array('id' => 'thumb-img', 'style' => 'max-width:100%; max-height:100%;')) }}
+                    {{ HTML::image(Config::get('constant.DEFAULT_IMAGE'), null, array('id' => 'thumb-img', 'style' => 'max-width:100%; max-height:100%;')) }}
                 </div>
                 <div class="col-md-8">
                     {!! Form::open(['url' => '/backend/medical-news', 'class' => 'form-horizontal', 'files' => true]) !!}

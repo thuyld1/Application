@@ -1,10 +1,6 @@
 {
   "fields": [
     {
-      "name": "code",
-      "type": "integer"
-    },
-    {
       "name": "name",
       "type": "string"
     },
@@ -25,8 +21,20 @@
       "type": "float"
     },
     {
-      "name": "status",
+      "name": "province",
+      "type": "integer"
+    },
+    {
+      "name": "district",
+      "type": "integer"
+    },
+    {
+      "name": "specialization",
       "type": "string"
+    },
+    {
+      "name": "status",
+      "type": "integer"
     }
   ]
 }
