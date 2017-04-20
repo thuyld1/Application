@@ -1,4 +1,4 @@
-@extends('layouts.functions')
+@extends('layouts.backend')
 
 @section('extra-css-js')
     <script type="text/javascript" src="{{ URL::asset('js/jquery-3.2.1.min.js') }}"></script>
