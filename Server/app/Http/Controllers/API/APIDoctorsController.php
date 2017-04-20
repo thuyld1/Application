@@ -80,16 +80,18 @@ class APIDoctorsController extends APIController
     /**
      * Display the specified resource.
      *
-     * @param  Request $request
+     * @param  int id
      *
      * @return \Illuminate\View\View
      */
-    public function doctor(Request $request)
+    public function doctor($id)
     {
-        $id = $request->get('id');
-        $doctor = Doctor::findOrFail($id);
-
-        return view('doctors.show', compact('doctor'));
+        $doctor = Doctor::find($id);
+        if (empty($doctor)) {
+            abort(404);
+        } else {
+            return view('doctors.details', compact('doctor'));
+        }
     }
 
 }
