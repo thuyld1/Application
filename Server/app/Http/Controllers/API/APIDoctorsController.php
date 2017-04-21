@@ -28,12 +28,13 @@ class APIDoctorsController extends APIController
         $provinces = $request->get('provinces');
         $districts = $request->get('districts');
         $specializations = $request->get('specializations');
-        if (!empty($provinces)) {
-            $builder->whereIn('province', explode(",", $provinces));
-        }
+
         if (!empty($districts)) {
             $builder->whereIn('district', explode(",", $districts));
+        } else if (!empty($provinces)) {
+            $builder->whereIn('province', explode(",", $provinces));
         }
+
         if (!empty($specializations)) {
             $builder->whereIn('specialization', explode(",", $specializations));
         }
@@ -73,6 +74,24 @@ class APIDoctorsController extends APIController
                 ->toArray();
         }
         return $districts;
+    }
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int id
+     *
+     * @return \Illuminate\View\View
+     */
+    public function doctor($id)
+    {
+        $doctor = Doctor::find($id);
+        if (empty($doctor)) {
+            abort(404);
+        } else {
+            return view('doctors.details', compact('doctor'));
+        }
     }
 
 }
