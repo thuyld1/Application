@@ -34,9 +34,17 @@ class DoctorsController extends Controller
                 ->orWhere('district', 'LIKE', "%$keyword%")
                 ->orWhere('specialization', 'LIKE', "%$keyword%")
                 ->orWhere('status', 'LIKE', "%$keyword%")
+                ->leftjoin('location_provinces', 'doctors.province', '=', 'location_provinces.code')
+                ->leftjoin('doctor_specializations', 'doctors.specialization', '=', 'doctor_specializations.code')
+                ->select('doctors.*', 'location_provinces.title as province_title', 'doctor_specializations.title as specialization_title')
+                ->orderBy('province')
                 ->paginate($perPage);
         } else {
-            $doctors = Doctor::paginate($perPage);
+            $doctors = Doctor::leftjoin('location_provinces', 'doctors.province', '=', 'location_provinces.code')
+                ->leftjoin('doctor_specializations', 'doctors.specialization', '=', 'doctor_specializations.code')
+                ->select('doctors.*', 'location_provinces.title as province_title', 'doctor_specializations.title as specialization_title')
+                ->orderBy('province')
+                ->paginate($perPage);
         }
 
         return view('doctors.index', compact('doctors'));
@@ -85,7 +93,12 @@ class DoctorsController extends Controller
      */
     public function show($id)
     {
-        $doctor = Doctor::findOrFail($id);
+        $doctor = Doctor::where('doctors.id', '=', $id)
+            ->leftjoin('location_provinces', 'doctors.province', '=', 'location_provinces.code')
+            ->leftjoin('location_districts', 'doctors.district', '=', 'location_districts.code')
+            ->leftjoin('doctor_specializations', 'doctors.specialization', '=', 'doctor_specializations.code')
+            ->select('doctors.*', 'location_provinces.title as province_title', 'location_districts.title as district_title', 'doctor_specializations.title as specialization_title')
+            ->first();
 
         return view('doctors.show', compact('doctor'));
     }

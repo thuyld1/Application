@@ -64,15 +64,15 @@
                         </tr>
                         <tr>
                             <th> Province</th>
-                            <td> {{ $doctor->province }} </td>
+                            <td> {{ $doctor->province_title }} </td>
                         </tr>
                         <tr>
                             <th> District</th>
-                            <td> {{ $doctor->district }} </td>
+                            <td> {{ $doctor->district_title }} </td>
                         </tr>
                         <tr>
                             <th> Specialization</th>
-                            <td> {{ $doctor->specialization }} </td>
+                            <td> {{ $doctor->specialization_title }} </td>
                         </tr>
                         <tr>
                             <th> Status</th>

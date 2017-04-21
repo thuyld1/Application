@@ -30,7 +30,8 @@
                             <th>Avatar</th>
                             <th>Name</th>
                             <th>Phone</th>
-                            <th>Description</th>
+                            <th>Province</th>
+                            <th>Specialization</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -43,7 +44,8 @@
                                 </td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->phone }}</td>
-                                <td>{{ $item->des }}</td>
+                                <td>{{ $item->province_title }}</td>
+                                <td>{{ $item->specialization_title }}</td>
                                 <td>
                                     <a href="{{ url('/backend/doctors/' . $item->id) }}" title="View Doctor">
                                         <button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i>
