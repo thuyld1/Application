@@ -11,7 +11,6 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Routing\Controller;
 
-class APIController extends Controller
-{
+class APIController extends Controller {
 
 }
