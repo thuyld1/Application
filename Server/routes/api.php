@@ -19,8 +19,11 @@ use Illuminate\Http\Request;
 
 
 Route::get('register', 'API\APIClientController@register');
-Route::get('medical-news', 'API\APIMedicalNewsController@listNews');
 
-Route::get('findDoctors', 'API\APIDoctorsController@findDoctor');
-Route::get('doctor/{id}', 'API\APIDoctorsController@doctor');
-Route::get('getDistricts', 'API\APIDoctorsController@getDistricts');
+Route::group(['prefix' => 'api', 'middleware' => 'auth:api'], function () {
+    Route::get('/medical-news', 'API\APIMedicalNewsController@listNews');
+
+    Route::get('findDoctors', 'API\APIDoctorsController@findDoctor');
+    Route::get('doctor/{id}', 'API\APIDoctorsController@doctor');
+    Route::get('getDistricts', 'API\APIDoctorsController@getDistricts');
+});

@@ -16,14 +16,14 @@ class CreateMobileUsersTable extends Migration
         Schema::create('mobile_users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('facebook_id', 100)->nullable();
-            $table->string('name', 256)->nullable();
+            $table->string('name', 100)->nullable();
             $table->string('device_id', 50)->unique();
-            $table->string('os_name', 50);
-            $table->string('os_version', 50);
+            $table->string('os_name', 30);
+            $table->string('os_version', 30);
             $table->string('app_version', 10);
             $table->string('push_token', 256)->nullable();
+            $table->string('api_token', 60)->nullable();
             $table->unsignedTinyInteger('status')->default(0);
-            $table->rememberToken();
             $table->timestamps();
         });
     }
